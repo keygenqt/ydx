@@ -1,0 +1,5 @@
+{
+  "name": "libcore.so",
+  "types": "./index.d.ts",
+  "version": "1.0.0"
+}

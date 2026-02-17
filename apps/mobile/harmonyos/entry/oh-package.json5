@@ -6,6 +6,6 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "libshared.so": "file:./src/main/cpp/types/shared"
+    "libcore.so": "file:./src/main/cpp/types/core"
   }
 }

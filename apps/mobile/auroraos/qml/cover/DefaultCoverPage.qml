@@ -7,9 +7,9 @@ CoverBackground {
     CoverTemplate {
         objectName: "applicationCover"
         primaryText: "App"
-        secondaryText: qsTr("Demo Rust")
+        secondaryText: qsTr("YDX")
         icon {
-            source: Qt.resolvedUrl("../icons/demo_rust.svg")
+            source: Qt.resolvedUrl("../icons/ydx.svg")
             sourceSize { width: icon.width; height: icon.height }
         }
     }

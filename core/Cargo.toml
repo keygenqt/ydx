@@ -1,10 +1,10 @@
 [package]
-name = "shared"
+name = "ydx-core"
 edition = "2024"
 version = "0.0.1"
 
 [lib]
-name = "shared"
+name = "core"
 crate-type = ["lib", "staticlib", "cdylib"]
 
 [dependencies]
@@ -15,7 +15,7 @@ safer-ffi = "0.1.13"
 
 # Safer FFI
 [[bin]]
-name = "shared-headers"
+name = "core-headers"
 required-features = ["headers"]
 
 [features]

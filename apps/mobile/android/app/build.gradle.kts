@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.keygenqt.demo_rust"
+    namespace = "com.keygenqt.ydx"
     ndkVersion = "29.0.14206865"
 
     kotlinOptions {
@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.keygenqt.demo_rust"
+        applicationId = "com.keygenqt.ydx"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -49,9 +49,9 @@ android {
 }
 
 extensions.configure(com.nishtahir.CargoExtension::class) {
-    module = "../../../shared/rust"
-    libname = "shared"
-    targets = listOf("arm", "arm64", "x86", "x86_64")
+    module = "../../../../core"
+    libname = "core"
+    targets = listOf("arm", "arm64", "x86_64")
     profile = "release"
 }
 

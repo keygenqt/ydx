@@ -1,14 +1,14 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtGraphicalEffects 1.0
-import SharedRust 1.0
+import CoreYDX 1.0
 
 Page {
     objectName: "mainPage"
     allowedOrientations: Orientation.All
 
-    SharedRust {
-        id: shared
+    CoreYDX {
+        id: core
     }
 
     PageHeader {
@@ -24,7 +24,7 @@ Page {
 
         Text {
             width: parent.width
-            text: qsTr("Aurora OS + Rust")
+            text: qsTr("YDX")
             color: Theme.primaryColor
             wrapMode: Text.WordWrap
             font.pixelSize: Theme.fontSizeExtraLarge
@@ -58,8 +58,8 @@ Page {
 
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: shared.state
-            onClicked: shared.performanceTest()
+            text: core.state
+            onClicked: core.performanceTest()
         }
 
         Text {

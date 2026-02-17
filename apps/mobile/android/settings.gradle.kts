@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Demo Rust"
+rootProject.name = "YDX"
 include(":app")

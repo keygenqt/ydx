@@ -1600,31 +1600,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a96887878f22d7bad8a3b6dc5b7440e0ada9a245242924394987b21cf2210a4c"
 
 [[package]]
-name = "rust-axum"
-version = "0.1.0"
-dependencies = [
- "argon2",
- "axum",
- "axum-auth",
- "axum-extra",
- "chrono",
- "clap",
- "clap-cargo",
- "colored",
- "diesel",
- "diesel-async",
- "diesel_migrations",
- "hocon-rs",
- "serde",
- "serde_json",
- "serde_with",
- "time",
- "tokio",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
 name = "rustc_version"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2529,6 +2504,31 @@ name = "writeable"
 version = "0.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9edde0db4769d2dc68579893f2306b26c6ecfbe0ef499b013d731b7b9247e0b9"
+
+[[package]]
+name = "ydx-server"
+version = "0.1.0"
+dependencies = [
+ "argon2",
+ "axum",
+ "axum-auth",
+ "axum-extra",
+ "chrono",
+ "clap",
+ "clap-cargo",
+ "colored",
+ "diesel",
+ "diesel-async",
+ "diesel_migrations",
+ "hocon-rs",
+ "serde",
+ "serde_json",
+ "serde_with",
+ "time",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+]
 
 [[package]]
 name = "yoke"

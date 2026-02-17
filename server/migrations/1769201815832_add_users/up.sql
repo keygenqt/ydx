@@ -1,4 +1,4 @@
-CREATE TABLE users_axum (
+CREATE TABLE users (
     id          SERIAL PRIMARY KEY,
     email       VARCHAR(255) UNIQUE NOT NULL,
     fname       VARCHAR(255) NOT NULL,

@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     fs: {
-      allow: ['.', '../../shared/rust/pkg']
+      allow: ['.', '../../core/pkg']
     }
   }
 })

@@ -4,7 +4,7 @@ import rustLogo from "./assets/rust.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
-import init, { performance_test } from "shared";
+import init, { performance_test } from "core";
 
 function App() {
   const [data, setData] = useState("Run performance test");
@@ -29,7 +29,7 @@ function App() {
           <img src={rustLogo} className="logo rust" alt="Rust logo" />
         </a>
       </div>
-      <h1>Vite + React + Rust</h1>
+      <h1>YDX</h1>
       <div className="card">
         <button
           disabled={data == "Loading..."}

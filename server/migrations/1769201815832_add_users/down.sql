@@ -1,1 +1,1 @@
-DROP TABLE "users_axum";
+DROP TABLE "users";

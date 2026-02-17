@@ -17,7 +17,7 @@ pub fn shared_performance_test() -> u64 {
 
 /// Android JNI
 #[unsafe(no_mangle)]
-pub extern "C" fn Java_com_keygenqt_demo_1rust_MainActivity_performanceTest<'local>(
+pub extern "C" fn Java_com_keygenqt_ydx_MainActivity_performanceTest<'local>(
     _env: JNIEnv<'local>,
     _class: JClass<'local>,
     _input: JString<'local>,
@@ -74,6 +74,6 @@ fn test_float_calculations() -> f64 {
 #[cfg(feature = "headers")]
 pub fn generate_headers() -> ::std::io::Result<()> {
     ::safer_ffi::headers::builder()
-        .to_file("./libs/libshared_api.h")?
+        .to_file("./libs/libcore.h")?
         .generate()
 }

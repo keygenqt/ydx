@@ -1,16 +1,16 @@
-name: rust-axum-server
+name: ydx-server
 
 services:
   # Build
   build:
-    container_name: ras-build
+    container_name: ydx-build
     image: rust:1.93.0-bookworm
     command:
       - /bin/bash
       - -c
       - |
         ################################
-        ## Build project rust-axum
+        ## Build project ydx
         ################################
         cargo build --release
 
@@ -58,7 +58,7 @@ services:
 
   # Db run
   postgres:
-    container_name: ras-postgres
+    container_name: ydx-postgres
     image: postgres:18.1-alpine
     depends_on:
       build:
@@ -78,7 +78,7 @@ services:
 
   # pgAdmin run
   pgadmin:
-    container_name: ras-pgadmin
+    container_name: ydx-pgadmin
     image: dpage/pgadmin4:9.11.0
     depends_on:
       postgres:
@@ -98,7 +98,7 @@ services:
 
   # API server run
   run:
-    container_name: ras-run
+    container_name: ydx-run
     image: rust:1.93.0-bookworm
     depends_on:
       postgres:
@@ -113,12 +113,12 @@ services:
         ################################
         ## Import users to API
         ################################
-        ./rust-axum tools --config application.conf --users /var/project/data/users.json
+        ./ydx tools --config application.conf --users /var/project/data/users.json
 
         ################################
         ## Run API server
         ################################
-        ./rust-axum start --config application.conf
+        ./ydx start --config application.conf
     ports:
       - ${API_PORT}:3000
     working_dir: /var/www/target/release
@@ -134,4 +134,4 @@ networks:
     driver: bridge
 
 volumes:
-  ras-postgres:
+  ydx-postgres:

@@ -1,5 +1,5 @@
 {
-  "name": "rust-wasm",
+  "name": "ydx",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "shared": "file:../../shared/rust/pkg"
+    "core": "file:../../core/pkg"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

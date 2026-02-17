@@ -362,16 +362,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5f179d4e11094a893b82fff208f74d448a7512f99f5a0acbd5c679b705f83ed9"
 
 [[package]]
-name = "shared"
-version = "0.0.1"
-dependencies = [
- "jni",
- "safer-ffi",
- "wasm-bindgen",
- "web-time",
-]
-
-[[package]]
 name = "stabby"
 version = "36.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -687,6 +677,16 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 1.0.109",
+]
+
+[[package]]
+name = "ydx-core"
+version = "0.0.1"
+dependencies = [
+ "jni",
+ "safer-ffi",
+ "wasm-bindgen",
+ "web-time",
 ]
 
 [[package]]

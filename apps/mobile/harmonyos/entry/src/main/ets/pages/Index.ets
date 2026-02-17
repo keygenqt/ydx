@@ -1,10 +1,10 @@
 import { taskpool } from '@kit.ArkTS';
 
-import libshared from 'libshared.so';
+import libcore from 'libcore.so';
 
 @Concurrent
 function runTest(): number {
-  return libshared.shared_performance_test();
+  return libcore.shared_performance_test();
 }
 
 @Entry
@@ -16,7 +16,7 @@ struct Index {
     RelativeContainer() {
       Column({ space: 24 }) {
 
-        Text('HarmonyOS + Rust')
+        Text('YDX')
           .fontSize($r('app.float.page_title'))
           .fontWeight(FontWeight.Bold)
 
