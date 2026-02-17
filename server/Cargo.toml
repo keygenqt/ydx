@@ -1,0 +1,32 @@
+[package]
+name = "rust-axum"
+version = "0.1.0"
+edition = "2024"
+
+[profile.release]
+strip = "symbols"
+lto = true
+panic = "abort"
+incremental = false
+codegen-units = 1
+
+[dependencies]
+axum = { version = "0.8", features = ["macros"] }
+axum-extra = { version = "0.12", features = ["cookie-private"] }
+axum-auth = { version = "0.8", default-features = false, features = ["auth-basic"] }
+time = "0.3.46"
+colored = "3.1.1"
+tokio = { version = "1.49", features = ["full"] }
+clap = { version = "4.5.54", features = ["derive"] }
+clap-cargo = "0.18.3"
+chrono = "0.4.43"
+serde_with = { version = "3.16", features = ["chrono"] }
+diesel = { version = "~2.3", features = ["chrono"] }
+diesel-async = { version = "0.7", features = ["postgres", "bb8", "migrations"] }
+diesel_migrations = "2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.149"
+hocon-rs = "0.1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+argon2 = { version = "0.5", features = ["std"] }

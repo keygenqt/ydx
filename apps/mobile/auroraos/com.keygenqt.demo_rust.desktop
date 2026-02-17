@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Icon=com.keygenqt.demo_rust
+Exec=/usr/bin/com.keygenqt.demo_rust
+Name=Demo Rust
+Name[ru]=Demo Rust
+
+[X-Application]
+Permissions=
+OrganizationName=com.keygenqt
+ApplicationName=demo_rust
+ExecDBus=/usr/bin/com.keygenqt.demo_rust

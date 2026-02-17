@@ -1,0 +1,16 @@
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc"
+rustflags = ["-C", "link-arg=-Wl,--build-id=sha1"]
+
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-C", "link-arg=-Wl,--build-id=sha1"]
+
+# macOS
+[target.aarch64-unknown-linux-ohos]
+linker = "/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/llvm/bin/clang"
+rustflags = [
+  "-C", "link-arg=--sysroot=/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/sysroot",
+  "-C", "link-arg=--target=aarch64-linux-ohos",
+  "-C", "relocation-model=pic",
+  "-C", "link-arg=-D__MUSL__",
+]

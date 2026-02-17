@@ -1,0 +1,12 @@
+{
+  "color": [
+    {
+      "name": "start_window_background",
+      "value": "#000000"
+    },
+    {
+      "name": "carg_background",
+      "value": "#FFA2A2A2"
+    }
+  ]
+}
