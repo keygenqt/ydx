@@ -21,11 +21,3 @@ rustup target add x86_64-linux-android      # for x86_64
 # Build with Gradle
 # The Android plugin automatically connects libraries
 # https://github.com/mozilla/rust-android-gradle
-if [[ "$OSTYPE" == "linux"* ]]; then
-    # @todo
-else
-    cd ../apps/mobile/android && ./gradlew cargoBuild \
-        -Prust.cargoCommand="$HOME/.cargo/bin/cargo" \
-        -Prust.rustcCommand="$HOME/.cargo/bin/rustc" \
-        -Prust.pythonCommand='/opt/homebrew/bin/python3'
-fi
