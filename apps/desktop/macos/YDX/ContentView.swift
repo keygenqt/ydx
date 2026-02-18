@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import CoreYDX
+import YdxMacos
 
 struct ContentView: View {
 
@@ -33,7 +33,7 @@ struct ContentView: View {
             }
             Button(state) {
                 Task {
-                    let value = await shared_performance_test_async()
+                    let value = await performance_test_async()
                     state = "The test was performed: \(value)ms"
                 }
                 state = "Loading..."
@@ -45,10 +45,10 @@ struct ContentView: View {
     }
 }
 
-func shared_performance_test_async() async -> UInt64 {
+func performance_test_async() async -> UInt64 {
     return await withUnsafeContinuation { continuation in
         DispatchQueue.global().async {
-            let result = shared_performance_test()
+            let result = ydx_macos_performance_test()
             continuation.resume(returning: result)
         }
     }

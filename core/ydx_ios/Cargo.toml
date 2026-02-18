@@ -1,0 +1,20 @@
+[package]
+name = "ydx-ios"
+edition = "2024"
+version = "0.0.1"
+
+[lib]
+name = "ydx_ios"
+crate-type = ["lib", "staticlib"]
+
+[dependencies]
+ydx-core = { path = "../ydx_core" }
+safer-ffi = "0.1.13"
+
+# Safer FFI
+[[bin]]
+name = "ydx_ios-headers"
+required-features = ["headers"]
+
+[features]
+headers = ["safer-ffi/headers"]

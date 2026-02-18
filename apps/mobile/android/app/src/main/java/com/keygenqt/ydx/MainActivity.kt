@@ -47,7 +47,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     init {
-        System.loadLibrary("core")
+        System.loadLibrary("ydx_android")
     }
 
     external fun performanceTest(): Long

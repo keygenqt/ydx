@@ -21,13 +21,13 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw';
 import GLib from 'gi://GLib';
 
-const Shared = imports.gi.Shared;
+const YdxLinux = imports.gi.YdxLinux;
 
-export const DemoRustWindow = GObject.registerClass({
-    GTypeName: 'DemoRustWindow',
-    Template: 'resource:///com/keygenqt/DemoRust/window.ui',
+export const YdxWindow = GObject.registerClass({
+    GTypeName: 'YdxWindow',
+    Template: 'resource:///com/keygenqt/ydx/window.ui',
     InternalChildren: ['label', 'IdBtn'],
-}, class DemoRustWindow extends Adw.ApplicationWindow {
+}, class YdxWindow extends Adw.ApplicationWindow {
 
     constructor(application) {
         super({ application });
@@ -38,7 +38,7 @@ export const DemoRustWindow = GObject.registerClass({
         this._IdBtn.connect('clicked', () => {
             // Run function
             GLib.timeout_add(GLib.PRIORITY_DEFAULT, 50, () => {
-                const value = Shared.performance_test();
+                const value = YdxLinux.performance_test();
                 this._IdBtn.label = `The test was performed: ${value}ms`;
                 this._IdBtn.sensitive = true;
                 return GLib.SOURCE_REMOVE;

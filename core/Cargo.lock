@@ -680,13 +680,72 @@ dependencies = [
 ]
 
 [[package]]
-name = "ydx-core"
+name = "ydx-android"
 version = "0.0.1"
 dependencies = [
  "jni",
+ "ydx-core",
+]
+
+[[package]]
+name = "ydx-auroraos"
+version = "0.0.1"
+dependencies = [
  "safer-ffi",
+ "ydx-core",
+]
+
+[[package]]
+name = "ydx-core"
+version = "0.0.1"
+
+[[package]]
+name = "ydx-harmonyos"
+version = "0.0.1"
+dependencies = [
+ "safer-ffi",
+ "ydx-core",
+]
+
+[[package]]
+name = "ydx-ios"
+version = "0.0.1"
+dependencies = [
+ "safer-ffi",
+ "ydx-core",
+]
+
+[[package]]
+name = "ydx-linux"
+version = "0.0.1"
+dependencies = [
+ "safer-ffi",
+ "ydx-core",
+]
+
+[[package]]
+name = "ydx-macos"
+version = "0.0.1"
+dependencies = [
+ "safer-ffi",
+ "ydx-core",
+]
+
+[[package]]
+name = "ydx-wasm"
+version = "0.0.1"
+dependencies = [
  "wasm-bindgen",
  "web-time",
+ "ydx-core",
+]
+
+[[package]]
+name = "ydx-windows"
+version = "0.0.1"
+dependencies = [
+ "safer-ffi",
+ "ydx-core",
 ]
 
 [[package]]
