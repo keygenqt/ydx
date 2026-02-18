@@ -1,7 +1,7 @@
 #include <QtQuick>
 #include <auroraapp.h>
 
-#include "core_ydx.h"
+#include "ydx_core.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     application->setOrganizationName(QStringLiteral("com.keygenqt"));
     application->setApplicationName(QStringLiteral("ydx"));
 
-    qmlRegisterType<CoreYDX>("CoreYDX", 1, 0, "CoreYDX");
+    qmlRegisterType<YdxCore>("YdxCore", 1, 0, "YdxCore");
 
     QScopedPointer<QQuickView> view(Aurora::Application::createView());
     view->setSource(Aurora::Application::pathTo(QStringLiteral("qml/ydx.qml")));

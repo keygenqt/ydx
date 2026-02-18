@@ -12,15 +12,16 @@ members = [
     "ydx_windows",
 ]
 
-[profile.dev]
-strip = true
-lto = true
+# @todo
+# [profile.dev]
+# strip = true
+# lto = true
 
-[profile.release]
-opt-level = 3
-strip = true
-lto = true
-panic = "abort"
+# [profile.release]
+# opt-level = 3
+# strip = true
+# lto = true
+# panic = "abort"
 
 # Cross Aurora OS
 [workspace.metadata.cross.target.x86_64-unknown-linux-gnu]
@@ -28,6 +29,13 @@ image = "ubuntu:23.10"
 pre-build = [
     "sed -i -re 's/([a-z]{2}.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list",
     "apt-get update && apt-get -y install ssh build-essential clang pkg-config",
+]
+
+[workspace.metadata.cross.target.armv7-unknown-linux-gnueabihf]
+image = "ubuntu:23.10"
+pre-build = [
+    "sed -i -re 's/([a-z]{2}.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list",
+    "apt-get update && apt-get -y install ssh build-essential clang pkg-config gcc-arm-linux-gnueabihf",
 ]
 
 [workspace.metadata.cross.target.aarch64-unknown-linux-gnu]

@@ -1,5 +1,7 @@
 @echo off
 
+@REM Build core for application dll
+
 @REM Set root dir
 cd /d "%~dp0..\.." || exit /b 1
 

@@ -1,5 +1,5 @@
 {
-  "name": "libcore.so",
+  "name": "libydx_harmonyos.so",
   "types": "./index.d.ts",
   "version": "1.0.0"
 }

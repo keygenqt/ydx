@@ -1,13 +1,13 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtGraphicalEffects 1.0
-import CoreYDX 1.0
+import YdxCore 1.0
 
 Page {
     objectName: "mainPage"
     allowedOrientations: Orientation.All
 
-    CoreYDX {
+    YdxCore {
         id: core
     }
 

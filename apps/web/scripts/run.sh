@@ -5,38 +5,24 @@
 ############################
 
 # Set root dir
-cd "$( dirname -- "${BASH_SOURCE[0]}"; )/../";
+cd "$( dirname -- "${BASH_SOURCE[0]}"; )/../../../";
 
-# Linux / GJS
-if [[ ! "$OSTYPE" == "linux"* ]]; then
-    echo "Error: OSTYPE not Linux!" >&2
+# Check system
+if [[ ! "$OSTYPE" == "linux"* ]] && [[ ! "$OSTYPE" == "darwin"* ]]; then
+    echo "Error: Unsupported operating system. This script requires Linux or macOS!" >&2
+    echo "Current OSTYPE: $OSTYPE" >&2
     exit 1
 fi
 
-# Check tools
-if [[ -z $(meson --version 2> /dev/null) ]]; then
-    echo "Install tools...".
-    source scripts/tools.sh || exit
-fi
-
 # Build lib
-bash ../../../core/scripts/linux/build.sh
+bash core/scripts/web/build.sh
 
-# Export lib
-export GI_TYPELIB_PATH=$GI_TYPELIB_PATH:$PWD/../../../core/build/linux/x86_64-unknown-linux-gnu
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/../../../core/build/linux/x86_64-unknown-linux-gnu
+# Open dir project
+cd apps/web
 
-# Build application
-FOLDER='build'
-meson setup \
-    -Dbindir=/home/$USER/.local/bin \
-    -Ddatadir=/home/$USER/.local/share \
-    -Dlibdir=/home/$USER/.local/lib \
-    -Dprefix=/home/$USER/.local \
-    $FOLDER
-
-# Install application
-ninja -C $FOLDER install
+# Update dependency
+npm install ../../core/build/web
+npm update
 
 # Run application
-/home/$USER/.local/bin/com.keygenqt.ydx
+npm run dev

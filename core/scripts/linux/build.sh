@@ -5,16 +5,17 @@
 # Set root dir
 cd "$( dirname -- "${BASH_SOURCE[0]}"; )/../../";
 
-# Linux / GJS
+# Check system
 if [[ ! "$OSTYPE" == "linux"* ]]; then
-    echo "Error: OSTYPE not Linux!" >&2
+    echo "Error: Unsupported operating system. This script requires Linux!" >&2
+    echo "Current OSTYPE: $OSTYPE" >&2
     exit 1
 fi
 
 # Check tools
 if [[ -z $(g-ir-compiler --version 2> /dev/null) ]]; then
     echo "Install tools...".
-    source scripts/linux/tools.sh || exit
+    bash scripts/linux/tools.sh || exit
 fi
 
 # Params build
@@ -67,41 +68,3 @@ for target in "${TARGETS[@]}"; do
     g-ir-compiler "$PATH_LIB_OUT/$target/YdxLinux-1.0.gir" \
         -o "$PATH_LIB_OUT/$target/YdxLinux-1.0.typelib"
 done
-
-exit;
-
-# BUILD_DIR="target/$TARGET/$TYPE"
-# BUILD_OUT="build/linux/typelibX64"
-# HEADER="build/headers/libcore.h"
-
-# Rust target
-rustup target add $TARGET
-
-# Run build header
-mkdir -p "$(dirname "$HEADER")"
-cross run --manifest-path core/Cargo.toml --target $TARGET --$TYPE --features headers --bin core-headers
-
-# Fix GTK-Doc warnings
-sed -i '/\/\*\* \\brief/,/\*\//d' $HEADER
-
-# Clear old build
-rm -rf $BUILD_OUT && mkdir -p $BUILD_OUT
-
-# Build typelib
-cross build --manifest-path core/Cargo.toml --target $TARGET --$TYPE
-
-# Copy lib
-cp $BUILD_DIR/*.so $BUILD_OUT
-
-# Build gir
-g-ir-scanner --warn-all \
-             --namespace=Core \
-             --nsversion=1.0 \
-             --library=core \
-             --library-path=$BUILD_OUT \
-             --include=GObject-2.0 \
-             --output=$BUILD_OUT/Core-1.0.gir \
-             "$HEADER" || { exit 1; }
-
-# Build typelib
-g-ir-compiler $BUILD_OUT/Core-1.0.gir -o $BUILD_OUT/Core-1.0.typelib

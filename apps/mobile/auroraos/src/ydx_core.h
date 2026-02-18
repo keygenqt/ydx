@@ -8,14 +8,14 @@
 #include <QObject>
 #include <QtQml>
 
-#include <../../../core/libs/linuxX64/libcore.h>
+#include <../../../core/build/auroraos/x86_64-unknown-linux-gnu/ydx_auroraos.h>
 
-class CoreYDX : public QObject
+class YdxCore : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit CoreYDX(QObject* parent = nullptr);
+    explicit YdxCore(QObject* parent = nullptr);
 
     Q_PROPERTY(QString state MEMBER m_state NOTIFY setState)
     Q_INVOKABLE void performanceTest();

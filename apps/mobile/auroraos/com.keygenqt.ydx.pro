@@ -14,12 +14,12 @@ PKGCONFIG += \
 
 HEADERS += \
     # default path header libs (linuxX64 == linuxArm64)
-    $$PWD/../../../core/libs/linuxX64/libcore.h \
-    src/core_ydx.h \
+    $$PWD/../../../core/build/auroraos/armv7-unknown-linux-gnueabihf/ydx_auroraos.h \
+    src/ydx_core.h \
 
 SOURCES += \
     src/main.cpp \
-    src/core_ydx.cpp \
+    src/ydx_core.cpp \
 
 DISTFILES += \
     rpm/com.keygenqt.ydx.spec \
@@ -32,21 +32,21 @@ TRANSLATIONS += \
 
 # get target name rust
 contains(QMAKE_TARGET.arch, armv7l): {
-    error("Unsupported architecture armv7l")
+    RUST_TARGET = "armv7-unknown-linux-gnueabihf"
 }
 contains(QMAKE_TARGET.arch, aarch64): {
-    RUST_TARGET = "linuxArm64"
+    RUST_TARGET = "aarch64-unknown-linux-gnu"
 }
 contains(QMAKE_TARGET.arch, x86_64): {
-    RUST_TARGET = "linuxX64"
+    RUST_TARGET = "x86_64-unknown-linux-gnu"
 }
 
 # add rust static lib
-INCLUDEPATH += $$PWD/../../../core/libs/$${RUST_TARGET}
-LIBS += -L$$PWD/../../../core/libs/$${RUST_TARGET} -lcore
+INCLUDEPATH += $$PWD/../../../core/build/auroraos/$${RUST_TARGET}
+LIBS += -L$$PWD/../../../core/build/auroraos/$${RUST_TARGET} -lydx_auroraos
 
 # add lib to rpm
-CONFIG += shared
-shared.files = $$PWD/../../../core/libs/$${RUST_TARGET}
-shared.path = /usr/share/$${TARGET}
-INSTALLS += shared
+CONFIG += ydx_auroraos
+ydx_auroraos.files = $$PWD/../../../core/build/auroraos/$${RUST_TARGET}
+ydx_auroraos.path = /usr/share/$${TARGET}
+INSTALLS += ydx_auroraos
