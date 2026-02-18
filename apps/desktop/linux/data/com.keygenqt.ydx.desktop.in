@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=demo-rust
-Exec=com.keygenqt.DemoRust
-Icon=com.keygenqt.DemoRust
+Exec=com.keygenqt.ydx
+Icon=com.keygenqt.ydx
 Terminal=false
 Type=Application
 Categories=Utility;

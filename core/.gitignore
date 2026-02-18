@@ -1,6 +1,6 @@
 /target
+/build
 /pkg
-/libs
 
 # Editor directories and files
 .vscode/*

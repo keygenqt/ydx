@@ -1,5 +1,5 @@
 {
-    "id" : "com.keygenqt.DemoRust",
+    "id" : "com.keygenqt.ydx",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "48",
     "sdk" : "org.gnome.Sdk",
@@ -7,7 +7,7 @@
         "org.freedesktop.Sdk.Extension.node20",
         "org.freedesktop.Sdk.Extension.typescript"
     ],
-    "command" : "com.keygenqt.DemoRust",
+    "command" : "com.keygenqt.ydx",
     "finish-args" : [
         "--share=network",
         "--share=ipc",

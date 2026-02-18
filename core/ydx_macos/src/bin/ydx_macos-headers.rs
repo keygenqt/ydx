@@ -1,3 +1,3 @@
 fn main() -> ::std::io::Result<()> {
-    ::core::generate_headers()
+    ::ydx_macos::generate_headers()
 }

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set root dir
-cd "$(dirname "$(realpath "$0")")"/../ || exit
+cd "$( dirname -- "${BASH_SOURCE[0]}"; )/../";
 
 # Remove old build
 rm -rf libs
@@ -12,9 +12,9 @@ mkdir libs
 # Tools
 cargo install cross --git https://github.com/cross-rs/cross
 cargo install wasm-pack
-if [[ "$OSTYPE" == "linux"* ]]; then
-    sudo apt install libgirepository1.0-dev gobject-introspection libglib2.0-dev
-fi
+# if [[ "$OSTYPE" == "linux"* ]]; then
+#     # sudo apt install libgirepository1.0-dev gobject-introspection libglib2.0-dev
+# fi
 
 ##################################
 ##################################

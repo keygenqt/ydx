@@ -1,8 +1,8 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
-data/com.keygenqt.DemoRust.desktop.in
-data/com.keygenqt.DemoRust.metainfo.xml.in
-data/com.keygenqt.DemoRust.gschema.xml
+data/com.keygenqt.ydx.desktop.in
+data/com.keygenqt.ydx.metainfo.xml.in
+data/com.keygenqt.ydx.gschema.xml
 src/main.js
 src/window.js
 src/window.ui
