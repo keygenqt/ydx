@@ -31,7 +31,7 @@ cargo run --target aarch64-apple-darwin --$TYPE --features headers --bin ydx_ios
 
 # Build cdylib libs
 for target in "${TARGETS[@]}"; do
-    cargo build --target $target --$TYPE -p ydx-ios
+    cargo build --target $target --$TYPE --package ydx-ios
 done
 
 # Build typelib libs

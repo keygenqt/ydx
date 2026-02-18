@@ -43,7 +43,7 @@ done
 
 # Build cdylib libs
 for target in "${TARGETS[@]}"; do
-    cargo build --target $target --$TYPE -p ydx-linux
+    cargo build --target $target --$TYPE --package ydx-linux
 done
 
 # Build typelib libs

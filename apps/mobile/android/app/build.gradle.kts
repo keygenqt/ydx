@@ -50,10 +50,10 @@ android {
 
 extensions.configure(com.nishtahir.CargoExtension::class) {
     module = "../../../../core"
-    libname = "ydx_android"
-    pythonCommand = "-p ydx-harmonyos"
-    targets = listOf("arm", "arm64", "x86_64")
     profile = "release"
+    libname = "ydx_android"
+    targets = listOf("arm", "arm64", "x86_64")
+    extraCargoBuildArguments = listOf("-p", "ydx-android")
 }
 
 tasks.preBuild.configure {
