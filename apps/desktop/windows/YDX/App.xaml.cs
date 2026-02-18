@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace DemoRust
+namespace YDX
 {
     public partial class App : Application {}
 }

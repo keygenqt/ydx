@@ -12,6 +12,7 @@
     <None Remove="images\rust.png" />
     <None Remove="images\windows.png" />
     <None Remove="Native\shared.dll" />
+    <None Remove="Native\ydx_windows.dll" />
     <None Remove="windows.svg" />
   </ItemGroup>
 
@@ -22,9 +23,12 @@
     <Resource Include="images\windows.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Native\shared.dll">
+    <Content Include="Native\ydx_windows.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="BeforeBuild">
+    <Exec Command="call &quot;$(SolutionDir)..\..\..\core\scripts\windows\build.bat&quot;" />
+  </Target>
 </Project>

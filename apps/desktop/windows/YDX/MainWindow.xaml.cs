@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace DemoRust
+namespace YDX
 {
     public partial class MainWindow : Window
     {
@@ -11,7 +11,7 @@ namespace DemoRust
 
         private async void RunTestButton_Click(object sender, RoutedEventArgs e)
         {
-            var task = Task.Run(() => NativeMethods.shared_performance_test());
+            var task = Task.Run(() => NativeMethods.ydx_windows_performance_test());
             RunTestButton.Content = "Loading...";
             RunTestButton.IsEnabled = false;
             try

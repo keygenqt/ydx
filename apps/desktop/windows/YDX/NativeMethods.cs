@@ -1,12 +1,12 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace DemoRust
+namespace YDX
 {
     internal static class NativeMethods
     {
-        private const string DllName = @"Native\shared.dll";
+        private const string DllName = @"Native\ydx_windows.dll";
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern ulong shared_performance_test();
+        public static extern ulong ydx_windows_performance_test();
     }
 }
