@@ -18,6 +18,5 @@ rustup target add i686-linux-android        # for x86
 rustup target add aarch64-linux-android     # for arm64
 rustup target add x86_64-linux-android      # for x86_64
 
-# Build with Gradle
-# The Android plugin automatically connects libraries
+# The Android plugin automatically build connects libraries to application
 # https://github.com/mozilla/rust-android-gradle
