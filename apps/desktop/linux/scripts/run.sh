@@ -1,20 +1,33 @@
 #!/bin/bash
 
-##########################
-## Build meson application
-##########################
+############################
+## Build and Run application
+############################
 
 # Set root dir
-cd "$(dirname "$(realpath "$0")")"/../ || exit
+cd "$( dirname -- "${BASH_SOURCE[0]}"; )/../";
 
-# Tools
-# sudo apt install libglib2.0-dev gettext meson ninja-build
+# Linux / GJS
+if [[ ! "$OSTYPE" == "linux"* ]]; then
+    echo "Error: OSTYPE not Linux!" >&2
+    exit 1
+fi
 
-export GI_TYPELIB_PATH=$GI_TYPELIB_PATH:$PWD/../../shared/rust/libs/typelibX64
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/../../shared/rust/libs/typelibX64
+# Check tools
+if [[ -z $(meson --version 2> /dev/null) ]]; then
+    echo "Install tools...".
+    source scripts/tools.sh || exit
+fi
 
-FOLDER='build-dir'
+# Build lib
+bash ../../../core/scripts/linux/build.sh
 
+# Export lib
+export GI_TYPELIB_PATH=$GI_TYPELIB_PATH:$PWD/../../../core/build/linux/x86_64-unknown-linux-gnu
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/../../../core/build/linux/x86_64-unknown-linux-gnu
+
+# Build application
+FOLDER='build'
 meson setup \
     -Dbindir=/home/$USER/.local/bin \
     -Ddatadir=/home/$USER/.local/share \
@@ -22,6 +35,8 @@ meson setup \
     -Dprefix=/home/$USER/.local \
     $FOLDER
 
+# Install application
 ninja -C $FOLDER install
 
-/home/$USER/.local/bin/com.keygenqt.DemoRust
+# Run application
+/home/$USER/.local/bin/com.keygenqt.ydx

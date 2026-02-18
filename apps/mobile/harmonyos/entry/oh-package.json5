@@ -6,6 +6,6 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "libcore.so": "file:./src/main/cpp/types/core"
+    "libydx_harmonyos.so": "file:./src/main/cpp/types/ydx_harmonyos"
   }
 }

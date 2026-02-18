@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
-  <template class="DemoRustWindow" parent="AdwApplicationWindow">
+  <template class="YdxWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Demo Rust</property>
     <property name="default-width">900</property>
     <property name="default-height">400</property>

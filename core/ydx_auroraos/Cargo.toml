@@ -1,0 +1,20 @@
+[package]
+name = "ydx-auroraos"
+edition = "2024"
+version = "0.0.1"
+
+[lib]
+name = "ydx_auroraos"
+crate-type = ["lib", "staticlib"]
+
+[dependencies]
+ydx-core = { path = "../ydx_core" }
+safer-ffi = "0.1.13"
+
+# Safer FFI
+[[bin]]
+name = "ydx_auroraos-headers"
+required-features = ["headers"]
+
+[features]
+headers = ["safer-ffi/headers"]

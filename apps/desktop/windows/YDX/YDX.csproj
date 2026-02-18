@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="images\rust.png" />
+    <None Remove="images\windows.png" />
+    <None Remove="Native\shared.dll" />
+    <None Remove="Native\ydx_windows.dll" />
+    <None Remove="windows.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\rust.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\windows.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Native\ydx_windows.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="BeforeBuild">
+    <Exec Command="call &quot;$(SolutionDir)..\..\..\core\scripts\windows\build.bat&quot;" />
+  </Target>
+</Project>

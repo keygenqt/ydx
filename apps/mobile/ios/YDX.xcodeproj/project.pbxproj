@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2FD79DDF2F44B67E00EEA403 /* libcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD79DDE2F44B67E00EEA403 /* libcore.a */; };
+		2F52A5702F45F3FC00ECE377 /* libydx_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F52A56F2F45F3FC00ECE377 /* libydx_ios.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F52A56F2F45F3FC00ECE377 /* libydx_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libydx_ios.a; path = "../../../core/build/ios/aarch64-apple-ios-sim/libydx_ios.a"; sourceTree = "<group>"; };
 		2F67B9622F405081009B57C8 /* YDX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YDX.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2FD79DDE2F44B67E00EEA403 /* libcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcore.a; path = ../../../core/libs/iosSimArm64/libcore.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -28,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FD79DDF2F44B67E00EEA403 /* libcore.a in Frameworks */,
+				2F52A5702F45F3FC00ECE377 /* libydx_ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,7 +55,7 @@
 		2FD79DD32F44B16100EEA403 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2FD79DDE2F44B67E00EEA403 /* libcore.a */,
+				2F52A56F2F45F3FC00ECE377 /* libydx_ios.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -277,7 +277,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../../core/libs/iosSimArm64";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../../core/build/ios/aarch64-apple-ios-sim";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.keygenqt.Demo-Rust";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -288,7 +288,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../core/libs/iosSimArm64";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../core/build/ios/aarch64-apple-ios-sim";
 			};
 			name = Debug;
 		};
@@ -310,7 +310,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../../core/libs/iosSimArm64";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../../core/build/ios/aarch64-apple-ios-sim";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.keygenqt.Demo-Rust";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -321,7 +321,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../core/libs/iosSimArm64";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../core/build/ios/aarch64-apple-ios-sim";
 			};
 			name = Release;
 		};

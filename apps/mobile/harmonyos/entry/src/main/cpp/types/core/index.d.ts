@@ -1,1 +1,0 @@
-export const shared_performance_test: () => number;

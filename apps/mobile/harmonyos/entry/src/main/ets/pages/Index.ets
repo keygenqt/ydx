@@ -1,10 +1,10 @@
 import { taskpool } from '@kit.ArkTS';
 
-import libcore from 'libcore.so';
+import ydx_harmonyos from 'libydx_harmonyos.so';
 
 @Concurrent
 function runTest(): number {
-  return libcore.shared_performance_test();
+  return ydx_harmonyos.ydx_harmonyos_performance_test();
 }
 
 @Entry

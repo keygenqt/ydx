@@ -1,32 +1,39 @@
-[package]
-name = "ydx-core"
-edition = "2024"
-version = "0.0.1"
+[workspace]
+resolver = "2"
+exclude = ["submodules"]
+members = [
+    "ydx_android",
+    "ydx_auroraos",
+    "ydx_harmonyos",
+    "ydx_ios",
+    "ydx_linux",
+    "ydx_macos",
+    "ydx_wasm",
+    "ydx_windows",
+]
 
-[lib]
-name = "core"
-crate-type = ["lib", "staticlib", "cdylib"]
+[profile.dev]
+lto = true
 
-[dependencies]
-wasm-bindgen = "0.2"
-web-time = "1.1"
-jni = "0.21.1"
-safer-ffi = "0.1.13"
+[profile.release]
+opt-level = 3
+lto = true
+panic = "abort"
+# strip = true # @todo
 
-# Safer FFI
-[[bin]]
-name = "core-headers"
-required-features = ["headers"]
-
-[features]
-headers = ["safer-ffi/headers"]
-
-# Cross
+# Cross Aurora OS
 [workspace.metadata.cross.target.x86_64-unknown-linux-gnu]
 image = "ubuntu:23.10"
 pre-build = [
     "sed -i -re 's/([a-z]{2}.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list",
     "apt-get update && apt-get -y install ssh build-essential clang pkg-config",
+]
+
+[workspace.metadata.cross.target.armv7-unknown-linux-gnueabihf]
+image = "ubuntu:23.10"
+pre-build = [
+    "sed -i -re 's/([a-z]{2}.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list",
+    "apt-get update && apt-get -y install ssh build-essential clang pkg-config gcc-arm-linux-gnueabihf",
 ]
 
 [workspace.metadata.cross.target.aarch64-unknown-linux-gnu]

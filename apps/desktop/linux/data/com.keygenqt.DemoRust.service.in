@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=com.keygenqt.DemoRust
-Exec=@bindir@/com.keygenqt.DemoRust --gapplication-service

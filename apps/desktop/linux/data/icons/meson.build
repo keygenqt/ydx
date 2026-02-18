@@ -1,4 +1,4 @@
-application_id = 'com.keygenqt.DemoRust'
+application_id = 'com.keygenqt.ydx'
 
 scalable_dir = 'hicolor' / 'scalable' / 'apps'
 install_data(
