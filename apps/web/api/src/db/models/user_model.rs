@@ -25,7 +25,7 @@ pub struct UserModel {
     pub password: Option<String>,
     #[serde(default = "utils::local_time::chrono_time_now")]
     #[serde_as(as = "TimestampMilliSeconds<i64>")]
-    pub create_at: NaiveDateTime,
+    pub created_at: NaiveDateTime,
 }
 
 /// Impl model user entry
@@ -39,7 +39,7 @@ impl UserModel {
             lname: entity.lname.clone(),
             pwd_hash: entity.pwd_hash.clone(),
             password: None,
-            create_at: entity.create_at,
+            created_at: entity.created_at,
         }
     }
 
@@ -50,7 +50,7 @@ impl UserModel {
             fname: self.fname.clone(),
             lname: self.lname.clone(),
             pwd_hash: self.pwd_hash.clone(),
-            create_at: self.create_at,
+            created_at: self.created_at,
         }
     }
 
