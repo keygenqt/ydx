@@ -5,7 +5,7 @@
 ############################
 
 # Set root dir
-cd "$( dirname -- "${BASH_SOURCE[0]}"; )/../../../";
+cd "$( dirname -- "${BASH_SOURCE[0]}"; )/../";
 
 # Check system
 if [[ ! "$OSTYPE" == "linux"* ]] && [[ ! "$OSTYPE" == "darwin"* ]]; then
@@ -15,13 +15,9 @@ if [[ ! "$OSTYPE" == "linux"* ]] && [[ ! "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # Build lib
-bash core/scripts/web/build.sh
-
-# Open dir project
-cd apps/web
+bash ../../../core/scripts/web/build.sh
 
 # Update dependency
-npm install ../../core/build/web
 npm update
 
 # Run application

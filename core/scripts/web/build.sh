@@ -16,10 +16,10 @@ fi
 if [[ -z $(wasm-pack --version 2> /dev/null) ]]; then
     echo "Install tools...".
     if [[ ! "$OSTYPE" == "linux"* ]]; then
-        bash scripts/linux/tools_linux.sh || exit
+        bash scripts/web/tools_linux.sh || exit
     fi
     if [[ ! "$OSTYPE" == "darwin"* ]]; then
-        bash scripts/linux/tools_macos.sh || exit
+        bash scripts/web/tools_macos.sh || exit
     fi
 fi
 
@@ -37,4 +37,7 @@ for target in "${TARGETS[@]}"; do
     wasm-pack build ydx_wasm --target $target --$TYPE
     # Move
     mv ydx_wasm/pkg "$PATH_LIB_OUT/$target"
+    # Copy to app
+    rm -rf ../apps/web/app/src/wasm
+    cp -R "$PATH_LIB_OUT/$target" ../apps/web/app/src/wasm
 done

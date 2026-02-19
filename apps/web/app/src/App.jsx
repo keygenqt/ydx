@@ -4,7 +4,7 @@ import rustLogo from "./assets/rust.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
-import init, { ydx_wasm_performance_test } from "ydx-wasm";
+import init, { ydx_wasm_performance_test } from "./wasm/ydx_wasm.js";
 
 function App() {
   const [data, setData] = useState("Run performance test");
