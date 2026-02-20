@@ -6,10 +6,7 @@ use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use serde_with::{TimestampMilliSeconds, serde_as};
 
-use crate::{
-    db::entities::user_entity::{UserEntity, UserNewEntity},
-    utils::{self, constants},
-};
+use crate::{db::entities::user_entity::{NewUserEntity, UserEntity}, utils::{self, constants}};
 
 /// Model user entry [UserEntity]
 #[serde_as]
@@ -30,26 +27,26 @@ pub struct UserModel {
 
 /// Impl model user entry
 impl UserModel {
-    /// Convert to [UserModel]
+    /// Convert from database entity to model
     pub fn from_entity(entity: &UserEntity) -> Self {
         Self {
             id: Some(entity.id),
             email: entity.email.clone(),
             fname: entity.fname.clone(),
             lname: entity.lname.clone(),
-            pwd_hash: entity.pwd_hash.clone(),
+            pwd_hash: Some(entity.pwd_hash.clone()),
             password: None,
             created_at: entity.created_at,
         }
     }
 
-    /// Convert to [UserNewEntity]
-    pub fn as_new_entity(&self) -> UserNewEntity {
-        UserNewEntity {
+    /// Convert to new entity for database insertion
+    pub fn to_new_entity(&self) -> NewUserEntity {
+        NewUserEntity {
             email: self.email.clone(),
             fname: self.fname.clone(),
             lname: self.lname.clone(),
-            pwd_hash: self.pwd_hash.clone(),
+            pwd_hash: self.pwd_hash.clone().expect("password hash is required for creating new user"),
             created_at: self.created_at,
         }
     }

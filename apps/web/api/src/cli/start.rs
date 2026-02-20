@@ -1,8 +1,11 @@
+use axum::{ServiceExt, extract::Request};
 use clap::Args;
 use std::{fs, path::PathBuf};
+use tower::ServiceBuilder;
+use tower_http::normalize_path::NormalizePathLayer;
 
 use crate::{
-    app::{app_config::AppConfig, app_tracing::configure_tracing},
+    app::{app_config::AppConfig, app_tracing::configure_tracing, configure_uploads},
     exit_error, route,
     utils::path::get_relative_path_canonicalize,
 };
@@ -28,10 +31,12 @@ pub async fn run(arg: StartArgs) {
                 Ok(result) => result,
                 Err(_) => exit_error!("error read config"),
             };
+            // check uploads dirs
+            configure_uploads(&config);
             // register tracing
             configure_tracing(&config);
             // init tcp listener
-            let route = format!("{}:{}", config.deployment.host, config.deployment.port);
+            let route: String = format!("{}:{}", config.deployment.host, config.deployment.port);
             let listener = tokio::net::TcpListener::bind(route).await.unwrap();
             // print start message
             if config.server.development {
@@ -45,8 +50,16 @@ pub async fn run(arg: StartArgs) {
                     listener.local_addr().unwrap()
                 )
             }
+            // get router
+            let router = route::configure_route(&config).await;
+            // route normalize: /foo/ is redirected to /foo
+            let app = ServiceBuilder::new()
+                .layer(NormalizePathLayer::trim_trailing_slash())
+                .service(router);
+            // service normalize
+            let service = ServiceExt::<Request>::into_make_service(app);
             // start server
-            let _ = axum::serve(listener, route::configure_route(&config).await).await;
+            axum::serve(listener, service).await.unwrap();
         }
         None => exit_error!("not found path to config"),
     }

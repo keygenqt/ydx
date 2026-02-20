@@ -19,14 +19,17 @@ mod user;
 
 /// Init Axum server
 pub async fn configure_route(config: &AppConfig) -> Router {
+    // Route state
     let state = AppState {
         jkey: Arc::new(Key::from(config.server.secret.as_bytes())),
         conf: Arc::new(config.clone()),
         auth: Arc::new(None),
         pool: Arc::new(configure_db(config).await),
     };
+    // Route config
     Router::new()
         .route("/", get(guest::home::index))
+        .route("/api", get(guest::home::index))
         .route("/api/auth", post(guest::auth::basic))
         .route("/api/logout", delete(guest::auth::logout))
         .route("/api/users", get(user::users::search))

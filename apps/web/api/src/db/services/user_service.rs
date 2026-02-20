@@ -2,12 +2,11 @@ use crate::{
     app::app_response::AppResponse,
     db::{
         db_handle_error,
-        entities::user_entity::{UserEntity, users_axum},
-        models::user_model::UserModel,
+        entities::user_entity::UserEntity,
+        models::user_model::UserModel, schema::{self, users::dsl},
     },
 };
 
-use crate::db::entities::user_entity::users_axum::dsl;
 use diesel::prelude::*;
 use diesel_async::{AsyncPgConnection, RunQueryDsl, pooled_connection::bb8::PooledConnection};
 
@@ -67,8 +66,8 @@ impl UserService {
         mut conn: PooledConnection<'static, AsyncPgConnection>,
         user: &UserModel,
     ) -> Result<UserModel, AppResponse> {
-        let entity = user.as_new_entity();
-        let result = diesel::insert_into(users_axum::table)
+        let entity = user.to_new_entity();
+        let result = diesel::insert_into(schema::users::table)
             .values(entity)
             .returning(UserEntity::as_returning())
             .get_result(&mut conn)

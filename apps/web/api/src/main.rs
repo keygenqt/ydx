@@ -1,8 +1,8 @@
 use clap::{CommandFactory, Parser};
 
 use crate::{
-    app::app_info,
     cli::{AppCLI, Commands},
+    utils::constants,
 };
 
 mod app;
@@ -15,7 +15,7 @@ mod utils;
 #[tokio::main]
 async fn main() {
     if AppCLI::parse().version {
-        println!("Version: {}", app_info::version());
+        println!("Version: {}", constants::APP_VERSION);
         return;
     }
     match AppCLI::parse().command {

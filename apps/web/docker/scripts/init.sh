@@ -28,6 +28,7 @@ server {
 deployment {
     host = 0.0.0.0
     port = $API_PORT
+    workdir = "/var/www"
 }
 postgres {
     url = "postgres://postgres:5432/${POSTGRES_DB}"

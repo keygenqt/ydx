@@ -11,6 +11,7 @@ use crate::app::{app_config::AppConfig, app_response::AppResponse};
 pub mod entities;
 pub mod models;
 pub mod services;
+pub mod schema;
 
 pub const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations/");
 

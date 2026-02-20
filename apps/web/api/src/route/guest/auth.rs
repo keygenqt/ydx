@@ -2,9 +2,7 @@ use axum_auth::AuthBasic;
 use axum_extra::extract::{PrivateCookieJar, cookie::Cookie};
 
 use crate::{
-    app::{app_response::AppResponse, app_state::Db},
-    db::{models::user_auth::UserAuth, services::user_service::UserService},
-    utils::{constants, local_time},
+    app::{app_response::AppResponse, app_state::Db, app_user::AppUser}, db::services::user_service::UserService, utils::{constants, local_time}
 };
 
 /// POST basic auth cookie
@@ -25,7 +23,7 @@ pub async fn basic(
         return Err(AppResponse::new_403());
     }
     // get value string
-    let model_json = serde_json::to_string(&UserAuth {
+    let model_json = serde_json::to_string(&AppUser {
         id: result.id.unwrap(),
         email: result.email,
     })
@@ -35,6 +33,9 @@ pub async fn basic(
     token_hash.set_http_only(true);
     token_hash.set_path("/");
     token_hash.set_expires(local_time::cookie_time_expires());
+
+    // @todo token db
+
     // result
     Ok((jar.add(token_hash), AppResponse::new_200()))
 }

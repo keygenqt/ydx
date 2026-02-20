@@ -6,8 +6,7 @@ use crate::{
         app_json::AppJson,
         app_response::AppResponse,
         app_state::{AuthModel, Db},
-    },
-    db::{models::user_model::UserModel, services::user_service::UserService},
+    }, db::{models::user_model::UserModel, services::user_service::UserService},
 };
 
 /// Query params

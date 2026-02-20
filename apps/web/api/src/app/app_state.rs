@@ -8,8 +8,8 @@ use std::sync::Arc;
 
 use crate::app::app_config::AppConfig;
 use crate::app::app_response::AppResponse;
+use crate::app::app_user::AppUser;
 use crate::db::db_handle_internal_error;
-use crate::db::models::user_auth::UserAuth;
 use crate::db::services::user_service::UserService;
 use crate::utils::constants;
 
@@ -17,7 +17,7 @@ use crate::utils::constants;
 pub struct AppState {
     pub jkey: Arc<Key>,
     pub conf: Arc<AppConfig>,
-    pub auth: Arc<Option<UserAuth>>,
+    pub auth: Arc<Option<AppUser>>,
     pub pool: Arc<bb8::Pool<AsyncPgConnection>>,
 }
 
@@ -45,7 +45,7 @@ impl FromRequestParts<AppState> for Config {
 }
 
 /// Impl for route UserModel
-pub struct AuthModel(pub Arc<Option<UserAuth>>);
+pub struct AuthModel(pub Arc<Option<AppUser>>);
 
 impl FromRequestParts<AppState> for AuthModel {
     type Rejection = AppResponse;
@@ -63,7 +63,7 @@ impl FromRequestParts<AppState> for AuthModel {
         };
         // get auth model
         let user_auth = if let Some(data) = jar.get(constants::SESSION_NAME) {
-            match serde_json::from_str::<UserAuth>(data.value()) {
+            match serde_json::from_str::<AppUser>(data.value()) {
                 Ok(model) => Some(model),
                 Err(_) => None,
             }

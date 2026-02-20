@@ -1,8 +1,23 @@
 use clap::builder::Styles;
 use colored::Colorize;
+use serde::{Deserialize, Serialize};
 
-pub fn version() -> &'static str {
-    "0.0.1"
+use crate::utils::constants;
+
+/// AppInfo response
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct AppInfo {
+    code: u16,
+    pub version: String,
+}
+
+impl Default for AppInfo {
+    fn default() -> Self {
+        Self {
+            code: 200,
+            version: constants::APP_VERSION.to_string(),
+        }
+    }
 }
 
 pub fn about() -> String {

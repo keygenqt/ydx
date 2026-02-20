@@ -1,43 +1,41 @@
-use chrono::NaiveDateTime;
 use diesel::prelude::*;
-use serde::{Deserialize, Serialize};
+use chrono::NaiveDateTime;
+use serde::{Serialize, Deserialize};
 use serde_with::{TimestampMilliSeconds, serde_as};
 
-// Table users
-diesel::table! {
-    users_axum (id) {
-        id -> Integer,
-        email -> VarChar,
-        fname -> VarChar,
-        lname -> VarChar,
-        pwd_hash -> Nullable<VarChar>,
-        created_at -> Timestamp,
-    }
-}
+use crate::db::schema;
 
-/// Entity
 #[serde_as]
-#[derive(Serialize, HasQuery)]
-#[diesel(table_name = users_axum)]
+#[derive(Debug, Serialize, Deserialize, HasQuery)]
+#[diesel(table_name = schema::users)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct UserEntity {
     pub id: i32,
     pub email: String,
     pub fname: String,
     pub lname: String,
-    pub pwd_hash: Option<String>,
+    pub pwd_hash: String,
     #[serde_as(as = "TimestampMilliSeconds<i64>")]
     pub created_at: NaiveDateTime,
 }
 
-/// Entity new
 #[serde_as]
-#[derive(Deserialize, Insertable, Clone, Debug)]
-#[diesel(table_name = users_axum)]
-pub struct UserNewEntity {
+#[derive(Debug, Insertable, Serialize, Deserialize)]
+#[diesel(table_name = schema::users)]
+pub struct NewUserEntity {
     pub email: String,
     pub fname: String,
     pub lname: String,
-    pub pwd_hash: Option<String>,
+    pub pwd_hash: String,
     #[serde_as(as = "TimestampMilliSeconds<i64>")]
     pub created_at: NaiveDateTime,
+}
+
+#[derive(Debug, AsChangeset, Serialize, Deserialize)]
+#[diesel(table_name = schema::users)]
+pub struct UpdateUserEntity {
+    pub email: Option<String>,
+    pub fname: Option<String>,
+    pub lname: Option<String>,
+    pub pwd_hash: Option<String>,
 }

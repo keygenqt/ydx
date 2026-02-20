@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use serde::Deserialize;
 
 /// Common configuration
@@ -20,6 +22,7 @@ pub struct ServerConfig {
 pub struct DeploymentConfig {
     pub host: String,
     pub port: i32,
+    pub workdir: PathBuf,
 }
 
 /// Connect postgres params
