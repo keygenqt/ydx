@@ -2,7 +2,11 @@ use axum_auth::AuthBasic;
 use axum_extra::extract::{PrivateCookieJar, cookie::Cookie};
 
 use crate::{
-    api::api_response::ApiResponse, app::app_user::AppUser, ctx::ctx_database::CtxDatabase, db::services::user_service::UserService, utils::{constants, local_time}
+    api::api_response::ApiResponse,
+    app::app_user::AppUser,
+    ctx::ctx_database::CtxDatabase,
+    db::services::user_service::UserService,
+    utils::{constants, local_time},
 };
 
 /// POST - /api/auth

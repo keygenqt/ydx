@@ -1,10 +1,11 @@
 use crate::{
-    api::api_response::ApiResponse, db::{
+    api::api_response::ApiResponse,
+    db::{
         db_handle_error,
         entities::user_entity::UserEntity,
         models::user_model::UserModel,
         schema::{self, users::dsl},
-    }
+    },
 };
 
 use diesel::prelude::*;

@@ -1,7 +1,9 @@
 use axum::extract::Path;
 
 use crate::{
-    api::{api_json::ApiJson, api_response::ApiResponse}, ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser}, db::{models::set_model::SetModel, services::set_service::SetService}
+    api::{api_json::ApiJson, api_response::ApiResponse},
+    ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser},
+    db::{models::set_model::SetModel, services::set_service::SetService},
 };
 
 /// GET - find by ID

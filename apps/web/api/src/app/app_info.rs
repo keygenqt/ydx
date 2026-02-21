@@ -17,7 +17,10 @@ impl Default for AppInfo {
         Self {
             code: 200,
             version: constants::APP_VERSION.to_string(),
-            description: format!("{} - Axum REST API Demo Application.", "Rust Axum".bright_green().bold())
+            description: format!(
+                "{} - Axum REST API Demo Application.",
+                "Rust Axum".bright_green().bold()
+            ),
         }
     }
 }

@@ -6,9 +6,9 @@ use std::sync::Arc;
 
 use crate::api::api_response::ApiResponse;
 use crate::app::app_user::AppUser;
+use crate::ctx::AppContext;
 use crate::db::db_handle_internal_error;
 use crate::db::services::user_service::UserService;
-use crate::ctx::AppContext;
 use crate::utils::constants;
 
 /// Impl for route UserModel

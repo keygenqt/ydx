@@ -1,8 +1,9 @@
 use crate::{
-    api::api_response::ApiResponse, db::{
+    api::api_response::ApiResponse,
+    db::{
         db_handle_error, entities::set_settings_entity::SetSettingsEntity,
         models::set_settings_model::SetSettingsModel,
-    }
+    },
 };
 
 use diesel::prelude::*;

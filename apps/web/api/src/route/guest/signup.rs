@@ -6,7 +6,9 @@ use serde::Deserialize;
 use validator::Validate;
 
 use crate::{
-    api::{api_json::ApiJson, api_response::ApiResponse, api_validate_form::ApiValidatedForm}, ctx::ctx_database::CtxDatabase, db::models::token_model::TokenModel
+    api::{api_json::ApiJson, api_response::ApiResponse, api_validate_form::ApiValidatedForm},
+    ctx::ctx_database::CtxDatabase,
+    db::models::token_model::TokenModel,
 };
 
 static PASSWORD_REGEX: LazyLock<Regex> = LazyLock::new(|| {
@@ -35,7 +37,6 @@ pub async fn reg_user(
     CtxDatabase(conn): CtxDatabase,
     ApiValidatedForm(params): ApiValidatedForm<RegUserParams>,
 ) -> Result<ApiJson<TokenModel>, ApiResponse> {
-
     // @todo - create user
 
     // result

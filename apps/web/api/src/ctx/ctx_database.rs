@@ -4,8 +4,8 @@ use diesel_async::AsyncPgConnection;
 use diesel_async::pooled_connection::bb8;
 
 use crate::api::api_response::ApiResponse;
-use crate::db::db_handle_internal_error;
 use crate::ctx::AppContext;
+use crate::db::db_handle_internal_error;
 
 /// Impl for route AsyncPgConnection
 pub struct CtxDatabase(pub bb8::PooledConnection<'static, AsyncPgConnection>);

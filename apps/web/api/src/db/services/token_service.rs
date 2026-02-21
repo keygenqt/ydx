@@ -1,5 +1,6 @@
 use crate::{
-    api::api_response::ApiResponse, db::{db_handle_error, entities::token_entity::TokenEntity, models::token_model::TokenModel}
+    api::api_response::ApiResponse,
+    db::{db_handle_error, entities::token_entity::TokenEntity, models::token_model::TokenModel},
 };
 
 use diesel::prelude::*;
