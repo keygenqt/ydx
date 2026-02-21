@@ -1,9 +1,9 @@
 use diesel::prelude::*;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use crate::db::{entities::set_entity::SortCardsEntity, schema};
 
-#[derive(Debug, Queryable, Selectable, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, HasQuery)]
 #[diesel(table_name = schema::sets_settings)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct SetSettingsEntity {

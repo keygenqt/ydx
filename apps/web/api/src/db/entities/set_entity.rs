@@ -1,12 +1,17 @@
-use diesel::{deserialize::{self, FromSql, FromSqlRow}, expression::AsExpression, pg::{Pg, PgValue}, prelude::*};
 use chrono::NaiveDateTime;
-use serde::{Serialize, Deserialize};
 use diesel::serialize::{self, IsNull, Output, ToSql};
+use diesel::{
+    deserialize::{self, FromSql, FromSqlRow},
+    expression::AsExpression,
+    pg::{Pg, PgValue},
+    prelude::*,
+};
+use serde::{Deserialize, Serialize};
 use std::io::Write;
 
 use crate::db::schema;
 
-#[derive(Debug, Queryable, Selectable, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, HasQuery)]
 #[diesel(table_name = schema::sets)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct SetEntity {

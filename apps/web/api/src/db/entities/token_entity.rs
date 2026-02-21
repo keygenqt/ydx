@@ -1,10 +1,10 @@
-use diesel::prelude::*;
 use chrono::NaiveDateTime;
-use serde::{Serialize, Deserialize};
+use diesel::prelude::*;
+use serde::{Deserialize, Serialize};
 
 use crate::db::schema;
 
-#[derive(Debug, Queryable, Selectable, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, HasQuery)]
 #[diesel(table_name = schema::tokens)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct TokenEntity {

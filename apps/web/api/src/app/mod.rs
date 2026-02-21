@@ -5,6 +5,7 @@ pub mod app_response;
 pub mod app_state;
 pub mod app_tracing;
 pub mod app_user;
+pub mod app_validate;
 
 use std::fs;
 

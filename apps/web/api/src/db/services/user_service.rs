@@ -3,7 +3,8 @@ use crate::{
     db::{
         db_handle_error,
         entities::user_entity::UserEntity,
-        models::user_model::UserModel, schema::{self, users::dsl},
+        models::user_model::UserModel,
+        schema::{self, users::dsl},
     },
 };
 

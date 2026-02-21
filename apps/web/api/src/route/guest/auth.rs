@@ -2,11 +2,12 @@ use axum_auth::AuthBasic;
 use axum_extra::extract::{PrivateCookieJar, cookie::Cookie};
 
 use crate::{
-    app::{app_response::AppResponse, app_state::Db, app_user::AppUser}, db::services::user_service::UserService, utils::{constants, local_time}
+    app::{app_response::AppResponse, app_state::Db, app_user::AppUser},
+    db::services::user_service::UserService,
+    utils::{constants, local_time},
 };
 
-/// POST basic auth cookie
-/// /api/auth
+/// POST - /api/auth
 pub async fn basic(
     jar: PrivateCookieJar,
     Db(conn): Db,
@@ -38,11 +39,4 @@ pub async fn basic(
 
     // result
     Ok((jar.add(token_hash), AppResponse::new_200()))
-}
-
-/// DELETE logout cookie
-/// /api/logout
-pub async fn logout(jar: PrivateCookieJar) -> (PrivateCookieJar, AppResponse) {
-    let cookie = Cookie::build(constants::SESSION_NAME).path("/");
-    (jar.remove(cookie), AppResponse::new_200())
 }

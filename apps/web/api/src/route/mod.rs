@@ -28,12 +28,15 @@ pub async fn configure_route(config: &AppConfig) -> Router {
     };
     // Route config
     Router::new()
-        .route("/", get(guest::home::index))
-        .route("/api", get(guest::home::index))
+        .route("/", get(guest::home::app_info))
+        .route("/api", get(guest::home::app_info))
         .route("/api/auth", post(guest::auth::basic))
-        .route("/api/logout", delete(guest::auth::logout))
-        .route("/api/users", get(user::users::search))
+        .route("/api/logout", delete(guest::logout::clear_session))
+        .route("/api/signup", post(guest::signup::reg_user))
+        .route("/api/cards/{id}", get(user::cards::get_by_id))
+        .route("/api/sets/{id}", get(user::sets::get_by_id))
         .route("/api/users/{id}", get(user::users::get_by_id))
+        // configure
         .with_state(state)
         .layer(from_fn(log_app_errors))
         .fallback(handle_404)

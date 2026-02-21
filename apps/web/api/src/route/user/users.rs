@@ -1,37 +1,15 @@
-use axum::extract::{Path, Query};
-use serde::Deserialize;
+use axum::extract::Path;
 
 use crate::{
     app::{
         app_json::AppJson,
         app_response::AppResponse,
         app_state::{AuthModel, Db},
-    }, db::{models::user_model::UserModel, services::user_service::UserService},
+    },
+    db::{models::user_model::UserModel, services::user_service::UserService},
 };
 
-/// Query params
-#[derive(Deserialize)]
-pub struct SearchParams {
-    fname: Option<String>,
-    lname: Option<String>,
-}
-
-/// GET find by fname and lname
-/// /api/users
-pub async fn search(
-    AuthModel(user): AuthModel,
-    Db(conn): Db,
-    Query(search): Query<SearchParams>,
-) -> Result<AppJson<Vec<UserModel>>, AppResponse> {
-    if user.is_some() {
-        let result = UserService::search(conn, search.fname, search.lname).await?;
-        Ok(AppJson(result))
-    } else {
-        Err(AppResponse::new_403())
-    }
-}
-
-/// GET find by user ID
+/// GET - find by ID
 /// /api/users/{id}
 pub async fn get_by_id(
     AuthModel(user): AuthModel,

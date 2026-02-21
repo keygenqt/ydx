@@ -66,9 +66,11 @@ diesel::table! {
         #[max_length = 255]
         email -> Varchar,
         #[max_length = 255]
-        fname -> Varchar,
+        icon -> Nullable<Varchar>,
         #[max_length = 255]
-        lname -> Varchar,
+        fname -> Nullable<Varchar>,
+        #[max_length = 255]
+        lname -> Nullable<Varchar>,
         #[max_length = 255]
         pwd_hash -> Varchar,
         created_at -> Timestamp,

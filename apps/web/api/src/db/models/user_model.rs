@@ -6,16 +6,20 @@ use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use serde_with::{TimestampMilliSeconds, serde_as};
 
-use crate::{db::entities::user_entity::{NewUserEntity, UserEntity}, utils::{self, constants}};
+use crate::{
+    db::entities::user_entity::{NewUserEntity, UserEntity},
+    utils::{self, constants},
+};
 
-/// Model user entry [UserEntity]
+/// Model entry [UserEntity]
 #[serde_as]
 #[derive(Serialize, Deserialize, Debug)]
 pub struct UserModel {
     pub id: Option<i32>,
     pub email: String,
-    pub fname: String,
-    pub lname: String,
+    pub icon: Option<String>,
+    pub fname: Option<String>,
+    pub lname: Option<String>,
     #[serde(skip_serializing)]
     pub pwd_hash: Option<String>,
     #[serde(skip_serializing)]
@@ -25,13 +29,14 @@ pub struct UserModel {
     pub created_at: NaiveDateTime,
 }
 
-/// Impl model user entry
+/// Impl model entry
 impl UserModel {
     /// Convert from database entity to model
     pub fn from_entity(entity: &UserEntity) -> Self {
         Self {
             id: Some(entity.id),
             email: entity.email.clone(),
+            icon: entity.icon.clone(),
             fname: entity.fname.clone(),
             lname: entity.lname.clone(),
             pwd_hash: Some(entity.pwd_hash.clone()),
@@ -44,9 +49,13 @@ impl UserModel {
     pub fn to_new_entity(&self) -> NewUserEntity {
         NewUserEntity {
             email: self.email.clone(),
+            icon: self.icon.clone(),
             fname: self.fname.clone(),
             lname: self.lname.clone(),
-            pwd_hash: self.pwd_hash.clone().expect("password hash is required for creating new user"),
+            pwd_hash: self
+                .pwd_hash
+                .clone()
+                .expect("password hash is required for creating new user"),
             created_at: self.created_at,
         }
     }

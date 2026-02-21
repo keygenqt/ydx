@@ -1,6 +1,6 @@
-use diesel::prelude::*;
 use chrono::NaiveDateTime;
-use serde::{Serialize, Deserialize};
+use diesel::prelude::*;
+use serde::{Deserialize, Serialize};
 use serde_with::{TimestampMilliSeconds, serde_as};
 
 use crate::db::schema;
@@ -12,8 +12,9 @@ use crate::db::schema;
 pub struct UserEntity {
     pub id: i32,
     pub email: String,
-    pub fname: String,
-    pub lname: String,
+    pub icon: Option<String>,
+    pub fname: Option<String>,
+    pub lname: Option<String>,
     pub pwd_hash: String,
     #[serde_as(as = "TimestampMilliSeconds<i64>")]
     pub created_at: NaiveDateTime,
@@ -24,8 +25,9 @@ pub struct UserEntity {
 #[diesel(table_name = schema::users)]
 pub struct NewUserEntity {
     pub email: String,
-    pub fname: String,
-    pub lname: String,
+    pub icon: Option<String>,
+    pub fname: Option<String>,
+    pub lname: Option<String>,
     pub pwd_hash: String,
     #[serde_as(as = "TimestampMilliSeconds<i64>")]
     pub created_at: NaiveDateTime,
@@ -35,6 +37,7 @@ pub struct NewUserEntity {
 #[diesel(table_name = schema::users)]
 pub struct UpdateUserEntity {
     pub email: Option<String>,
+    pub icon: Option<String>,
     pub fname: Option<String>,
     pub lname: Option<String>,
     pub pwd_hash: Option<String>,

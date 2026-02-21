@@ -1,4 +1,3 @@
-use axum::http::StatusCode;
 use diesel::result::Error;
 use diesel_async::{
     AsyncMigrationHarness, AsyncPgConnection,
@@ -10,8 +9,8 @@ use crate::app::{app_config::AppConfig, app_response::AppResponse};
 
 pub mod entities;
 pub mod models;
-pub mod services;
 pub mod schema;
+pub mod services;
 
 pub const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations/");
 
@@ -37,13 +36,13 @@ pub async fn configure_db(config: &AppConfig) -> bb8::Pool<AsyncPgConnection> {
 
 // Handle INTERNAL_SERVER_ERROR db to response
 pub fn db_handle_internal_error<E: std::error::Error>(err: E) -> AppResponse {
-    AppResponse::new(StatusCode::INTERNAL_SERVER_ERROR, err.to_string())
+    AppResponse::new_500().with_message(&err.to_string())
 }
 
 // Handle any error db to response
 pub fn db_handle_error(err: Error) -> AppResponse {
     match err {
-        Error::NotFound => AppResponse::new(StatusCode::NOT_FOUND, err.to_string()),
-        _ => AppResponse::new(StatusCode::INTERNAL_SERVER_ERROR, err.to_string()),
+        Error::NotFound => AppResponse::new_404().with_message(&err.to_string()),
+        _ => AppResponse::new_500().with_message(&err.to_string()),
     }
 }
