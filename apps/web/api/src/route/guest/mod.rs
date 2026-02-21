@@ -1,4 +1,4 @@
-pub mod auth;
+pub mod signin;
 pub mod home;
-pub mod logout;
+pub mod signout;
 pub mod signup;

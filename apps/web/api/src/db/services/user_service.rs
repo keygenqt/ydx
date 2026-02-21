@@ -1,11 +1,10 @@
 use crate::{
-    app::app_response::AppResponse,
-    db::{
+    api::api_response::ApiResponse, db::{
         db_handle_error,
         entities::user_entity::UserEntity,
         models::user_model::UserModel,
         schema::{self, users::dsl},
-    },
+    }
 };
 
 use diesel::prelude::*;
@@ -20,7 +19,7 @@ impl UserService {
         mut conn: PooledConnection<'static, AsyncPgConnection>,
         fname: Option<String>,
         lname: Option<String>,
-    ) -> Result<Vec<UserModel>, AppResponse> {
+    ) -> Result<Vec<UserModel>, ApiResponse> {
         if fname.is_none() && lname.is_none() {
             return Ok(vec![]);
         }
@@ -40,7 +39,7 @@ impl UserService {
     pub async fn find_by_id(
         mut conn: PooledConnection<'static, AsyncPgConnection>,
         id: i32,
-    ) -> Result<UserModel, AppResponse> {
+    ) -> Result<UserModel, ApiResponse> {
         let result = UserEntity::query()
             .find(id)
             .first(&mut conn)
@@ -53,7 +52,7 @@ impl UserService {
     pub async fn find_by_email(
         mut conn: PooledConnection<'static, AsyncPgConnection>,
         email: String,
-    ) -> Result<UserModel, AppResponse> {
+    ) -> Result<UserModel, ApiResponse> {
         let result: UserEntity = UserEntity::query()
             .filter(dsl::email.eq(email))
             .first(&mut conn)
@@ -66,7 +65,7 @@ impl UserService {
     pub async fn insert(
         mut conn: PooledConnection<'static, AsyncPgConnection>,
         user: &UserModel,
-    ) -> Result<UserModel, AppResponse> {
+    ) -> Result<UserModel, ApiResponse> {
         let entity = user.to_new_entity();
         let result = diesel::insert_into(schema::users::table)
             .values(entity)

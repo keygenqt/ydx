@@ -1,6 +1,5 @@
 use crate::{
-    app::app_response::AppResponse,
-    db::{db_handle_error, entities::set_entity::SetEntity, models::set_model::SetModel},
+    api::api_response::ApiResponse, db::{db_handle_error, entities::set_entity::SetEntity, models::set_model::SetModel}
 };
 
 use diesel::prelude::*;
@@ -14,7 +13,7 @@ impl SetService {
     pub async fn find_by_id(
         mut conn: PooledConnection<'static, AsyncPgConnection>,
         id: i32,
-    ) -> Result<SetModel, AppResponse> {
+    ) -> Result<SetModel, ApiResponse> {
         let result = SetEntity::query()
             .find(id)
             .first(&mut conn)

@@ -1,25 +1,20 @@
 use axum::extract::Path;
 
 use crate::{
-    app::{
-        app_json::AppJson,
-        app_response::AppResponse,
-        app_state::{AuthModel, Db},
-    },
-    db::{models::user_model::UserModel, services::user_service::UserService},
+    api::{api_json::ApiJson, api_response::ApiResponse}, ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser}, db::{models::user_model::UserModel, services::user_service::UserService}
 };
 
 /// GET - find by ID
 /// /api/users/{id}
 pub async fn get_by_id(
-    AuthModel(user): AuthModel,
-    Db(conn): Db,
+    CtxUser(user): CtxUser,
+    CtxDatabase(conn): CtxDatabase,
     Path(id): Path<i32>,
-) -> Result<AppJson<UserModel>, AppResponse> {
+) -> Result<ApiJson<UserModel>, ApiResponse> {
     if user.is_some() {
         let result = UserService::find_by_id(conn, id).await?;
-        Ok(AppJson(result))
+        Ok(ApiJson(result))
     } else {
-        Err(AppResponse::new_403())
+        Err(ApiResponse::new_403())
     }
 }

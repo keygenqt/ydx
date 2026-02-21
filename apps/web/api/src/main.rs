@@ -5,8 +5,10 @@ use crate::{
     utils::constants,
 };
 
+mod api;
 mod app;
 mod cli;
+mod ctx;
 mod db;
 mod route;
 mod utils;

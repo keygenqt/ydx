@@ -2,26 +2,24 @@ use axum_auth::AuthBasic;
 use axum_extra::extract::{PrivateCookieJar, cookie::Cookie};
 
 use crate::{
-    app::{app_response::AppResponse, app_state::Db, app_user::AppUser},
-    db::services::user_service::UserService,
-    utils::{constants, local_time},
+    api::api_response::ApiResponse, app::app_user::AppUser, ctx::ctx_database::CtxDatabase, db::services::user_service::UserService, utils::{constants, local_time}
 };
 
 /// POST - /api/auth
 pub async fn basic(
     jar: PrivateCookieJar,
-    Db(conn): Db,
+    CtxDatabase(conn): CtxDatabase,
     AuthBasic((id, password)): AuthBasic,
-) -> Result<(PrivateCookieJar, AppResponse), AppResponse> {
+) -> Result<(PrivateCookieJar, ApiResponse), ApiResponse> {
     // find user
     let result = UserService::find_by_email(conn, id).await?;
     // check exist pass
     if password.is_none() {
-        return Err(AppResponse::new_403());
+        return Err(ApiResponse::new_403());
     }
     // argon2 validate pass
     if !result.password_valid(&password.unwrap()) {
-        return Err(AppResponse::new_403());
+        return Err(ApiResponse::new_403());
     }
     // get value string
     let model_json = serde_json::to_string(&AppUser {
@@ -38,5 +36,5 @@ pub async fn basic(
     // @todo token db
 
     // result
-    Ok((jar.add(token_hash), AppResponse::new_200()))
+    Ok((jar.add(token_hash), ApiResponse::new_200()))
 }

@@ -6,10 +6,7 @@ use serde::Deserialize;
 use validator::Validate;
 
 use crate::{
-    app::{
-        app_json::AppJson, app_response::AppResponse, app_state::Db, app_validate::ValidatedForm,
-    },
-    db::models::token_model::TokenModel,
+    api::{api_json::ApiJson, api_response::ApiResponse, api_validate_form::ApiValidatedForm}, ctx::ctx_database::CtxDatabase, db::models::token_model::TokenModel
 };
 
 static PASSWORD_REGEX: LazyLock<Regex> = LazyLock::new(|| {
@@ -35,12 +32,12 @@ pub struct RegUserParams {
 /// POST - /api/signup
 pub async fn reg_user(
     jar: PrivateCookieJar,
-    Db(conn): Db,
-    ValidatedForm(params): ValidatedForm<RegUserParams>,
-) -> Result<AppJson<TokenModel>, AppResponse> {
+    CtxDatabase(conn): CtxDatabase,
+    ApiValidatedForm(params): ApiValidatedForm<RegUserParams>,
+) -> Result<ApiJson<TokenModel>, ApiResponse> {
 
     // @todo - create user
 
     // result
-    Err(AppResponse::new_400())
+    Err(ApiResponse::new_400())
 }

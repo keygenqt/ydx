@@ -1,8 +1,9 @@
 use clap::ArgAction;
 use clap::Parser;
 use clap::Subcommand;
+use clap::builder::Styles;
 
-use crate::app::app_info;
+use crate::app::app_info::AppInfo;
 use crate::cli::start::StartArgs;
 use crate::cli::tools::ToolsArgs;
 
@@ -15,8 +16,15 @@ pub mod tools;
     disable_help_subcommand = true,
     disable_version_flag = true
 )]
-#[command(about=app_info::about())]
-#[command(styles=app_info::styles())]
+#[command(about=AppInfo::default().description)]
+#[command(styles=Styles::styled()
+        .header(clap_cargo::style::HEADER)
+        .usage(clap_cargo::style::USAGE)
+        .literal(clap_cargo::style::LITERAL)
+        .placeholder(clap_cargo::style::PLACEHOLDER)
+        .error(clap_cargo::style::ERROR)
+        .valid(clap_cargo::style::VALID)
+        .invalid(clap_cargo::style::INVALID))]
 pub struct AppCLI {
     /// Print version information and exit
     #[arg(short, long, default_value_t = false)]

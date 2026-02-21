@@ -1,6 +1,5 @@
 use crate::{
-    app::app_response::AppResponse,
-    db::{db_handle_error, entities::card_entity::CardEntity, models::card_model::CardModel},
+    api::api_response::ApiResponse, db::{db_handle_error, entities::card_entity::CardEntity, models::card_model::CardModel}
 };
 
 use diesel::prelude::*;
@@ -14,7 +13,7 @@ impl CardService {
     pub async fn find_by_id(
         mut conn: PooledConnection<'static, AsyncPgConnection>,
         id: i32,
-    ) -> Result<CardModel, AppResponse> {
+    ) -> Result<CardModel, ApiResponse> {
         let result = CardEntity::query()
             .find(id)
             .first(&mut conn)

@@ -2,14 +2,14 @@ use axum::Json;
 use axum::extract::FromRequest;
 use axum::response::{IntoResponse, Response};
 
-use crate::app::app_response::AppResponse;
+use crate::api::api_response::ApiResponse;
 
 /// Application custom Json
 #[derive(FromRequest)]
-#[from_request(via(Json), rejection(AppResponse))]
-pub struct AppJson<T>(pub T);
+#[from_request(via(Json), rejection(ApiResponse))]
+pub struct ApiJson<T>(pub T);
 
-impl<T> IntoResponse for AppJson<T>
+impl<T> IntoResponse for ApiJson<T>
 where
     Json<T>: IntoResponse,
 {

@@ -3,11 +3,11 @@ use axum::response::{IntoResponse, Response};
 use serde::Serialize;
 use std::sync::Arc;
 
-use crate::app::app_json::AppJson;
+use crate::api::api_json::ApiJson;
 
 /// Application common response
 #[derive(Serialize, Debug, Clone)]
-pub struct AppResponse {
+pub struct ApiResponse {
     pub code: u16,
     pub message: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -15,17 +15,17 @@ pub struct AppResponse {
 }
 
 /// Impl axum response
-impl IntoResponse for AppResponse {
+impl IntoResponse for ApiResponse {
     fn into_response(self) -> Response {
         let status = StatusCode::from_u16(self.code).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR);
-        let mut response = (status, AppJson(self.clone())).into_response();
+        let mut response = (status, ApiJson(self.clone())).into_response();
         response.extensions_mut().insert(Arc::new(self.clone()));
         response
     }
 }
 
 /// Impl states
-impl AppResponse {
+impl ApiResponse {
     pub fn new(status: StatusCode, message: &str, data: Option<serde_json::Value>) -> Self {
         Self {
             code: status.as_u16(),

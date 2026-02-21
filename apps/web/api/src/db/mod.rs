@@ -5,7 +5,7 @@ use diesel_async::{
 };
 use diesel_migrations::{EmbeddedMigrations, MigrationHarness, embed_migrations};
 
-use crate::app::{app_config::AppConfig, app_response::AppResponse};
+use crate::{api::api_response::ApiResponse, app::app_config::AppConfig};
 
 pub mod entities;
 pub mod models;
@@ -35,14 +35,14 @@ pub async fn configure_db(config: &AppConfig) -> bb8::Pool<AsyncPgConnection> {
 }
 
 // Handle INTERNAL_SERVER_ERROR db to response
-pub fn db_handle_internal_error<E: std::error::Error>(err: E) -> AppResponse {
-    AppResponse::new_500().with_message(&err.to_string())
+pub fn db_handle_internal_error<E: std::error::Error>(err: E) -> ApiResponse {
+    ApiResponse::new_500().with_message(&err.to_string())
 }
 
 // Handle any error db to response
-pub fn db_handle_error(err: Error) -> AppResponse {
+pub fn db_handle_error(err: Error) -> ApiResponse {
     match err {
-        Error::NotFound => AppResponse::new_404().with_message(&err.to_string()),
-        _ => AppResponse::new_500().with_message(&err.to_string()),
+        Error::NotFound => ApiResponse::new_404().with_message(&err.to_string()),
+        _ => ApiResponse::new_500().with_message(&err.to_string()),
     }
 }

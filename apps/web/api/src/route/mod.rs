@@ -6,9 +6,9 @@ use axum::{Router, middleware::Next};
 use axum::{extract::Request, middleware::from_fn, response::Response};
 use axum_extra::extract::cookie::Key;
 
+use crate::api::api_response::ApiResponse;
 use crate::app::app_config::AppConfig;
-use crate::app::app_response::AppResponse;
-use crate::app::app_state::AppState;
+use crate::ctx::AppContext;
 use crate::db::configure_db;
 
 #[path = "guest/mod.rs"]
@@ -20,7 +20,7 @@ mod user;
 /// Init Axum server
 pub async fn configure_route(config: &AppConfig) -> Router {
     // Route state
-    let state = AppState {
+    let state = AppContext {
         jkey: Arc::new(Key::from(config.server.secret.as_bytes())),
         conf: Arc::new(config.clone()),
         auth: Arc::new(None),
@@ -30,8 +30,8 @@ pub async fn configure_route(config: &AppConfig) -> Router {
     Router::new()
         .route("/", get(guest::home::app_info))
         .route("/api", get(guest::home::app_info))
-        .route("/api/auth", post(guest::auth::basic))
-        .route("/api/logout", delete(guest::logout::clear_session))
+        .route("/api/auth", post(guest::signin::basic))
+        .route("/api/logout", delete(guest::signout::clear_session))
         .route("/api/signup", post(guest::signup::reg_user))
         .route("/api/cards/{id}", get(user::cards::get_by_id))
         .route("/api/sets/{id}", get(user::sets::get_by_id))
@@ -44,13 +44,13 @@ pub async fn configure_route(config: &AppConfig) -> Router {
 
 /// Handle route 404
 async fn handle_404() -> impl IntoResponse {
-    AppResponse::new_404()
+    ApiResponse::new_404()
 }
 
 /// Handle any error for tracing
 async fn log_app_errors(request: Request, next: Next) -> Response {
     let response = next.run(request).await;
-    if let Some(err) = response.extensions().get::<Arc<AppResponse>>() {
+    if let Some(err) = response.extensions().get::<Arc<ApiResponse>>() {
         tracing::error!(?err, "an unexpected error occurred inside a handler");
     }
     response

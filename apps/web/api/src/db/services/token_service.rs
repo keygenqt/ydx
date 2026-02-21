@@ -1,6 +1,5 @@
 use crate::{
-    app::app_response::AppResponse,
-    db::{db_handle_error, entities::token_entity::TokenEntity, models::token_model::TokenModel},
+    api::api_response::ApiResponse, db::{db_handle_error, entities::token_entity::TokenEntity, models::token_model::TokenModel}
 };
 
 use diesel::prelude::*;
@@ -14,7 +13,7 @@ impl TokenService {
     pub async fn find_by_id(
         mut conn: PooledConnection<'static, AsyncPgConnection>,
         id: i32,
-    ) -> Result<TokenModel, AppResponse> {
+    ) -> Result<TokenModel, ApiResponse> {
         let result = TokenEntity::query()
             .find(id)
             .first(&mut conn)
