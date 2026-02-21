@@ -34,3 +34,5 @@ hocon-rs = "0.1"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 argon2 = { version = "0.5", features = ["std"] }
+jsonwebtoken = { version = "10", features = ["rust_crypto"] }
+rand = "0.10.0"

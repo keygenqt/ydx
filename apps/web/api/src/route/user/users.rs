@@ -10,11 +10,11 @@ use crate::{
 /// /api/users/{id}
 pub async fn get_by_id(
     CtxUser(user): CtxUser,
-    CtxDatabase(conn): CtxDatabase,
+    CtxDatabase(mut conn): CtxDatabase,
     Path(id): Path<i32>,
 ) -> Result<ApiJson<UserModel>, ApiResponse> {
     if user.is_some() {
-        let result = UserService::find_by_id(conn, id).await?;
+        let result = UserService::find_by_id(&mut conn, id).await?;
         Ok(ApiJson(result))
     } else {
         Err(ApiResponse::new_403())

@@ -12,12 +12,12 @@ pub struct CardService {}
 impl CardService {
     /// Find entity by id
     pub async fn find_by_id(
-        mut conn: PooledConnection<'static, AsyncPgConnection>,
+        conn: &mut PooledConnection<'static, AsyncPgConnection>,
         id: i32,
     ) -> Result<CardModel, ApiResponse> {
         let result = CardEntity::query()
             .find(id)
-            .first(&mut conn)
+            .first(conn)
             .await
             .map_err(db_handle_error)?;
         Ok(CardModel::from_entity(&result))

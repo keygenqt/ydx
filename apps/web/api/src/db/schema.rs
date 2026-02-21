@@ -53,7 +53,7 @@ diesel::table! {
     tokens (id) {
         id -> Int4,
         user_id -> Int4,
-        refresh_token -> Text,
+        hash_refresh_token -> Text,
         device_uuid -> Text,
         expires_at -> Timestamp,
         created_at -> Timestamp,

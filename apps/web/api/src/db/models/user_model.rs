@@ -1,5 +1,5 @@
 use argon2::{
-    Argon2, Params, PasswordHash, PasswordHasher, PasswordVerifier, password_hash::SaltString,
+    Argon2, PasswordHash, PasswordHasher, PasswordVerifier, password_hash::SaltString,
     password_hash::rand_core::OsRng,
 };
 use chrono::NaiveDateTime;
@@ -8,7 +8,7 @@ use serde_with::{TimestampMilliSeconds, serde_as};
 
 use crate::{
     db::entities::user_entity::{NewUserEntity, UserEntity},
-    utils::{self, constants},
+    utils,
 };
 
 /// Model entry [UserEntity]
@@ -20,17 +20,59 @@ pub struct UserModel {
     pub icon: Option<String>,
     pub fname: Option<String>,
     pub lname: Option<String>,
-    #[serde(skip_serializing)]
-    pub pwd_hash: Option<String>,
-    #[serde(skip_serializing)]
-    pub password: Option<String>,
     #[serde(default = "utils::local_time::chrono_time_now")]
     #[serde_as(as = "TimestampMilliSeconds<i64>")]
     pub created_at: NaiveDateTime,
+    // user pass
+    #[serde(skip_serializing)]
+    pub password: Option<String>,
+    // for database
+    #[serde(skip_serializing)]
+    pub pwd_hash: Option<String>,
 }
 
 /// Impl model entry
 impl UserModel {
+    pub fn new(email: &String, password: &String) -> Self {
+        let mut model = Self {
+            id: None,
+            email: email.clone(),
+            icon: None,
+            fname: None,
+            lname: None,
+            pwd_hash: None,
+            password: Some(password.clone()),
+            created_at: utils::local_time::chrono_time_now(),
+        };
+        model.update_hash();
+        model
+    }
+
+    /// Create hash from password for db
+    pub fn update_hash(&mut self) {
+        let password = self.password.clone().expect("password expected");
+        let salt = SaltString::generate(&mut OsRng);
+        let argon2 = Argon2::default();
+        let hash = argon2
+            .hash_password(password.as_bytes(), &salt)
+            .expect("error create hash")
+            .to_string();
+        self.pwd_hash = Some(hash);
+    }
+
+    /// Validate password for auth
+    pub fn password_valid(&self, password: &str) -> bool {
+        if let Some(hash) = &self.pwd_hash {
+            let argon2 = Argon2::default();
+            let parsed_hash = PasswordHash::new(&hash).expect("error parse hash");
+            return match argon2.verify_password(password.as_bytes(), &parsed_hash) {
+                Ok(()) => true,
+                Err(_) => false,
+            };
+        }
+        false
+    }
+
     /// Convert from database entity to model
     pub fn from_entity(entity: &UserEntity) -> Self {
         Self {
@@ -58,44 +100,5 @@ impl UserModel {
                 .expect("password hash is required for creating new user"),
             created_at: self.created_at,
         }
-    }
-
-    /// Create hash from password for db
-    pub fn update_hash(&mut self) {
-        let password = self.password.clone().expect("password expected");
-        let salt = SaltString::generate(&mut OsRng);
-        let params = Params::new(
-            constants::ARGON2_DEFAULT_M_COST, // default for spring Argon2
-            Params::DEFAULT_T_COST,
-            Params::DEFAULT_P_COST,
-            None,
-        )
-        .unwrap();
-        let argon2 = Argon2::from(params);
-        let hash = argon2
-            .hash_password(password.as_bytes(), &salt)
-            .expect("error create hash")
-            .to_string();
-        self.pwd_hash = Some(hash);
-    }
-
-    /// Validate password for auth
-    pub fn password_valid(&self, password: &str) -> bool {
-        if let Some(hash) = &self.pwd_hash {
-            let params = Params::new(
-                constants::ARGON2_DEFAULT_M_COST,
-                Params::DEFAULT_T_COST,
-                Params::DEFAULT_P_COST,
-                None,
-            )
-            .unwrap();
-            let argon2 = Argon2::from(params);
-            let parsed_hash = PasswordHash::new(&hash).expect("error parse hash");
-            return match argon2.verify_password(password.as_bytes(), &parsed_hash) {
-                Ok(()) => true,
-                Err(_) => false,
-            };
-        }
-        false
     }
 }

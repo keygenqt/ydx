@@ -1,6 +1,7 @@
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
 use serde::Serialize;
+use serde_json::json;
 use std::sync::Arc;
 
 use crate::api::api_json::ApiJson;
@@ -24,7 +25,7 @@ impl IntoResponse for ApiResponse {
     }
 }
 
-/// Impl states
+/// Impl response states
 impl ApiResponse {
     pub fn new(status: StatusCode, message: &str, data: Option<serde_json::Value>) -> Self {
         Self {
@@ -50,6 +51,10 @@ impl ApiResponse {
         Self::new(StatusCode::FORBIDDEN, "Access denied", None)
     }
 
+    pub fn new_409() -> Self {
+        Self::new(StatusCode::CONFLICT, "Conflict", None)
+    }
+
     pub fn new_422() -> Self {
         Self::new(
             StatusCode::UNPROCESSABLE_ENTITY,
@@ -65,7 +70,10 @@ impl ApiResponse {
             None,
         )
     }
+}
 
+/// Impl response builders
+impl ApiResponse {
     pub fn with_message(mut self, message: &str) -> Self {
         self.message = message.to_string();
         self
@@ -74,5 +82,17 @@ impl ApiResponse {
     pub fn with_data(mut self, data: serde_json::Value) -> Self {
         self.data = Some(data);
         self
+    }
+}
+
+/// Impl response errors
+impl ApiResponse {
+    pub fn serde_json_error(e: serde_json::Error) -> Self {
+        Self::new_500()
+            .with_message("JSON processing error")
+            .with_data(json!({
+                "error": "json_serialization",
+                "detail": e.to_string()
+            }))
     }
 }

@@ -11,6 +11,7 @@ pub mod ctx_config;
 pub mod ctx_cookie;
 pub mod ctx_database;
 pub mod ctx_user;
+pub mod ctx_uuid;
 
 #[derive(Clone, FromRef)]
 pub struct AppContext {

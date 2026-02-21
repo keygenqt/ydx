@@ -12,12 +12,12 @@ pub struct SetService {}
 impl SetService {
     /// Find entity by id
     pub async fn find_by_id(
-        mut conn: PooledConnection<'static, AsyncPgConnection>,
+        conn: &mut PooledConnection<'static, AsyncPgConnection>,
         id: i32,
     ) -> Result<SetModel, ApiResponse> {
         let result = SetEntity::query()
             .find(id)
-            .first(&mut conn)
+            .first(conn)
             .await
             .map_err(db_handle_error)?;
         Ok(SetModel::from_entity(&result))

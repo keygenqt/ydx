@@ -38,7 +38,7 @@ pub async fn configure_route(config: &AppConfig) -> Router {
         .route("/api/users/{id}", get(user::users::get_by_id))
         // configure
         .with_state(state)
-        .layer(from_fn(log_app_errors))
+        .layer(from_fn(log_app_responses))
         .fallback(handle_404)
 }
 
@@ -48,10 +48,12 @@ async fn handle_404() -> impl IntoResponse {
 }
 
 /// Handle any error for tracing
-async fn log_app_errors(request: Request, next: Next) -> Response {
+async fn log_app_responses(request: Request, next: Next) -> Response {
     let response = next.run(request).await;
-    if let Some(err) = response.extensions().get::<Arc<ApiResponse>>() {
-        tracing::error!(?err, "an unexpected error occurred inside a handler");
+    if let Some(response) = response.extensions().get::<Arc<ApiResponse>>() {
+        if response.code != 200 {
+            tracing::error!(?response, "an unexpected error occurred inside a handler");
+        }
     }
     response
 }
