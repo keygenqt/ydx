@@ -14,7 +14,10 @@ pub struct AppUser {
 }
 
 impl AppUser {
-    pub fn create_cookie(user_id: i32, device_uuid: String) -> Result<Cookie<'static>, ApiResponse> {
+    pub fn create_cookie(
+        user_id: i32,
+        device_uuid: String,
+    ) -> Result<Cookie<'static>, ApiResponse> {
         // get value string
         let model_json = serde_json::to_string(&AppUser {
             user_id,

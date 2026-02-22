@@ -3,8 +3,6 @@ use argon2::{
     password_hash::rand_core::OsRng,
 };
 use chrono::NaiveDateTime;
-use serde::{Deserialize, Serialize};
-use serde_with::{TimestampMilliSeconds, serde_as};
 
 use crate::{
     db::entities::user_entity::{NewUserEntity, UserEntity},
@@ -12,93 +10,101 @@ use crate::{
 };
 
 /// Model entry [UserEntity]
-#[serde_as]
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Clone, Debug)]
 pub struct UserModel {
     pub id: Option<i32>,
     pub email: String,
     pub icon: Option<String>,
     pub fname: Option<String>,
     pub lname: Option<String>,
-    #[serde(default = "utils::local_time::chrono_time_now")]
-    #[serde_as(as = "TimestampMilliSeconds<i64>")]
+    pub hash_password: String,
     pub created_at: NaiveDateTime,
-    // user pass
-    #[serde(skip_serializing)]
-    pub password: Option<String>,
-    // for database
-    #[serde(skip_serializing)]
-    pub pwd_hash: Option<String>,
+}
+
+impl Default for UserModel {
+    fn default() -> Self {
+        Self {
+            id: None,
+            email: "".to_string(),
+            icon: None,
+            fname: None,
+            lname: None,
+            hash_password: "".to_string(),
+            created_at: utils::local_time::chrono_time_now(),
+        }
+    }
 }
 
 /// Impl model entry
+#[allow(dead_code)]
 impl UserModel {
     pub fn new(email: &String, password: &String) -> Self {
-        let mut model = Self {
+        Self {
             id: None,
             email: email.clone(),
             icon: None,
             fname: None,
             lname: None,
-            pwd_hash: None,
-            password: Some(password.clone()),
+            hash_password: Self::get_hash_password(&password),
             created_at: utils::local_time::chrono_time_now(),
-        };
-        model.update_hash();
-        model
-    }
-
-    /// Create hash from password for db
-    pub fn update_hash(&mut self) {
-        let password = self.password.clone().expect("password expected");
-        let salt = SaltString::generate(&mut OsRng);
-        let argon2 = Argon2::default();
-        let hash = argon2
-            .hash_password(password.as_bytes(), &salt)
-            .expect("error create hash")
-            .to_string();
-        self.pwd_hash = Some(hash);
-    }
-
-    /// Validate password for auth
-    pub fn password_valid(&self, password: &str) -> bool {
-        if let Some(hash) = &self.pwd_hash {
-            let argon2 = Argon2::default();
-            let parsed_hash = PasswordHash::new(&hash).expect("error parse hash");
-            return match argon2.verify_password(password.as_bytes(), &parsed_hash) {
-                Ok(()) => true,
-                Err(_) => false,
-            };
         }
-        false
     }
 
-    /// Convert from database entity to model
+    /// Create model from [UserEntity]
     pub fn from_entity(entity: &UserEntity) -> Self {
-        Self {
-            id: Some(entity.id),
-            email: entity.email.clone(),
-            icon: entity.icon.clone(),
-            fname: entity.fname.clone(),
-            lname: entity.lname.clone(),
-            pwd_hash: Some(entity.pwd_hash.clone()),
-            password: None,
-            created_at: entity.created_at,
-        }
+        Self::default().with_entity(entity)
     }
 
-    /// Convert to new entity for database insertion
+    /// Update model from [UserEntity]
+    pub fn update_from_entity(&mut self, entity: &UserEntity) {
+        self.id = Some(entity.id);
+        self.email = entity.email.clone();
+        self.icon = entity.icon.clone();
+        self.fname = entity.fname.clone();
+        self.lname = entity.lname.clone();
+        self.hash_password = entity.hash_password.clone();
+        self.created_at = entity.created_at;
+    }
+
+    /// Update model from [UserEntity]
+    pub fn with_entity(mut self, entity: &UserEntity) -> Self {
+        self.update_from_entity(entity);
+        self
+    }
+
+    /// Create new [NewUserEntity]
     pub fn to_new_entity(&self) -> NewUserEntity {
         NewUserEntity {
             email: self.email.clone(),
             icon: self.icon.clone(),
             fname: self.fname.clone(),
             lname: self.lname.clone(),
-            pwd_hash: self
-                .pwd_hash
-                .clone()
-                .expect("password hash is required for creating new user"),
-            created_at: self.created_at,
+            hash_password: self.hash_password.clone(),
+            created_at: self.created_at.clone(),
         }
+    }
+
+    /// Validate password
+    pub fn password_valid(&self, password: &str) -> bool {
+        let argon2 = Argon2::default();
+        let parsed_hash = PasswordHash::new(&self.hash_password).expect("error parse hash");
+        argon2
+            .verify_password(password.as_bytes(), &parsed_hash)
+            .is_ok()
+    }
+
+    /// Check is empty model
+    pub fn is_empty(&self) -> bool {
+        self.email.is_empty()
+    }
+
+    /// Create hash from password for db
+    fn get_hash_password(password: &String) -> String {
+        let salt = SaltString::generate(&mut OsRng);
+        let argon2 = Argon2::default();
+        argon2
+            .hash_password(password.as_bytes(), &salt)
+            .expect("error create password")
+            .to_string()
     }
 }

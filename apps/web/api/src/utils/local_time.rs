@@ -1,5 +1,5 @@
-use time::{Duration, OffsetDateTime};
 use chrono::{NaiveDateTime, Utc};
+use time::{Duration, OffsetDateTime};
 
 /// Get time for entities
 pub fn chrono_time_now() -> NaiveDateTime {

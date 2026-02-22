@@ -15,7 +15,7 @@ pub struct UserEntity {
     pub icon: Option<String>,
     pub fname: Option<String>,
     pub lname: Option<String>,
-    pub pwd_hash: String,
+    pub hash_password: String,
     #[serde_as(as = "TimestampMilliSeconds<i64>")]
     pub created_at: NaiveDateTime,
 }
@@ -28,7 +28,7 @@ pub struct NewUserEntity {
     pub icon: Option<String>,
     pub fname: Option<String>,
     pub lname: Option<String>,
-    pub pwd_hash: String,
+    pub hash_password: String,
     #[serde_as(as = "TimestampMilliSeconds<i64>")]
     pub created_at: NaiveDateTime,
 }
@@ -40,5 +40,5 @@ pub struct UpdateUserEntity {
     pub icon: Option<String>,
     pub fname: Option<String>,
     pub lname: Option<String>,
-    pub pwd_hash: Option<String>,
+    pub hash_password: Option<String>,
 }

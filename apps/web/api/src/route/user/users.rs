@@ -3,7 +3,7 @@ use axum::extract::Path;
 use crate::{
     api::{api_json::ApiJson, api_response::ApiResponse},
     ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser},
-    db::{models::user_model::UserModel, services::user_service::UserService},
+    db::{responses::user_response::UserResponse, services::user_service::UserService},
 };
 
 /// GET - find by ID
@@ -12,10 +12,10 @@ pub async fn get_by_id(
     CtxUser(user): CtxUser,
     CtxDatabase(mut conn): CtxDatabase,
     Path(id): Path<i32>,
-) -> Result<ApiJson<UserModel>, ApiResponse> {
+) -> Result<ApiJson<UserResponse>, ApiResponse> {
     if user.is_some() {
-        let result = UserService::find_by_id(&mut conn, id).await?;
-        Ok(ApiJson(result))
+        let model = UserService::find_by_id(&mut conn, id).await?;
+        Ok(ApiJson(UserResponse::from_model(&model)?))
     } else {
         Err(ApiResponse::new_403())
     }

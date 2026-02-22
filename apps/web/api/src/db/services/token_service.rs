@@ -25,14 +25,14 @@ impl TokenService {
         let user_id = user.id.ok_or_else(|| {
             ApiResponse::new_500().with_message("User ID is required to create token")
         })?;
-        let mut token = TokenModel::new(user_id, uuid.clone(), secret.clone());
-        let entity = token.to_new_entity();
+        let mut model = TokenModel::new(user_id, uuid.clone(), secret.clone());
+        let entity = model.to_new_entity();
         let result = diesel::insert_into(schema::tokens::table)
             .values(entity)
             .returning(TokenEntity::as_returning())
             .get_result(conn)
             .await
             .map_err(db_handle_error)?;
-        Ok(token.with_entity(&result))
+        Ok(model.with_entity(&result))
     }
 }

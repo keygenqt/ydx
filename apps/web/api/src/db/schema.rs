@@ -72,7 +72,7 @@ diesel::table! {
         #[max_length = 255]
         lname -> Nullable<Varchar>,
         #[max_length = 255]
-        pwd_hash -> Varchar,
+        hash_password -> Varchar,
         created_at -> Timestamp,
     }
 }

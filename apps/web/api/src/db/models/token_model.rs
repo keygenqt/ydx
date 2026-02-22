@@ -7,7 +7,9 @@ use jsonwebtoken::{EncodingKey, Header, encode};
 use rand::{RngExt, distr::Alphanumeric, rng};
 
 use crate::{
-    app::app_user::AppUser, db::entities::token_entity::{NewTokenEntity, TokenEntity}, utils::{self}
+    app::app_user::AppUser,
+    db::entities::token_entity::{NewTokenEntity, TokenEntity},
+    utils::{self},
 };
 
 /// Model entry [TokenEntity]
@@ -48,7 +50,7 @@ impl TokenModel {
         }
     }
 
-    /// Update date from [TokenEntity]
+    /// Update model from [TokenEntity]
     pub fn update_from_entity(&mut self, entity: &TokenEntity) {
         self.id = Some(entity.id);
         self.user_id = entity.user_id;
@@ -58,7 +60,7 @@ impl TokenModel {
         self.created_at = entity.created_at;
     }
 
-    /// Update date from [TokenEntity]
+    /// Update model from [TokenEntity]
     pub fn with_entity(mut self, entity: &TokenEntity) -> Self {
         self.update_from_entity(entity);
         self
@@ -78,10 +80,9 @@ impl TokenModel {
     pub fn refresh_token_valid(&self, refresh_token: &str) -> bool {
         let argon2 = Argon2::default();
         let parsed_hash = PasswordHash::new(&self.hash_refresh_token).expect("error parse hash");
-        return match argon2.verify_password(refresh_token.as_bytes(), &parsed_hash) {
-            Ok(()) => true,
-            Err(_) => false,
-        };
+        argon2
+            .verify_password(refresh_token.as_bytes(), &parsed_hash)
+            .is_ok()
     }
 
     /// Check expired
