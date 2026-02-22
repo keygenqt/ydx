@@ -32,6 +32,7 @@ pub async fn configure_route(config: &AppConfig) -> Router {
         .route("/api/signin", post(guest::signin::form))
         .route("/api/signup", post(guest::signup::reg_user))
         .route("/api/signout", delete(user::signout::clear_session))
+        .route("/api/signrefresh", post(user::signrefresh::refresh_token))
         .route("/api/cards/{id}", get(user::cards::get_by_id))
         .route("/api/sets/{id}", get(user::sets::get_by_id))
         .route("/api/users/{id}", get(user::users::get_by_id))

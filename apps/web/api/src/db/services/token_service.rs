@@ -24,6 +24,7 @@ impl TokenService {
         let result = TokenEntity::query()
             .filter(dsl::user_id.eq(user_id))
             .filter(dsl::device_uuid.eq(uuid))
+            .order(dsl::created_at.desc())
             .first(conn)
             .await
             .map_err(db_handle_error)?;
