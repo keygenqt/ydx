@@ -23,14 +23,13 @@ pub async fn configure_route(config: &AppConfig) -> Router {
     let state = AppContext {
         jkey: Arc::new(Key::from(config.server.secret.as_bytes())),
         conf: Arc::new(config.clone()),
-        auth: Arc::new(None),
         pool: Arc::new(configure_db(config).await),
     };
     // route config
     Router::new()
         .route("/", get(guest::home::app_info))
         .route("/api", get(guest::home::app_info))
-        .route("/api/signin", post(guest::signin::basic))
+        .route("/api/signin", post(guest::signin::form))
         .route("/api/signout", delete(guest::signout::clear_session))
         .route("/api/signup", post(guest::signup::reg_user))
         .route("/api/cards/{id}", get(user::cards::get_by_id))

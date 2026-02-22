@@ -13,7 +13,6 @@ codegen-units = 1
 [dependencies]
 axum = { version = "0.8", features = ["macros"] }
 axum-extra = { version = "0.12", features = ["cookie-private"] }
-axum-auth = { version = "0.8", default-features = false, features = ["auth-basic"] }
 tower = { version = "0.5", features = ["util"] }
 tower-http = { version = "0.6", features = ["normalize-path"] }
 validator = { version = "0.20", features = ["derive"] }

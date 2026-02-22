@@ -9,14 +9,10 @@ use crate::{
 /// GET - find by ID
 /// /api/sets/{id}
 pub async fn get_by_id(
-    CtxUser(user): CtxUser,
+    CtxUser(_): CtxUser,
     CtxDatabase(mut conn): CtxDatabase,
     Path(id): Path<i32>,
 ) -> Result<ApiJson<SetModel>, ApiResponse> {
-    if user.is_some() {
-        let result = SetService::find_by_id(&mut conn, id).await?;
-        Ok(ApiJson(result))
-    } else {
-        Err(ApiResponse::new_403())
-    }
+    let result = SetService::find_by_id(&mut conn, id).await?;
+    Ok(ApiJson(result))
 }

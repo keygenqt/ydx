@@ -55,12 +55,15 @@ pub async fn reg_user(
     let model_params = UserModel::new(&params.email, &params.password);
     let model_create = UserService::create(&mut conn, &model_params).await?;
     // create user token
+    let user_id = model_create
+        .id
+        .ok_or_else(|| ApiResponse::new_500().with_message("User ID is required"))?;
     let secret = &config.server.secret;
-    let model_token = TokenService::create(&mut conn, &model_create, &uuid, &secret).await?;
+    let model_token = TokenService::create(&mut conn, user_id, &uuid, &secret).await?;
     let model_token_response = TokenResponse::from_model(&model_token)?;
     let data_token = to_value(model_token_response).map_err(ApiResponse::serde_json_error)?;
     // create user session
-    let cookie = AppUser::create_cookie(model_create.id.unwrap(), uuid)?;
+    let cookie = AppUser::create_cookie(model_create.id.unwrap(), &uuid)?;
     let session = jar.add(cookie);
     // result
     Ok((session, ApiResponse::new_200().with_data(data_token)))

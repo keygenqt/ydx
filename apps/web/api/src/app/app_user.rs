@@ -11,17 +11,21 @@ use crate::{
 pub struct AppUser {
     pub user_id: i32,
     pub device_uuid: String,
+    pub exp: usize,
+    pub iat: usize,
 }
 
 impl AppUser {
     pub fn create_cookie(
         user_id: i32,
-        device_uuid: String,
+        device_uuid: &String,
     ) -> Result<Cookie<'static>, ApiResponse> {
         // get value string
         let model_json = serde_json::to_string(&AppUser {
             user_id,
-            device_uuid: device_uuid,
+            device_uuid: device_uuid.clone(),
+            exp: 0,
+            iat: 0,
         })
         .map_err(ApiResponse::serde_json_error)?;
         // create cookie session

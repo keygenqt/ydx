@@ -43,6 +43,10 @@ impl ApiResponse {
         Self::new(StatusCode::BAD_REQUEST, "Bad request", None)
     }
 
+    pub fn new_401() -> Self {
+        Self::new(StatusCode::UNAUTHORIZED, "Unauthorized", None)
+    }
+
     pub fn new_404() -> Self {
         Self::new(StatusCode::NOT_FOUND, "Not found", None)
     }

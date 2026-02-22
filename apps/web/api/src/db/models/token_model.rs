@@ -26,6 +26,21 @@ pub struct TokenModel {
     pub refresh_token: Option<String>,
 }
 
+impl Default for TokenModel {
+    fn default() -> Self {
+        Self {
+            id: None,
+            user_id: 0,
+            device_uuid: "".to_string(),
+            hash_refresh_token: "".to_string(),
+            expires_at: utils::local_time::chrono_time_now(),
+            created_at: utils::local_time::chrono_time_now(),
+            access_token: None,
+            refresh_token: None,
+        }
+    }
+}
+
 #[allow(dead_code)]
 /// Impl model entry
 impl TokenModel {
@@ -48,6 +63,11 @@ impl TokenModel {
             access_token: Some(access_token),
             refresh_token: Some(refresh_token),
         }
+    }
+
+    /// Create model from [TokenEntity]
+    pub fn from_entity(entity: &TokenEntity) -> Self {
+        Self::default().with_entity(entity)
     }
 
     /// Update model from [TokenEntity]
@@ -90,6 +110,11 @@ impl TokenModel {
         self.expires_at < Utc::now().naive_utc()
     }
 
+    /// Check is empty model
+    pub fn is_empty(&self) -> bool {
+        self.hash_refresh_token.is_empty()
+    }
+
     /// Create hash from refresh_token for db
     fn get_hash_refresh_token(refresh_token: &String) -> String {
         let salt = SaltString::generate(&mut OsRng);
@@ -102,9 +127,12 @@ impl TokenModel {
 
     /// Generate JWT access token
     fn get_access_token(user_id: i32, device_uuid: &str, secret: String) -> String {
+        let now = utils::local_time::chrono_time_now();
         let claims = AppUser {
             user_id,
             device_uuid: device_uuid.to_string(),
+            exp: (now + Duration::minutes(15)).and_utc().timestamp() as usize,
+            iat: now.and_utc().timestamp() as usize,
         };
         encode(
             &Header::default(),
