@@ -10,7 +10,6 @@ use crate::ctx::ctx_cookie::CtxJar;
 use crate::ctx::ctx_database::CtxDatabase;
 use crate::ctx::ctx_uuid::CtxUuid;
 use crate::db::services::token_service::TokenService;
-use crate::db::services::user_service::UserService;
 use crate::utils::{self, constants};
 
 /// Impl for route UserModel
@@ -75,10 +74,6 @@ impl CtxUser {
         app_user: &AppUser,
         uuid: &String,
     ) -> Result<(), ApiResponse> {
-        // get user
-        let _ = UserService::find_by_id(conn, app_user.user_id)
-            .await
-            .map_err(|_| ApiResponse::new_403())?;
         // get token
         let token = TokenService::find_by_id_uuid(conn, app_user.user_id, &uuid)
             .await
