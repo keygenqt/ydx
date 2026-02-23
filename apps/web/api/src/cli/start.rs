@@ -14,7 +14,7 @@ use crate::{
 #[command(arg_required_else_help = true)]
 pub struct StartArgs {
     /// Path to the configuration file
-    #[arg(short = 'c', long, value_name = "path")]
+    #[arg(long, value_name = "path")]
     pub config: PathBuf,
 
     /// Show this help message and exit

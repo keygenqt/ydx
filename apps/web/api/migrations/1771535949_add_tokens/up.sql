@@ -7,6 +7,5 @@ CREATE TABLE tokens (
     created_at          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE UNIQUE INDEX idx_tokens_user_device ON tokens(user_id, device_uuid);
 CREATE INDEX idx_hash_refresh_token ON tokens(hash_refresh_token);
 CREATE INDEX idx_tokens_expires_at ON tokens(expires_at);

@@ -6,6 +6,7 @@ use crate::{
         models::token_model::TokenModel,
         schema::{self, tokens::dsl},
     },
+    utils,
 };
 
 use diesel::prelude::*;
@@ -46,7 +47,7 @@ impl TokenService {
         Ok(deleted_count)
     }
 
-    /// Clear all tokens
+    /// Clear all user tokens
     pub async fn clear_by_id(
         conn: &mut PooledConnection<'static, AsyncPgConnection>,
         user_id: i32,
@@ -56,6 +57,37 @@ impl TokenService {
             .execute(conn)
             .await
             .map_err(db_handle_error)?;
+        Ok(deleted_count)
+    }
+
+    /// Clear all expired tokens
+    pub async fn clear_expired_tokens(
+        conn: &mut PooledConnection<'static, AsyncPgConnection>,
+    ) -> Result<usize, ApiResponse> {
+        let deleted_count = diesel::delete(schema::tokens::table)
+            .filter(dsl::expires_at.lt(utils::local_time::chrono_time_now()))
+            .execute(conn)
+            .await
+            .map_err(db_handle_error)?;
+        Ok(deleted_count)
+    }
+
+    pub async fn deduplicate_tokens(
+        conn: &mut PooledConnection<'static, AsyncPgConnection>,
+    ) -> Result<usize, ApiResponse> {
+        let deleted_count = diesel::dsl::sql::<diesel::sql_types::BigInt>(
+            "WITH keep_ids AS (
+                SELECT MAX(id) as id
+                FROM tokens
+                GROUP BY user_id, device_uuid
+            )
+            DELETE FROM tokens
+            WHERE id NOT IN (SELECT id FROM keep_ids)"
+        )
+        .execute(conn)
+        .await
+        .map_err(db_handle_error)?;
+
         Ok(deleted_count)
     }
 
