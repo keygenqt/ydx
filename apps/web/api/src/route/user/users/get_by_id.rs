@@ -8,7 +8,7 @@ use crate::{
 
 /// GET - find by ID
 /// /api/users/{id}
-pub async fn get_by_id(
+pub async fn get(
     CtxUser(_): CtxUser,
     CtxDatabase(mut conn): CtxDatabase,
     Path(id): Path<i32>,

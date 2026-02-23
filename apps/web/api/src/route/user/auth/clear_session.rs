@@ -8,7 +8,7 @@ use crate::{
 };
 
 /// DELETE - /api/logout
-pub async fn clear_session(
+pub async fn delete(
     CtxUser(user): CtxUser,
     CtxJar(jar): CtxJar,
     CtxUuid(uuid): CtxUuid,

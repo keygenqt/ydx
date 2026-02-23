@@ -28,7 +28,7 @@ pub struct LoginParams {
 }
 
 /// POST - /api/signin
-pub async fn form(
+pub async fn post(
     CtxJar(jar): CtxJar,
     CtxUuid(uuid): CtxUuid,
     CtxConfig(config): CtxConfig,

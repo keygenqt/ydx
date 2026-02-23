@@ -21,7 +21,7 @@ pub struct TokenRefreshParams {
 }
 
 /// POST - /api/signrefresh
-pub async fn refresh_token(
+pub async fn post(
     CtxUser(ctx_user): CtxUser,
     CtxJar(jar): CtxJar,
     CtxUuid(uuid): CtxUuid,

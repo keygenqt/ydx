@@ -40,7 +40,7 @@ pub struct RegUserParams {
 }
 
 /// POST - /api/signup
-pub async fn reg_user(
+pub async fn post(
     CtxJar(jar): CtxJar,
     CtxUuid(uuid): CtxUuid,
     CtxConfig(config): CtxConfig,
