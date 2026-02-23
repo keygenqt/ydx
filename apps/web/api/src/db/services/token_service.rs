@@ -72,7 +72,8 @@ impl TokenService {
         Ok(deleted_count)
     }
 
-    pub async fn deduplicate_tokens(
+    /// Clear all old duplicate tokens
+    pub async fn clear_duplicate_tokens(
         conn: &mut PooledConnection<'static, AsyncPgConnection>,
     ) -> Result<usize, ApiResponse> {
         let deleted_count = diesel::dsl::sql::<diesel::sql_types::BigInt>(

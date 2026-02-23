@@ -72,7 +72,7 @@ pub async fn run(args: ToolsArgs) {
                 print_success!("{} Expired tokens removed: {}", "✓".green(), deleted);
             }
             if args.duplicate {
-                let deleted = TokenService::deduplicate_tokens(&mut conn)
+                let deleted = TokenService::clear_duplicate_tokens(&mut conn)
                     .await
                     .unwrap_or_else(|e| exit_error!("failed to deduplicate tokens: {}", e.message));
                 print_success!("{} Duplicate tokens removed: {}", "✓".green(), deleted);
