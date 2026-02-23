@@ -24,7 +24,7 @@ static PASSWORD_REGEX: LazyLock<Regex> = LazyLock::new(|| {
 });
 
 #[derive(Deserialize, Debug, Validate)]
-pub struct RegUserParams {
+pub struct SignUpParams {
     #[validate(email(message = "Invalid email format"))]
     email: String,
     #[validate(length(
@@ -45,7 +45,7 @@ pub async fn post(
     CtxUuid(uuid): CtxUuid,
     CtxConfig(config): CtxConfig,
     CtxDatabase(mut conn): CtxDatabase,
-    ApiValidatedForm(params): ApiValidatedForm<RegUserParams>,
+    ApiValidatedForm(params): ApiValidatedForm<SignUpParams>,
 ) -> Result<(PrivateCookieJar, ApiResponse), ApiResponse> {
     // check exist email
     if let Ok(_) = UserService::find_by_email(&mut conn, &params.email).await {

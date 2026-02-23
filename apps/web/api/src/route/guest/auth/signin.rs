@@ -16,7 +16,7 @@ use crate::{
 };
 
 #[derive(Deserialize, Debug, Validate)]
-pub struct LoginParams {
+pub struct SignInParams {
     #[validate(email(message = "Invalid email format"))]
     email: String,
     #[validate(length(
@@ -33,7 +33,7 @@ pub async fn post(
     CtxUuid(uuid): CtxUuid,
     CtxConfig(config): CtxConfig,
     CtxDatabase(mut conn): CtxDatabase,
-    ApiValidatedForm(params): ApiValidatedForm<LoginParams>,
+    ApiValidatedForm(params): ApiValidatedForm<SignInParams>,
 ) -> Result<(PrivateCookieJar, ApiResponse), ApiResponse> {
     // find user
     let model = UserService::find_by_email(&mut conn, &params.email)
