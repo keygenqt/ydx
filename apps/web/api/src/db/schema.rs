@@ -25,6 +25,9 @@ diesel::table! {
 }
 
 diesel::table! {
+    use diesel::sql_types::*;
+    use super::sql_types::SortCards;
+
     sets (id) {
         id -> Int4,
         user_id -> Int4,
@@ -32,20 +35,10 @@ diesel::table! {
         name -> Varchar,
         icon -> Nullable<Text>,
         description -> Nullable<Text>,
+        known_limit -> Int4,
+        session_limit -> Int4,
+        sort_by -> SortCards,
         created_at -> Timestamp,
-    }
-}
-
-diesel::table! {
-    use diesel::sql_types::*;
-    use super::sql_types::SortCards;
-
-    sets_settings (id) {
-        id -> Int4,
-        set_id -> Int4,
-        known_limit -> Nullable<Int4>,
-        session_limit -> Nullable<Int4>,
-        sort_by -> Nullable<SortCards>,
     }
 }
 
@@ -79,7 +72,6 @@ diesel::table! {
 
 diesel::joinable!(cards -> sets (set_id));
 diesel::joinable!(sets -> users (user_id));
-diesel::joinable!(sets_settings -> sets (set_id));
 diesel::joinable!(tokens -> users (user_id));
 
-diesel::allow_tables_to_appear_in_same_query!(cards, sets, sets_settings, tokens, users,);
+diesel::allow_tables_to_appear_in_same_query!(cards, sets, tokens, users,);

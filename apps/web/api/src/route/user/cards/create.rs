@@ -3,16 +3,25 @@ use validator::Validate;
 
 use crate::{
     api::{api_json::ApiJson, api_response::ApiResponse, api_validate_form::ApiValidatedForm},
-    ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser}, db::responses::card_response::CardResponse,
+    ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser},
+    db::{models::card_model::CardModel, responses::card_response::CardResponse, services::{card_service::CardService, set_service::SetService}},
 };
 
 #[derive(Deserialize, Debug, Validate)]
 pub struct CreateParams {
     set_id: i32,
     image: Option<String>,
-    #[validate(length(min = 1, max = 500, message = "Term must be between 1 and 500 characters"))]
+    #[validate(length(
+        min = 1,
+        max = 500,
+        message = "Term must be between 1 and 500 characters"
+    ))]
     term: String,
-    #[validate(length(min = 1, max = 500, message = "Definition must be between 1 and 500 characters"))]
+    #[validate(length(
+        min = 1,
+        max = 500,
+        message = "Definition must be between 1 and 500 characters"
+    ))]
     definition: String,
 }
 
@@ -20,8 +29,14 @@ pub struct CreateParams {
 /// /api/cards
 pub async fn post(
     CtxUser(_): CtxUser,
-    CtxDatabase(_): CtxDatabase,
+    CtxDatabase(mut conn): CtxDatabase,
     ApiValidatedForm(params): ApiValidatedForm<CreateParams>,
 ) -> Result<ApiJson<CardResponse>, ApiResponse> {
-    Err(ApiResponse::new_500().with_message("@todo"))
+    // check exist set
+    let _ = SetService::find_by_id(&mut conn, params.set_id).await?;
+    // create user in database
+    let model = CardModel::new(params.set_id, params.term, params.definition, params.image);
+    let model = CardService::create(&mut conn, &model).await?;
+    // result
+    Ok(ApiJson(CardResponse::from_model(&model)?))
 }

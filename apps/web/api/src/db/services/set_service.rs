@@ -1,6 +1,6 @@
 use crate::{
     api::api_response::ApiResponse,
-    db::{db_handle_error, entities::set_entity::SetEntity, models::set_model::SetModel},
+    db::{db_handle_error, entities::set_entity::SetEntity, models::set_model::SetModel, schema},
 };
 
 use diesel::prelude::*;
@@ -18,6 +18,21 @@ impl SetService {
         let result = SetEntity::query()
             .find(id)
             .first(conn)
+            .await
+            .map_err(db_handle_error)?;
+        Ok(SetModel::from_entity(&result))
+    }
+
+    /// Create new entity
+    pub async fn create(
+        conn: &mut PooledConnection<'static, AsyncPgConnection>,
+        model: &SetModel,
+    ) -> Result<SetModel, ApiResponse> {
+        let entity = model.to_new_entity();
+        let result = diesel::insert_into(schema::sets::table)
+            .values(entity)
+            .returning(SetEntity::as_returning())
+            .get_result(conn)
             .await
             .map_err(db_handle_error)?;
         Ok(SetModel::from_entity(&result))

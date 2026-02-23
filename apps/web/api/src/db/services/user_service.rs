@@ -74,6 +74,6 @@ impl UserService {
             .get_result(conn)
             .await
             .map_err(db_handle_error)?;
-        Ok(user.clone().with_entity(&result))
+        Ok(UserModel::from_entity(&result))
     }
 }

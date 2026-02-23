@@ -62,11 +62,8 @@ impl TokenService {
     /// Create new entity
     pub async fn create(
         conn: &mut PooledConnection<'static, AsyncPgConnection>,
-        user_id: i32,
-        uuid: &String,
-        secret: &String,
+        model: &TokenModel,
     ) -> Result<TokenModel, ApiResponse> {
-        let mut model = TokenModel::new(user_id, uuid.clone(), secret.clone());
         let entity = model.to_new_entity();
         let result = diesel::insert_into(schema::tokens::table)
             .values(entity)
@@ -74,6 +71,10 @@ impl TokenService {
             .get_result(conn)
             .await
             .map_err(db_handle_error)?;
-        Ok(model.with_entity(&result))
+        Ok(TokenModel::from_entity_with_tokens(
+            &result,
+            &model.access_token,
+            &model.refresh_token,
+        ))
     }
 }

@@ -13,6 +13,7 @@ use crate::{
 };
 
 /// Model entry [TokenEntity]
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub struct TokenModel {
     pub id: Option<i32>,
@@ -24,21 +25,6 @@ pub struct TokenModel {
     // new tokens for response
     pub access_token: Option<String>,
     pub refresh_token: Option<String>,
-}
-
-impl Default for TokenModel {
-    fn default() -> Self {
-        Self {
-            id: None,
-            user_id: 0,
-            device_uuid: "".to_string(),
-            hash_refresh_token: "".to_string(),
-            expires_at: utils::local_time::chrono_time_now(),
-            created_at: utils::local_time::chrono_time_now(),
-            access_token: None,
-            refresh_token: None,
-        }
-    }
 }
 
 #[allow(dead_code)]
@@ -67,23 +53,28 @@ impl TokenModel {
 
     /// Create model from [TokenEntity]
     pub fn from_entity(entity: &TokenEntity) -> Self {
-        Self::default().with_entity(entity)
+        Self {
+            id: Some(entity.id),
+            user_id: entity.user_id,
+            device_uuid: entity.device_uuid.clone(),
+            hash_refresh_token: entity.hash_refresh_token.clone(),
+            expires_at: entity.expires_at,
+            created_at: entity.created_at,
+            access_token: None,
+            refresh_token: None,
+        }
     }
 
-    /// Update model from [TokenEntity]
-    pub fn update_from_entity(&mut self, entity: &TokenEntity) {
-        self.id = Some(entity.id);
-        self.user_id = entity.user_id;
-        self.device_uuid = entity.device_uuid.clone();
-        self.hash_refresh_token = entity.hash_refresh_token.clone();
-        self.expires_at = entity.expires_at;
-        self.created_at = entity.created_at;
-    }
-
-    /// Update model from [TokenEntity]
-    pub fn with_entity(mut self, entity: &TokenEntity) -> Self {
-        self.update_from_entity(entity);
-        self
+    /// Create model from [TokenEntity] with params
+    pub fn from_entity_with_tokens(
+        entity: &TokenEntity,
+        access_token: &Option<String>,
+        refresh_token: &Option<String>,
+    ) -> Self {
+        let mut model = Self::from_entity(entity);
+        model.access_token = access_token.clone();
+        model.refresh_token = refresh_token.clone();
+        model
     }
 
     /// Create new [NewTokenEntity]

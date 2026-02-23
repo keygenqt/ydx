@@ -10,7 +10,10 @@ use crate::{
         ctx_config::CtxConfig, ctx_cookie::CtxJar, ctx_database::CtxDatabase, ctx_user::CtxUser,
         ctx_uuid::CtxUuid,
     },
-    db::{responses::token_response::TokenResponse, services::token_service::TokenService},
+    db::{
+        models::token_model::TokenModel, responses::token_response::TokenResponse,
+        services::token_service::TokenService,
+    },
     utils,
 };
 
@@ -22,7 +25,7 @@ pub struct TokenRefreshParams {
 
 /// POST - /api/signrefresh
 pub async fn post(
-    CtxUser(ctx_user): CtxUser,
+    CtxUser(user): CtxUser,
     CtxJar(jar): CtxJar,
     CtxUuid(uuid): CtxUuid,
     CtxConfig(config): CtxConfig,
@@ -30,7 +33,7 @@ pub async fn post(
     ApiValidatedForm(params): ApiValidatedForm<TokenRefreshParams>,
 ) -> Result<(PrivateCookieJar, ApiResponse), ApiResponse> {
     // find user device token
-    let token = TokenService::find_by_id_uuid(&mut conn, ctx_user.user_id, &uuid).await?;
+    let token = TokenService::find_by_id_uuid(&mut conn, user.user_id, &uuid).await?;
     // argon2 validate token
     if !token.refresh_token_valid(&params.refresh_token) {
         Err(ApiResponse::new_401().with_message("Invalid refresh_token"))?
@@ -40,19 +43,19 @@ pub async fn post(
         Err(ApiResponse::new_401().with_message("Invalid refresh_token"))?
     }
     // create user token
-    let secret = &config.server.secret;
-    let model_token = TokenService::create(&mut conn, ctx_user.user_id, &uuid, secret).await?;
-    let model_token_response = TokenResponse::from_model(&model_token)?;
-    let data_token = to_value(model_token_response).map_err(ApiResponse::serde_json_error)?;
+    let token = TokenModel::new(user.user_id, uuid.clone(), config.server.secret.clone());
+    let token = TokenService::create(&mut conn, &token).await?;
+    let response = TokenResponse::from_model(&token)?;
+    let data_token = to_value(response).map_err(ApiResponse::serde_json_error)?;
     // create user session
-    let cookie = AppUser::create_cookie(ctx_user.user_id, &uuid)?;
+    let cookie = AppUser::create_cookie(user.user_id, &uuid)?;
     let session = jar.add(cookie);
     // Ignore cleanup errors:
     // - New token already created
     // - Old token is one-time use only → already invalid
     // - Cron will clean up expired tokens
     // - User shouldn't see 500 for background cleanup issues
-    let _ = TokenService::clear_by_id_uuid(&mut conn, ctx_user.user_id, &uuid).await;
+    let _ = TokenService::clear_by_id_uuid(&mut conn, user.user_id, &uuid).await;
     // result
     Ok((session, ApiResponse::new_200().with_data(data_token)))
 }

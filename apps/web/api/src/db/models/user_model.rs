@@ -21,20 +21,6 @@ pub struct UserModel {
     pub created_at: NaiveDateTime,
 }
 
-impl Default for UserModel {
-    fn default() -> Self {
-        Self {
-            id: None,
-            email: "".to_string(),
-            icon: None,
-            fname: None,
-            lname: None,
-            hash_password: "".to_string(),
-            created_at: utils::local_time::chrono_time_now(),
-        }
-    }
-}
-
 /// Impl model entry
 #[allow(dead_code)]
 impl UserModel {
@@ -52,24 +38,15 @@ impl UserModel {
 
     /// Create model from [UserEntity]
     pub fn from_entity(entity: &UserEntity) -> Self {
-        Self::default().with_entity(entity)
-    }
-
-    /// Update model from [UserEntity]
-    pub fn update_from_entity(&mut self, entity: &UserEntity) {
-        self.id = Some(entity.id);
-        self.email = entity.email.clone();
-        self.icon = entity.icon.clone();
-        self.fname = entity.fname.clone();
-        self.lname = entity.lname.clone();
-        self.hash_password = entity.hash_password.clone();
-        self.created_at = entity.created_at;
-    }
-
-    /// Update model from [UserEntity]
-    pub fn with_entity(mut self, entity: &UserEntity) -> Self {
-        self.update_from_entity(entity);
-        self
+        Self {
+            id: Some(entity.id),
+            email: entity.email.clone(),
+            icon: entity.icon.clone(),
+            fname: entity.fname.clone(),
+            lname: entity.lname.clone(),
+            hash_password: entity.hash_password.clone(),
+            created_at: entity.created_at,
+        }
     }
 
     /// Create new [NewUserEntity]

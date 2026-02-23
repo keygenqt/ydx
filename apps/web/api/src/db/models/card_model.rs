@@ -24,7 +24,19 @@ pub struct CardModel {
 /// Impl model entry
 #[allow(dead_code)]
 impl CardModel {
-    /// Convert from database entity to model
+    /// Create new [CardModel]
+    pub fn new(set_id: i32, term: String, definition: String, image: Option<String>) -> Self {
+        Self {
+            id: None,
+            set_id,
+            term,
+            definition,
+            image: image.clone(),
+            created_at: utils::local_time::chrono_time_now(),
+        }
+    }
+
+    /// Create model from [CardEntity]
     pub fn from_entity(entity: &CardEntity) -> Self {
         Self {
             id: Some(entity.id),
@@ -36,7 +48,7 @@ impl CardModel {
         }
     }
 
-    /// Convert to new entity for database insertion
+    /// Create new [NewSetEntity]
     pub fn to_new_entity(&self) -> NewCardEntity {
         NewCardEntity {
             set_id: self.set_id.clone(),

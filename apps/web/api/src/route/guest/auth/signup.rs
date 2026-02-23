@@ -13,7 +13,7 @@ use crate::{
         ctx_config::CtxConfig, ctx_cookie::CtxJar, ctx_database::CtxDatabase, ctx_uuid::CtxUuid,
     },
     db::{
-        models::user_model::UserModel,
+        models::{token_model::TokenModel, user_model::UserModel},
         responses::token_response::TokenResponse,
         services::{token_service::TokenService, user_service::UserService},
     },
@@ -52,18 +52,16 @@ pub async fn post(
         Err(ApiResponse::new_409().with_message("User with this email already exists"))?;
     }
     // create user in database
-    let model_params = UserModel::new(&params.email, &params.password);
-    let model_create = UserService::create(&mut conn, &model_params).await?;
+    let user = UserModel::new(&params.email, &params.password);
+    let user = UserService::create(&mut conn, &user).await?;
+    let user_id = user.id.unwrap();
     // create user token
-    let user_id = model_create
-        .id
-        .ok_or_else(|| ApiResponse::new_500().with_message("User ID is required"))?;
-    let secret = &config.server.secret;
-    let model_token = TokenService::create(&mut conn, user_id, &uuid, &secret).await?;
-    let model_token_response = TokenResponse::from_model(&model_token)?;
-    let data_token = to_value(model_token_response).map_err(ApiResponse::serde_json_error)?;
+    let token = TokenModel::new(user_id, uuid.clone(), config.server.secret.clone());
+    let token = TokenService::create(&mut conn, &token).await?;
+    let response = TokenResponse::from_model(&token)?;
+    let data_token = to_value(response).map_err(ApiResponse::serde_json_error)?;
     // create user session
-    let cookie = AppUser::create_cookie(model_create.id.unwrap(), &uuid)?;
+    let cookie = AppUser::create_cookie(user_id, &uuid)?;
     let session = jar.add(cookie);
     // result
     Ok((session, ApiResponse::new_200().with_data(data_token)))

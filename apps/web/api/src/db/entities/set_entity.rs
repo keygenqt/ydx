@@ -20,6 +20,9 @@ pub struct SetEntity {
     pub name: String,
     pub icon: Option<String>,
     pub description: Option<String>,
+    pub known_limit: i32,
+    pub session_limit: i32,
+    pub sort_by: SortCardsEntity,
     pub created_at: NaiveDateTime,
 }
 
@@ -30,6 +33,9 @@ pub struct NewSetEntity {
     pub name: String,
     pub icon: Option<String>,
     pub description: Option<String>,
+    pub known_limit: i32,
+    pub session_limit: i32,
+    pub sort_by: SortCardsEntity,
 }
 
 #[derive(Debug, AsChangeset, Serialize, Deserialize)]
