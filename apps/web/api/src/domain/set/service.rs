@@ -1,6 +1,7 @@
 use crate::{
     api::api_response::ApiResponse,
-    db::{db_handle_error, entities::set_entity::SetEntity, models::set_model::SetModel, schema},
+    db::{db_handle_error, schema},
+    domain::set::{entity::SetEntity, model::SetModel},
 };
 
 use diesel::prelude::*;

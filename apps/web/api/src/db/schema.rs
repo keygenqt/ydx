@@ -9,6 +9,17 @@ pub mod sql_types {
         Debug,
         diesel::sql_types::SqlType,
     )]
+    #[diesel(postgres_type(name = "entity_type_image"))]
+    pub struct EntityTypeImage;
+
+    #[derive(
+        diesel::query_builder::QueryId,
+        serde::Serialize,
+        serde::Deserialize,
+        Clone,
+        Debug,
+        diesel::sql_types::SqlType,
+    )]
     #[diesel(postgres_type(name = "sort_cards"))]
     pub struct SortCards;
 }
@@ -20,6 +31,19 @@ diesel::table! {
         term -> Text,
         definition -> Text,
         image -> Nullable<Text>,
+        created_at -> Timestamp,
+    }
+}
+
+diesel::table! {
+    use diesel::sql_types::*;
+    use super::sql_types::EntityTypeImage;
+
+    images (id) {
+        id -> Int4,
+        entity_type -> EntityTypeImage,
+        entity_id -> Int4,
+        path -> Text,
         created_at -> Timestamp,
     }
 }
@@ -74,4 +98,4 @@ diesel::joinable!(cards -> sets (set_id));
 diesel::joinable!(sets -> users (user_id));
 diesel::joinable!(tokens -> users (user_id));
 
-diesel::allow_tables_to_appear_in_same_query!(cards, sets, tokens, users,);
+diesel::allow_tables_to_appear_in_same_query!(cards, images, sets, tokens, users,);

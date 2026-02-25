@@ -8,7 +8,7 @@ use rand::{RngExt, distr::Alphanumeric, rng};
 
 use crate::{
     app::app_user::AppUser,
-    db::entities::token_entity::{NewTokenEntity, TokenEntity},
+    domain::token::entity::{NewTokenEntity, TokenEntity},
     utils::{self},
 };
 

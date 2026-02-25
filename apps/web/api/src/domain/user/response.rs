@@ -1,6 +1,6 @@
 use serde::Serialize;
 
-use crate::{api::api_response::ApiResponse, db::models::user_model::UserModel};
+use crate::{api::api_response::ApiResponse, domain::user::model::UserModel};
 
 /// Model response [UserModel]
 #[derive(Serialize)]

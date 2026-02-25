@@ -4,10 +4,7 @@ use validator::Validate;
 use crate::{
     api::{api_json::ApiJson, api_response::ApiResponse, api_validate_form::ApiValidatedForm},
     ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser},
-    db::{
-        models::set_model::SetModel, responses::set_response::SetResponse,
-        services::set_service::SetService,
-    },
+    domain::set::{model::SetModel, response::SetResponse, service::SetService},
 };
 
 #[derive(Deserialize, Debug, Validate)]

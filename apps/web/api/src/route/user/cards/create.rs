@@ -4,10 +4,9 @@ use validator::Validate;
 use crate::{
     api::{api_json::ApiJson, api_response::ApiResponse, api_validate_form::ApiValidatedForm},
     ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser},
-    db::{
-        models::card_model::CardModel,
-        responses::card_response::CardResponse,
-        services::{card_service::CardService, set_service::SetService},
+    domain::{
+        card::{model::CardModel, response::CardResponse, service::CardService},
+        set::service::SetService,
     },
 };
 

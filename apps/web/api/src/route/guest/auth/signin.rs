@@ -9,10 +9,9 @@ use crate::{
     ctx::{
         ctx_config::CtxConfig, ctx_cookie::CtxJar, ctx_database::CtxDatabase, ctx_uuid::CtxUuid,
     },
-    db::{
-        models::token_model::TokenModel,
-        responses::token_response::TokenResponse,
-        services::{token_service::TokenService, user_service::UserService},
+    domain::{
+        token::{model::TokenModel, response::TokenResponse, service::TokenService},
+        user::service::UserService,
     },
 };
 

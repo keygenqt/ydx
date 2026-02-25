@@ -12,7 +12,7 @@ bash ../docker/scripts/init.sh
 
 # Params dev config
 CONFIG=(
-    "s|/var\/www|$PWD|g"
+    "s|/var/www/api|$PWD|g"
     "s|postgres:5432|localhost:5432|g"
     "s|development = false|development = true|g"
 )

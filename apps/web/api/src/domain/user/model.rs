@@ -5,7 +5,7 @@ use argon2::{
 use chrono::NaiveDateTime;
 
 use crate::{
-    db::entities::user_entity::{NewUserEntity, UserEntity},
+    domain::user::entity::{NewUserEntity, UserEntity},
     utils,
 };
 

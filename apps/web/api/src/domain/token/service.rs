@@ -2,10 +2,9 @@ use crate::{
     api::api_response::ApiResponse,
     db::{
         db_handle_error,
-        entities::token_entity::TokenEntity,
-        models::token_model::TokenModel,
         schema::{self, tokens::dsl},
     },
+    domain::token::{entity::TokenEntity, model::TokenModel},
     utils,
 };
 
@@ -83,7 +82,7 @@ impl TokenService {
                 GROUP BY user_id, device_uuid
             )
             DELETE FROM tokens
-            WHERE id NOT IN (SELECT id FROM keep_ids)"
+            WHERE id NOT IN (SELECT id FROM keep_ids)",
         )
         .execute(conn)
         .await

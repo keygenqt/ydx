@@ -28,7 +28,7 @@ server {
 deployment {
     host = 0.0.0.0
     port = $API_PORT
-    workdir = "/var/www"
+    workdir = "/var/www/api"
 }
 postgres {
     url = "postgres://postgres:5432/${POSTGRES_DB}"
@@ -74,6 +74,21 @@ server {
         proxy_pass http://api:$API_PORT;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
+    }
+
+    location /pgadmin {
+        proxy_pass http://pgadmin;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
+
+    location /uploads {
+        alias /var/www/api/uploads;
+        expires 30d;
+        add_header Cache-Control "public, no-transform";
+        location ~ ^/uploads/$ {
+            return 403;
+        }
     }
 
     location / {

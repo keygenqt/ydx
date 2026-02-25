@@ -4,10 +4,8 @@ use clap::{Args, Subcommand};
 use colored::Colorize;
 
 use crate::{
-    app::app_config::AppConfig,
-    db::{configure_db, services::token_service::TokenService},
-    exit_error, print_info, print_success,
-    utils::path::get_relative_path_canonicalize,
+    app::app_config::AppConfig, db::configure_db, domain::token::service::TokenService, exit_error,
+    print_info, print_success, utils::path::get_relative_path_canonicalize,
 };
 
 #[derive(Args)]
@@ -82,7 +80,9 @@ pub async fn run(args: ToolsArgs) {
                 print_success!("{} Old images cleaned", "✓".green());
             }
             if !args.expired && !args.duplicate && !args.images {
-                print_info!("no clean options. Specify at least one: --expired, --duplicate, --images");
+                print_info!(
+                    "no clean options. Specify at least one: --expired, --duplicate, --images"
+                );
             }
         }
     }

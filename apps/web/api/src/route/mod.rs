@@ -27,12 +27,17 @@ pub async fn configure_route(config: &AppConfig) -> Router {
     };
     // route config
     Router::new()
+        // guest
         .route("/", get(guest::home::app_info::get))
         .route("/api", get(guest::home::app_info::get))
         .route("/api/signin", post(guest::auth::signin::post))
         .route("/api/signup", post(guest::auth::signup::post))
-        .route("/api/signout", delete(user::auth::clear_session::delete))
+        // user
+        .route("/api/images/user", post(user::uploads::images::post_user))
+        .route("/api/images/set", post(user::uploads::images::post_set))
+        .route("/api/images/card", post(user::uploads::images::post_card))
         .route("/api/signrefresh", post(user::auth::refresh_token::post))
+        .route("/api/signout", delete(user::auth::clear_session::delete))
         .route("/api/cards/{id}", get(user::cards::get_by_id::get))
         .route("/api/cards", post(user::cards::create::post))
         .route("/api/sets/{id}", get(user::sets::get_by_id::get))

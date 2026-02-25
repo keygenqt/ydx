@@ -10,6 +10,7 @@ mod app;
 mod cli;
 mod ctx;
 mod db;
+mod domain;
 mod route;
 mod utils;
 

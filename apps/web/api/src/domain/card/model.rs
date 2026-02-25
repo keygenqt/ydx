@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use serde_with::{TimestampMilliSeconds, serde_as};
 
 use crate::{
-    db::entities::card_entity::{CardEntity, NewCardEntity},
+    domain::card::entity::{CardEntity, NewCardEntity},
     utils::{self},
 };
 

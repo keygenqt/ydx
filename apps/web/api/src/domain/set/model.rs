@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use serde_with::{TimestampMilliSeconds, serde_as};
 
 use crate::{
-    db::entities::set_entity::{NewSetEntity, SetEntity, SortCardsEntity},
+    domain::set::entity::{NewSetEntity, SetEntity, SortCardsEntity},
     utils::{self},
 };
 

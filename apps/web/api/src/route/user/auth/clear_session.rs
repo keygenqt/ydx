@@ -3,7 +3,7 @@ use axum_extra::extract::{PrivateCookieJar, cookie::Cookie};
 use crate::{
     api::api_response::ApiResponse,
     ctx::{ctx_cookie::CtxJar, ctx_database::CtxDatabase, ctx_user::CtxUser, ctx_uuid::CtxUuid},
-    db::services::token_service::TokenService,
+    domain::token::service::TokenService,
     utils::constants,
 };
 

@@ -3,7 +3,7 @@ use axum::extract::Path;
 use crate::{
     api::{api_json::ApiJson, api_response::ApiResponse},
     ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser},
-    db::{responses::user_response::UserResponse, services::user_service::UserService},
+    domain::user::{response::UserResponse, service::UserService},
 };
 
 /// GET - find by ID

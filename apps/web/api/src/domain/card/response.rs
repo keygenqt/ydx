@@ -2,7 +2,7 @@ use chrono::NaiveDateTime;
 use serde::Serialize;
 use serde_with::{TimestampMilliSeconds, serde_as};
 
-use crate::{api::api_response::ApiResponse, db::models::card_model::CardModel};
+use crate::{api::api_response::ApiResponse, domain::card::model::CardModel};
 
 /// Model response [TokenModel]
 #[serde_as]
