@@ -23,7 +23,7 @@ impl FromRequestParts<AppContext> for CtxUser {
         parts: &mut Parts,
         state: &AppContext,
     ) -> Result<Self, Self::Rejection> {
-        let state = AppContext::from_ref(state);
+        let app_context = AppContext::from_ref(state);
         // get uuid
         let CtxUuid(uuid) = CtxUuid::from_request_parts(parts, &state).await?;
         // get connect
@@ -39,7 +39,7 @@ impl FromRequestParts<AppContext> for CtxUser {
             // get app_user
             let app_user = jsonwebtoken::decode::<AppUser>(
                 token,
-                &jsonwebtoken::DecodingKey::from_secret(state.conf.server.secret.as_bytes()),
+                &jsonwebtoken::DecodingKey::from_secret(app_context.conf.server.secret.as_bytes()),
                 &jsonwebtoken::Validation::new(jsonwebtoken::Algorithm::HS256),
             )
             .map_err(|_| ApiResponse::new_401().with_message("Invalid token"))?

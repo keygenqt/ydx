@@ -17,8 +17,8 @@ impl FromRequestParts<AppContext> for CtxDatabase {
         _parts: &mut Parts,
         state: &AppContext,
     ) -> Result<Self, Self::Rejection> {
-        let state = AppContext::from_ref(state);
-        let conn = state
+        let app_context = AppContext::from_ref(state);
+        let conn = app_context
             .pool
             .get_owned()
             .await

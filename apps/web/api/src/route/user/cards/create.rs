@@ -2,7 +2,7 @@ use serde::Deserialize;
 use validator::Validate;
 
 use crate::{
-    api::{api_json::ApiJson, api_response::ApiResponse, api_validate_form::ApiValidatedForm},
+    api::{api_json::ApiJson, api_response::ApiResponse, api_validate_form::{ApiValidatedForm, validate_image}},
     ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser},
     domain::{
         card::{model::CardModel, response::CardResponse, service::CardService},
@@ -13,6 +13,7 @@ use crate::{
 #[derive(Deserialize, Debug, Validate)]
 pub struct CreateParams {
     set_id: i32,
+    #[validate(custom(function = "validate_image"))]
     image: Option<String>,
     #[validate(length(
         min = 1,

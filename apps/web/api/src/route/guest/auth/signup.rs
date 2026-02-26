@@ -7,7 +7,7 @@ use serde_json::to_value;
 use validator::Validate;
 
 use crate::{
-    api::{api_response::ApiResponse, api_validate_form::ApiValidatedForm},
+    api::{api_response::ApiResponse, api_validate_form::{ApiValidatedForm, validate_image}},
     app::app_user::AppUser,
     ctx::{
         ctx_config::CtxConfig, ctx_cookie::CtxJar, ctx_database::CtxDatabase, ctx_uuid::CtxUuid,
@@ -24,6 +24,8 @@ static PASSWORD_REGEX: LazyLock<Regex> = LazyLock::new(|| {
 
 #[derive(Deserialize, Debug, Validate)]
 pub struct SignUpParams {
+    #[validate(custom(function = "validate_image"))]
+    icon: Option<String>,
     #[validate(email(message = "Invalid email format"))]
     email: String,
     #[validate(length(
@@ -46,6 +48,16 @@ pub async fn post(
     CtxDatabase(mut conn): CtxDatabase,
     ApiValidatedForm(params): ApiValidatedForm<SignUpParams>,
 ) -> Result<(PrivateCookieJar, ApiResponse), ApiResponse> {
+    // check file
+    if let Some(icon_path) = &params.icon {
+        let full_path = config
+            .deployment
+            .workdir
+            .join(icon_path.trim_start_matches('/'));
+        if !full_path.exists() {
+            Err(ApiResponse::new_400().with_message("Icon file not found on server"))?
+        }
+    }
     // check exist email
     if let Ok(_) = UserService::find_by_email(&mut conn, &params.email).await {
         Err(ApiResponse::new_409().with_message("User with this email already exists"))?;

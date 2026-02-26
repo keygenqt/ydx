@@ -17,7 +17,7 @@ impl FromRequestParts<AppContext> for CtxConfig {
         _parts: &mut Parts,
         state: &AppContext,
     ) -> Result<Self, Self::Rejection> {
-        let state = AppContext::from_ref(state);
-        Ok(CtxConfig(state.conf))
+        let app_context = AppContext::from_ref(state);
+        Ok(CtxConfig(app_context.conf))
     }
 }

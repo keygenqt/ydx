@@ -5,7 +5,7 @@ use tower::ServiceBuilder;
 use tower_http::normalize_path::NormalizePathLayer;
 
 use crate::{
-    app::{app_config::AppConfig, app_tracing::configure_tracing, configure_uploads},
+    app::{app_config::AppConfig, app_tracing::configure_tracing},
     exit_error, route,
     utils::path::get_relative_path_canonicalize,
 };
@@ -31,8 +31,6 @@ pub async fn run(arg: StartArgs) {
                 Ok(result) => result,
                 Err(_) => exit_error!("error read config"),
             };
-            // check uploads dirs
-            configure_uploads(&config);
             // register tracing
             configure_tracing(&config);
             // init tcp listener
