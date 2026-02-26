@@ -33,9 +33,9 @@ pub async fn configure_route(config: &AppConfig) -> Router {
         .route("/api/signin", post(guest::auth::signin::post))
         .route("/api/signup", post(guest::auth::signup::post))
         // user
-        .route("/api/images/user/{id}", post(user::images::user::post))
-        .route("/api/images/set/{id}", post(user::images::set::post))
-        .route("/api/images/card/{id}", post(user::images::card::post))
+        .route("/api/images/user", post(user::images::user::post))
+        .route("/api/images/set", post(user::images::set::post))
+        .route("/api/images/card", post(user::images::card::post))
         .route("/api/signrefresh", post(user::auth::refresh_token::post))
         .route("/api/signout", delete(user::auth::clear_session::delete))
         .route("/api/cards/{id}", get(user::cards::get_by_id::get))

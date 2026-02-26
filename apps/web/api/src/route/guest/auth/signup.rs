@@ -7,7 +7,10 @@ use serde_json::to_value;
 use validator::Validate;
 
 use crate::{
-    api::{api_response::ApiResponse, api_validate_form::{ApiValidatedForm, validate_image}},
+    api::{
+        api_response::ApiResponse,
+        api_validate_form::{ApiValidatedForm, validate_image},
+    },
     app::app_user::AppUser,
     ctx::{
         ctx_config::CtxConfig, ctx_cookie::CtxJar, ctx_database::CtxDatabase, ctx_uuid::CtxUuid,

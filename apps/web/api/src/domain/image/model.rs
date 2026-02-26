@@ -49,12 +49,7 @@ impl ImageModel {
     pub async fn new<T: ImageType>(config: &AppConfig, data: &[u8]) -> Result<Self, ApiResponse> {
         let mime = "image/webp".to_string();
         let (width, height) = T::TARGET_SIZE;
-        let filename = format!(
-            "{}_{}x{}.webp",
-            Uuid::new_v4(),
-            width,
-            height
-        );
+        let filename = format!("{}_{}x{}.webp", Uuid::new_v4(), width, height);
         let path = format!("/{}/{}/{}", constants::UPLOADS_PATH, T::PATH, filename);
         let full_path = Self::get_full_path(&config.deployment.workdir, &path).await?;
         let image = Self::optimize_data::<T>(data)?;

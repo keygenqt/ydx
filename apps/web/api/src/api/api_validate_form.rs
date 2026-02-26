@@ -48,10 +48,12 @@ pub fn validate_file_exists(file: &str) -> Result<(), ValidationError> {
 
 /// check by regex
 pub fn validate_image_path(file: &str) -> Result<(), ValidationError> {
-    let regex = Regex::new(r"^/uploads/(users|sets|cards)/[0-9a-fA-F\-]{36}_\d+x\d+\.webp$").unwrap();
+    let regex =
+        Regex::new(r"^/uploads/(users|sets|cards)/[0-9a-fA-F\-]{36}_\d+x\d+\.webp$").unwrap();
     if !regex.is_match(file) {
-        return Err(ValidationError::new("file_error")
-            .with_message("Invalid image path format".into()));
+        return Err(
+            ValidationError::new("file_error").with_message("Invalid image path format".into())
+        );
     }
     Ok(())
 }
