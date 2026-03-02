@@ -14,9 +14,9 @@ pub extern "C" fn Java_com_keygenqt_ydx_MainActivity_performanceTest<'local>(
     // Run functions
     let mut counter = 0.0;
     for _ in 0..100 {
-        counter += ydx_core::test_loop_computations() as f64;
-        counter += ydx_core::test_vector_operations() as f64;
-        counter += ydx_core::test_float_calculations() as f64;
+        counter += ydx_core::utils::tests::test_loop_computations() as f64;
+        counter += ydx_core::utils::tests::test_vector_operations() as f64;
+        counter += ydx_core::utils::tests::test_float_calculations() as f64;
     }
     println!("counter: {:?}", counter);
     // Result time

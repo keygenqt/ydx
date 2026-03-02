@@ -20,7 +20,7 @@ import {
 import { AppCache } from "../../constants/AppCache";
 import { useEffectCache } from "../../components/hooks";
 import { CacheUtils } from "../../utils/CacheUtils";
-import { AppRoute } from "../../constants/AppRoute";
+import { AppPath } from "../../constants/AppPath";
 import { NavigationUtils } from "../../utils/NavigationUtils";
 import { LanguageUtils } from "../../utils/LanguageUtils";
 
@@ -64,23 +64,23 @@ export function Header(props) {
               <Button
                 color={"primary"}
                 onClick={() => {
-                  NavigationUtils.openPage(navigate, AppRoute.app);
+                  NavigationUtils.openPage(navigate, AppPath.manager);
                 }}
               >
                 {t("layouts.header.t_manager")}
               </Button>
-              <Button
+              {/* <Button
                 color={"primary"}
                 onClick={() => {
-                  NavigationUtils.openPage(navigate, AppRoute.apps);
+                  NavigationUtils.openPage(navigate, AppPath.apps);
                 }}
               >
                 {t("layouts.header.t_applications")}
-              </Button>
+              </Button> */}
               <Button
                 color={"primary"}
                 onClick={() => {
-                  NavigationUtils.openPage(navigate, AppRoute.docs);
+                  NavigationUtils.openPage(navigate, AppPath.docs);
                 }}
               >
                 {t("layouts.header.t_documentation")}

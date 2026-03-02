@@ -18,6 +18,9 @@ export const cnLocalization = {
         t_text: "抱歉，您查找的页面不存在或已被移动。",
         t_btn: "返回首页",
       },
+      protected: {
+        t_text: "加载中...",
+      },
       home: {
         t_text: "即将推出...",
       },

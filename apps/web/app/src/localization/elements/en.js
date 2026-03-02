@@ -18,6 +18,9 @@ export const enLocalization = {
         t_text: "Sorry, the page you are looking for doesn't exist.",
         t_btn: "Go to Homepage",
       },
+      protected: {
+        t_text: "Loading...",
+      },
       home: {
         t_text: "Coming soon...",
       },

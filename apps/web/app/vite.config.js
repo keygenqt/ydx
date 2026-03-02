@@ -20,6 +20,12 @@ export default defineConfig({
   server: {
     fs: {
       allow: ['.', '..']
-    }
+    },
+    proxy: {
+      '/api': {
+        target: 'http://0.0.0.0:3002',
+        changeOrigin: true,
+      },
+    },
   }
 })

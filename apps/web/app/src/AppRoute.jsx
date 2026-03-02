@@ -1,11 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
-
 import { BaseLayout } from "./layouts/BaseLayout";
-
-import {
-  ErrorPage,
-  HomePage,
-} from "./pages";
+import { ProtectedRoute } from "./components/ui";
+import { AuthPage, ErrorPage, HomePage, ManagerPage } from "./pages";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +13,24 @@ const router = createBrowserRouter([
           <BaseLayout>
             <HomePage />
           </BaseLayout>
+        ),
+      },
+      {
+        path: "auth",
+        element: (
+          <BaseLayout isCenter={true}>
+            <AuthPage />
+          </BaseLayout>
+        ),
+      },
+      {
+        path: "manager",
+        element: (
+          <ProtectedRoute>
+            <BaseLayout isCenter={true}>
+              <ManagerPage />
+            </BaseLayout>
+          </ProtectedRoute>
         ),
       },
       {

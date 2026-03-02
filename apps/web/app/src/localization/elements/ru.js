@@ -18,6 +18,9 @@ export const ruLocalization = {
         t_text: "Извините, страница, которую вы ищете, не существует.",
         t_btn: "На главную",
       },
+      protected: {
+        t_text: "Загрузка...",
+      },
       home: {
         t_text: "Скоро...",
       },
