@@ -9,7 +9,7 @@ use validator::Validate;
 use crate::{
     api::{
         api_response::ApiResponse,
-        api_validate_form::{ApiValidatedForm, validate_image},
+        api_validate_json::{ApiValidatedJson, validate_image},
     },
     app::app_user::AppUser,
     ctx::{
@@ -49,7 +49,7 @@ pub async fn post(
     CtxUuid(uuid): CtxUuid,
     CtxConfig(config): CtxConfig,
     CtxDatabase(mut conn): CtxDatabase,
-    ApiValidatedForm(params): ApiValidatedForm<SignUpParams>,
+    ApiValidatedJson(params): ApiValidatedJson<SignUpParams>,
 ) -> Result<(PrivateCookieJar, ApiResponse), ApiResponse> {
     // check file
     if let Some(icon_path) = &params.icon {

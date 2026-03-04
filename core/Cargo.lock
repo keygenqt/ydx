@@ -2142,7 +2142,10 @@ version = "0.0.1"
 dependencies = [
  "anyhow",
  "gloo-net",
+ "once_cell",
  "reqwest",
+ "serde",
+ "serde_json",
  "tokio",
  "web-sys",
 ]
@@ -2183,6 +2186,7 @@ dependencies = [
 name = "ydx-wasm"
 version = "0.0.1"
 dependencies = [
+ "anyhow",
  "js-sys",
  "wasm-bindgen",
  "wasm-bindgen-futures",

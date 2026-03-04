@@ -4,7 +4,7 @@ use serde_json::to_value;
 use validator::Validate;
 
 use crate::{
-    api::{api_response::ApiResponse, api_validate_form::ApiValidatedForm},
+    api::{api_response::ApiResponse, api_validate_json::ApiValidatedJson},
     app::app_user::AppUser,
     ctx::{
         ctx_config::CtxConfig, ctx_cookie::CtxJar, ctx_database::CtxDatabase, ctx_uuid::CtxUuid,
@@ -17,12 +17,12 @@ use crate::{
 
 #[derive(Deserialize, Debug, Validate)]
 pub struct SignInParams {
-    #[validate(email(message = "Invalid email format"))]
+    #[validate(email(message = "Must be a well-formed email address."))]
     email: String,
     #[validate(length(
         min = 8,
         max = 16,
-        message = "Password must be between 8 and 16 characters"
+        message = "Size must be between 8 and 16."
     ))]
     password: String,
 }
@@ -33,16 +33,16 @@ pub async fn post(
     CtxUuid(uuid): CtxUuid,
     CtxConfig(config): CtxConfig,
     CtxDatabase(mut conn): CtxDatabase,
-    ApiValidatedForm(params): ApiValidatedForm<SignInParams>,
+    ApiValidatedJson(params): ApiValidatedJson<SignInParams>,
 ) -> Result<(PrivateCookieJar, ApiResponse), ApiResponse> {
     // find user
     let model = UserService::find_by_email(&mut conn, &params.email)
         .await
-        .map_err(|_| ApiResponse::new_401().with_message("Invalid email or password"))?;
+        .map_err(|_| ApiResponse::new_401().with_message("Invalid email or password."))?;
     let user_id = model.id.unwrap();
     // argon2 validate pass
     if !model.password_valid(&params.password) {
-        Err(ApiResponse::new_401().with_message("Invalid email or password"))?
+        Err(ApiResponse::new_401().with_message("Invalid email or password."))?
     }
     // clear user token
     let _ = TokenService::clear_by_id_uuid(&mut conn, user_id, &uuid).await?;

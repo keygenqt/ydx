@@ -4,7 +4,7 @@ use serde_json::to_value;
 use validator::Validate;
 
 use crate::{
-    api::{api_response::ApiResponse, api_validate_form::ApiValidatedForm},
+    api::{api_response::ApiResponse, api_validate_json::ApiValidatedJson},
     app::app_user::AppUser,
     ctx::{
         ctx_config::CtxConfig, ctx_cookie::CtxJar, ctx_database::CtxDatabase, ctx_user::CtxUser,
@@ -27,7 +27,7 @@ pub async fn post(
     CtxUuid(uuid): CtxUuid,
     CtxConfig(config): CtxConfig,
     CtxDatabase(mut conn): CtxDatabase,
-    ApiValidatedForm(params): ApiValidatedForm<TokenRefreshParams>,
+    ApiValidatedJson(params): ApiValidatedJson<TokenRefreshParams>,
 ) -> Result<(PrivateCookieJar, ApiResponse), ApiResponse> {
     // find user device token
     let token = TokenService::find_by_id_uuid(&mut conn, user.user_id, &uuid).await?;

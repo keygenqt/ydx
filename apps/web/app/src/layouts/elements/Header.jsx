@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate } from "react-router";
 import {
   AppBar,
   Toolbar,
@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import {
   Home,
+  Logout,
   Brightness5Outlined,
   Brightness7Outlined,
 } from "@mui/icons-material";
@@ -22,18 +23,15 @@ import { useEffectCache } from "../../components/hooks";
 import { CacheUtils } from "../../utils/CacheUtils";
 import { AppPath } from "../../constants/AppPath";
 import { NavigationUtils } from "../../utils/NavigationUtils";
-import { LanguageUtils } from "../../utils/LanguageUtils";
+import { HttpClient } from "../../utils/HttpClient";
 
 export function Header(props) {
-  // route
-  const { pathname } = useLocation();
   // localization
-  const { t, i18n } = useTranslation();
-  const language = LanguageUtils.get(i18n);
+  const { t } = useTranslation();
   // theme
-  const isLoading = false;
   const theme = useTheme();
   const darkMode = useEffectCache(AppCache.darkModeKey);
+  const isLogin = useEffectCache(AppCache.isLogin);
   const isSM = useMediaQuery(theme.breakpoints.down("sm"));
   // navigate
   const navigate = useNavigate();
@@ -57,7 +55,7 @@ export function Header(props) {
               variant={"middle"}
               flexItem
               sx={{
-                backgroundColor: "primary.main"
+                backgroundColor: "primary.main",
               }}
             />
             <Stack direction={"row"} spacing={0}>
@@ -100,42 +98,18 @@ export function Header(props) {
             >
               {darkMode ? <Brightness7Outlined /> : <Brightness5Outlined />}
             </IconButton>
-            <IconButton
-              size={isSM ? "small" : "medium"}
-              disabled={isLoading}
-              edge={"end"}
-              color={"primary"}
-              sx={{
-                opacity: isLoading ? 0.7 : 1,
-              }}
-              onClick={() => {
-                // Change lang
-                if (language === "en") {
-                  i18n.changeLanguage("ru");
-                } else if (language === "ru") {
-                  i18n.changeLanguage("cn");
-                } else {
-                  i18n.changeLanguage("en");
-                }
-              }}
-            >
-              <Stack
-                sx={{
-                  height: isSM ? 22 : 24,
-                  width: isSM ? 22 : 24,
-                  borderRadius: 50,
-                  borderColor: "primary",
-                  border: "1px solid",
-                  color: "primary",
-                  fontSize: 11,
-                  fontWeight: "bold",
-                  alignItems: "center",
-                  justifyContent: "center",
+            {!isLogin ? null : (
+              <IconButton
+                size={isSM ? "small" : "medium"}
+                color={"primary"}
+                onClick={async () => {
+                  await HttpClient.signout()
+                  CacheUtils.set(AppCache.isLogin, false);
                 }}
               >
-                <Box>{t("layouts.header.t_language")}</Box>
-              </Stack>
-            </IconButton>
+                <Logout />
+              </IconButton>
+            )}
           </Stack>
         </Toolbar>
       </AppBar>

@@ -1,52 +1,40 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { useTranslation } from "react-i18next";
-import { Stack, Typography } from "@mui/material";
 import { NavigationUtils } from "../../utils/NavigationUtils";
 import { AppPath } from "../../constants/AppPath";
-import { BaseLayout } from "../../layouts/BaseLayout";
+import { HttpClient } from "../../utils/HttpClient";
+import { useEffectCache } from "../hooks";
+import { AppCache } from "../../constants/AppCache";
+import { CacheUtils } from "../../utils/CacheUtils";
 
-import { ydx_wasm_request_signcheck } from "../../wasm/ydx_wasm.js";
-
-async function authLoader() {
-  const value = await ydx_wasm_request_signcheck("device_uuid");
-  return value.includes("200");
-}
-
+/**
+ * Protected Route Component
+ *
+ * Restricts access to authenticated users only.
+ * Shows loading state while checking authentication.
+ * Redirects to auth page if user is not authenticated.
+ */
 export function ProtectedRoute({ children }) {
-  // localization
-  const { t } = useTranslation();
   // navigate
   const navigate = useNavigate();
-
-  const [isAuth, setIsAuth] = React.useState(null);
-  const wasCalled = React.useRef(false)
-
+  // states
+  const isLogin = useEffectCache(AppCache.isLogin);
+  const checkAuth = React.useRef(false);
+  // init callbacks
   React.useEffect(() => {
-    if(wasCalled.current) return;
-    wasCalled.current = true;
-    authLoader()
+    if (isLogin === false) {
+      NavigationUtils.replacePage(navigate, AppPath.auth);
+    }
+  }, [isLogin, navigate]);
+  // check auth
+  React.useEffect(() => {
+    if (checkAuth.current) return;
+    checkAuth.current = true;
+    HttpClient.signcheck()
       .then((isAuthenticated) => {
-        if (isAuthenticated) {
-          setIsAuth(true);
-        } else {
-          NavigationUtils.openPage(navigate, AppPath.auth);
-        }
-      })
-      .catch(() => NavigationUtils.openPage(navigate, AppPath.auth));
+        CacheUtils.set(AppCache.isLogin, isAuthenticated);
+      });
   }, []);
-
-  if (isAuth === null) {
-    return (
-      <BaseLayout isCenter={true}>
-        <Stack sx={{ alignItems: "center" }}>
-          <Typography color="textPrimary" variant="h4">
-            {t("pages.protected.t_text")}
-          </Typography>
-        </Stack>
-      </BaseLayout>
-    );
-  }
-
+  // result
   return children;
 }

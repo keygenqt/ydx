@@ -5,7 +5,7 @@ use crate::{
     api::{
         api_json::ApiJson,
         api_response::ApiResponse,
-        api_validate_form::{ApiValidatedForm, validate_image},
+        api_validate_json::{ApiValidatedJson, validate_image},
     },
     ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser},
     domain::set::{model::SetModel, response::SetResponse, service::SetService},
@@ -30,7 +30,7 @@ pub struct CreateParams {
 pub async fn post(
     CtxUser(user): CtxUser,
     CtxDatabase(mut conn): CtxDatabase,
-    ApiValidatedForm(params): ApiValidatedForm<CreateParams>,
+    ApiValidatedJson(params): ApiValidatedJson<CreateParams>,
 ) -> Result<ApiJson<SetResponse>, ApiResponse> {
     // create user in database
     let model = SetModel::new(user.user_id, params.name, params.icon, params.description);

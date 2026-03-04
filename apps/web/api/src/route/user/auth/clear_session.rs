@@ -7,7 +7,7 @@ use crate::{
     utils::constants,
 };
 
-/// DELETE - /api/logout
+/// DELETE - /api/signout
 pub async fn delete(
     CtxUser(user): CtxUser,
     CtxJar(jar): CtxJar,

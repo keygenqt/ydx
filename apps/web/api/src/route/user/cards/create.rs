@@ -5,7 +5,7 @@ use crate::{
     api::{
         api_json::ApiJson,
         api_response::ApiResponse,
-        api_validate_form::{ApiValidatedForm, validate_image},
+        api_validate_json::{ApiValidatedJson, validate_image},
     },
     ctx::{ctx_database::CtxDatabase, ctx_user::CtxUser},
     domain::{
@@ -38,7 +38,7 @@ pub struct CreateParams {
 pub async fn post(
     CtxUser(_): CtxUser,
     CtxDatabase(mut conn): CtxDatabase,
-    ApiValidatedForm(params): ApiValidatedForm<CreateParams>,
+    ApiValidatedJson(params): ApiValidatedJson<CreateParams>,
 ) -> Result<ApiJson<CardResponse>, ApiResponse> {
     // check exist set
     let _ = SetService::find_by_id(&mut conn, params.set_id).await?;

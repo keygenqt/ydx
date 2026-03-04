@@ -12,17 +12,28 @@ export const enLocalization = {
         t_copyright: "© 2026 YDX. All Rights Reserved.",
       },
     },
+    components: {
+      protected: {
+        t_text: "Loading...",
+      },
+    },
     pages: {
       error: {
         t_title: "Page Not Found",
         t_text: "Sorry, the page you are looking for doesn't exist.",
         t_btn: "Go to Homepage",
       },
-      protected: {
-        t_text: "Loading...",
-      },
+
       home: {
         t_text: "Coming soon...",
+      },
+      signin: {
+        t_welcome: "Welcome!",
+        t_subtitle: "To signin, please enter your email and the password.",
+        t_label_email: "Email",
+        t_label_password: "Password",
+        t_btn_submit: "Submit",
+        t_success: "Authorization was successful",
       },
     },
   },

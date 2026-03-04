@@ -8,7 +8,7 @@ export function ManagerPage(props) {
   return (
     <Stack sx={{ alignItems: "center" }}>
       <Typography color="textPrimary" variant="h4">
-        Manager
+        {t("layouts.header.t_manager")}
       </Typography>
     </Stack>
   );

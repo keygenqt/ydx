@@ -1,20 +1,15 @@
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router";
 import {
-  useTheme,
+  IconButton,
   Box,
-  Button,
-  Divider,
   Stack,
-  SvgIcon,
-  Typography,
-  Tooltip,
+  useTheme,
   useMediaQuery,
+  Typography,
   Container,
 } from "@mui/material";
-import { Telegram, GitHub } from "@mui/icons-material";
-import { AppData } from "../../constants/AppData";
-import { AppLinks } from "../../constants/AppLinks";
-import { NavigationUtils } from "../../utils/NavigationUtils";
+
 import { LanguageUtils } from "../../utils/LanguageUtils";
 
 export function Footer(props) {
@@ -22,8 +17,9 @@ export function Footer(props) {
   const { t, i18n } = useTranslation();
   const language = LanguageUtils.get(i18n);
   // theme
+  const isLoading = false;
+  // theme
   const theme = useTheme();
-  const isLG = useMediaQuery(theme.breakpoints.down("lg"));
   const isMD = useMediaQuery(theme.breakpoints.down("md"));
   const isSM = useMediaQuery(theme.breakpoints.down("sm"));
   // page
@@ -37,9 +33,61 @@ export function Footer(props) {
       }}
     >
       <Container maxWidth="xl">
-        <Typography color="textPrimary" variant="body2">
-          {t("layouts.footer.t_copyright")}
-        </Typography>
+        <Stack
+          direction={"row"}
+          sx={{
+            justifyItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography
+            color="textPrimary"
+            variant="body2"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {t("layouts.footer.t_copyright")}
+          </Typography>
+
+          <IconButton
+            size={isSM ? "small" : "medium"}
+            disabled={isLoading}
+            edge={"end"}
+            color={"primary"}
+            sx={{
+              opacity: isLoading ? 0.7 : 1,
+            }}
+            onClick={() => {
+              // Change lang
+              if (language === "en") {
+                i18n.changeLanguage("ru");
+              } else if (language === "ru") {
+                i18n.changeLanguage("cn");
+              } else {
+                i18n.changeLanguage("en");
+              }
+            }}
+          >
+            <Stack
+              sx={{
+                height: isSM ? 22 : 24,
+                width: isSM ? 22 : 24,
+                borderRadius: 50,
+                borderColor: "primary",
+                border: "1px solid",
+                color: "primary",
+                fontSize: 11,
+                fontWeight: "bold",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Box>{t("layouts.header.t_language")}</Box>
+            </Stack>
+          </IconButton>
+        </Stack>
       </Container>
     </Stack>
   );

@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
+
+import { FormSignin } from "./elements/FormSignin";
 
 export function AuthPage(props) {
   // localization
@@ -7,9 +9,7 @@ export function AuthPage(props) {
   // page
   return (
     <Stack sx={{ alignItems: "center" }}>
-      <Typography color="textPrimary" variant="h4">
-        Auth
-      </Typography>
+      <FormSignin />
     </Stack>
   );
 }
