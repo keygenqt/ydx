@@ -81,7 +81,7 @@ export function Header(props) {
                 size={isSM ? "small" : "medium"}
                 color={"primary"}
                 onClick={() => {
-                  NavigationUtils.openPage(navigate, AppPath.docs);
+                  NavigationUtils.openUrl(AppPath.docs);
                 }}
               >
                 {t("layouts.header.t_documentation")}
@@ -97,7 +97,7 @@ export function Header(props) {
                 size={isSM ? "small" : "medium"}
                 color={"primary"}
                 onClick={async () => {
-                  NavigationUtils.openPage(navigate, AppPath.docs);
+                  NavigationUtils.openUrl(AppPath.docs);
                 }}
               >
                 <Book />

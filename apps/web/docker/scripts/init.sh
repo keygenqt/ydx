@@ -57,8 +57,9 @@ EOF
 
 # Create nginx proxy
 cat > "$PATH_CONFIGS/nginx.conf" <<EOF
-limit_req_zone \$binary_remote_addr zone=uploads_limit:10m rate=5r/m;
-limit_conn_zone \$binary_remote_addr zone=uploads_conn:10m;
+limit_req_zone \$binary_remote_addr zone=api_limit:100m rate=300r/m;
+limit_req_zone \$binary_remote_addr zone=images_limit:100m rate=600r/m;
+limit_conn_zone \$binary_remote_addr zone=api_conn:100m;
 
 limit_req_status 429;
 limit_conn_status 429;
@@ -79,8 +80,8 @@ server {
     }
 
     location /api {
-        limit_req zone=uploads_limit burst=5 nodelay;
-        limit_conn uploads_conn 10;
+        limit_req zone=api_limit burst=20 nodelay;
+        limit_conn api_conn 30;
 
         proxy_pass http://api:$API_PORT;
         proxy_set_header Host \$host;
@@ -88,10 +89,10 @@ server {
     }
 
     location ~ ^/api/images/ {
-        limit_req zone=uploads_limit burst=3 nodelay;
-        limit_conn uploads_conn 3;
-        limit_rate_after 100k;
-        limit_rate 1024k;
+        limit_req zone=images_limit burst=50 nodelay;
+        limit_conn api_conn 20;
+        limit_rate_after 1m;
+        limit_rate 5m;
 
         proxy_pass http://api:$API_PORT;
         proxy_set_header Host \$host;

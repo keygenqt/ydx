@@ -12,7 +12,7 @@ export default defineConfig({
     exclude: ['ydx-wasm']
   },
   build: {
-    target: 'es2020',
+    target: 'es2022',
     rollupOptions: {
       external: ['ydx-wasm']
     }
