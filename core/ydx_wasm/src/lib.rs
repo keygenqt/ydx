@@ -31,6 +31,18 @@ pub fn ydx_wasm_request_signin(email: String, password: String) -> Promise {
     })
 }
 
+/// Signup user
+/// POST
+#[wasm_bindgen]
+pub fn ydx_wasm_request_signup(email: String, password: String) -> Promise {
+    future_to_promise(async move {
+        HttpClient::instance()
+            .signup(email, password)
+            .await
+            .to_js_response()
+    })
+}
+
 /// Signout user
 /// DELETE
 #[wasm_bindgen]

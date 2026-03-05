@@ -24,13 +24,15 @@ export const ruLocalization = {
         t_btn: "На главную",
       },
       home: {
-        t_text: "Скоро...",
+        t_text: "В разработке...",
       },
       auth: {
         t_title_signin: "YDX | Авторизация",
         t_title_signup: "YDX | Регистрация",
-        t_subtitle_signin: "Редактируйте коллекции, учитесь на любом устройстве!",
-        t_subtitle_signup: "Добавляйте коллекции и изучайте на любом устройстве!",
+        t_subtitle_signin:
+          "Редактируйте коллекции, учитесь на любом устройстве!",
+        t_subtitle_signup:
+          "Добавляйте коллекции и изучайте на любом устройстве!",
         benefits_signin: [
           "Нативный интерфейс на всех 8 платформах",
           "Работает молниеносно на любом устройстве",
@@ -71,5 +73,10 @@ export const ruLocalization = {
     "Must be a well-formed email address.":
       "Должен быть корректный email адрес.",
     "Size must be between 8 and 16.": "Размер должен быть от 8 до 16.",
+    "Icon file not found on server.": "Файл иконки не найден на сервере.",
+    "User with this email already exists.":
+      "Пользователь с таким email уже существует.",
+    "Password must contain at least one uppercase letter, one lowercase letter, and one number.":
+      "Пароль должен содержать хотя бы одну заглавную букву, одну строчную букву и одну цифру.",
   },
 };

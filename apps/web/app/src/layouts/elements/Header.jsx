@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import {
   Home,
+  Book,
   Logout,
   Brightness5Outlined,
   Brightness7Outlined,
@@ -40,12 +41,12 @@ export function Header(props) {
     <Container maxWidth="xl">
       <AppBar position="static" elevation={0} color="transparent">
         <Toolbar
-          sx={{ 
-            paddingLeft: '0 !important',
-            paddingRight: '0 !important',
+          sx={{
+            paddingLeft: "0 !important",
+            paddingRight: "0 !important",
           }}
         >
-          <Stack direction={"row"} spacing={2}>
+          <Stack direction={"row"} spacing={isSM ? 0 : 2}>
             <Button
               color={"primary"}
               startIcon={<Home />}
@@ -65,6 +66,7 @@ export function Header(props) {
             />
             <Stack direction={"row"} spacing={0}>
               <Button
+                size={isSM ? "small" : "medium"}
                 color={"primary"}
                 onClick={() => {
                   NavigationUtils.openPage(navigate, AppPath.manager);
@@ -72,15 +74,11 @@ export function Header(props) {
               >
                 {t("layouts.header.t_manager")}
               </Button>
-              {/* <Button
-                color={"primary"}
-                onClick={() => {
-                  NavigationUtils.openPage(navigate, AppPath.apps);
-                }}
-              >
-                {t("layouts.header.t_applications")}
-              </Button> */}
               <Button
+                sx={{
+                  display: isSM ? "none" : "inherit",
+                }}
+                size={isSM ? "small" : "medium"}
                 color={"primary"}
                 onClick={() => {
                   NavigationUtils.openPage(navigate, AppPath.docs);
@@ -94,6 +92,17 @@ export function Header(props) {
           <Box sx={{ flexGrow: 1 }} />
 
           <Stack direction={"row"} spacing={1} sx={{ marginRight: -1 }}>
+            {!isSM ? null : (
+              <IconButton
+                size={isSM ? "small" : "medium"}
+                color={"primary"}
+                onClick={async () => {
+                  NavigationUtils.openPage(navigate, AppPath.docs);
+                }}
+              >
+                <Book />
+              </IconButton>
+            )}
             <IconButton
               size={isSM ? "small" : "medium"}
               color={"primary"}

@@ -11,6 +11,8 @@ import {
   Typography,
   Container,
   IconButton,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { Person, PersonAddAlt1, FiberManualRecord } from "@mui/icons-material";
 
@@ -20,25 +22,28 @@ import { FormSignup } from "./elements/FormSignup";
 export function AuthPage(props) {
   // localization
   const { t } = useTranslation();
+  // theme
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.down("md"));
   // states
   const [toggleSignin, setToggleSignin] = React.useState(true);
-  // @todo - change with Container for china language
   // page
   return (
     <Container
       maxWidth="xl"
       sx={{
-        maxWidth: "1080px !important",
-        paddingY: 6,
+        maxWidth: "1090px !important",
+        paddingTop: 3,
+        paddingBottom: 6,
       }}
     >
       <Card>
-        <Stack direction={"row"}>
+        <Stack direction={isMD ? "column": "row"}>
           <Stack
             className="rt-circle"
             spacing={3}
             sx={{
-              p: 5,
+              p: isMD ? 3: 5,
               flex: 1,
               justifyContent: "center",
               justifyItems: "center",
@@ -49,7 +54,7 @@ export function AuthPage(props) {
                 ? t("pages.auth.t_title_signin")
                 : t("pages.auth.t_title_signup")}
             </Typography>
-            <Stack spacing={2}>
+            <Stack spacing={2} sx={{display: isMD ? "none" : "inherit"}}>
               <Typography variant="subtitle1" color={"text.primary"}>
                 {toggleSignin
                   ? t("pages.auth.t_subtitle_signin")
@@ -83,7 +88,7 @@ export function AuthPage(props) {
           <Stack
             spacing={4}
             sx={{
-              p: 5,
+              p: isMD ? 3: 5,
               flex: 1,
               justifyContent: "center",
               justifyItems: "center",

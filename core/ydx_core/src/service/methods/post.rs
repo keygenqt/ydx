@@ -9,4 +9,12 @@ impl HttpClient {
         )
         .await
     }
+
+    pub async fn signup(&self, email: String, password: String) -> Result<String> {
+        self.post(
+            "/api/signup",
+            serde_json::json!({"email": email,"password": password}),
+        )
+        .await
+    }
 }

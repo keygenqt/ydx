@@ -79,7 +79,7 @@ export function FormSignup(props) {
         await new Promise((r) => setTimeout(r, 500));
 
         try {
-          await HttpClient.signin(values.email, values.password);
+          await HttpClient.signup(values.email, values.password);
           resetForm();
           setStatus({ success: true });
           // Loading for animation

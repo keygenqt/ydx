@@ -30,7 +30,23 @@ export const HttpClient = {
    * @returns {Promise<Object>} - Server response (parsed JSON)
    */
   signin: async function (email, password) {
-    const data = JSON.parse(await wasm.ydx_wasm_request_signin(email, password));
+    const data = JSON.parse(
+      await wasm.ydx_wasm_request_signin(email, password),
+    );
+    if (data.code !== 200) throw data;
+    return data;
+  },
+
+  /**
+   * Sign in user
+   * @param {string} email - User email
+   * @param {string} password - User password
+   * @returns {Promise<Object>} - Server response (parsed JSON)
+   */
+  signup: async function (email, password) {
+    const data = JSON.parse(
+      await wasm.ydx_wasm_request_signup(email, password),
+    );
     if (data.code !== 200) throw data;
     return data;
   },

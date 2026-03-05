@@ -34,11 +34,11 @@ pub struct SignUpParams {
     #[validate(length(
         min = 8,
         max = 16,
-        message = "Password must be between 8 and 16 characters"
+        message = "Size must be between 8 and 16."
     ))]
     #[validate(regex(
         path = "PASSWORD_REGEX",
-        message = "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+        message = "Password must contain at least one uppercase letter, one lowercase letter, and one number."
     ))]
     password: String,
 }
@@ -58,12 +58,12 @@ pub async fn post(
             .workdir
             .join(icon_path.trim_start_matches('/'));
         if !full_path.exists() {
-            Err(ApiResponse::new_400().with_message("Icon file not found on server"))?
+            Err(ApiResponse::new_400().with_message("Icon file not found on server."))?
         }
     }
     // check exist email
     if let Ok(_) = UserService::find_by_email(&mut conn, &params.email).await {
-        Err(ApiResponse::new_409().with_message("User with this email already exists"))?;
+        Err(ApiResponse::new_409().with_message("User with this email already exists."))?;
     }
     // create user in database
     let user = UserModel::new(&params.email, &params.password);
