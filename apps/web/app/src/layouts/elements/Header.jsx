@@ -39,7 +39,12 @@ export function Header(props) {
   return (
     <Container maxWidth="xl">
       <AppBar position="static" elevation={0} color="transparent">
-        <Toolbar>
+        <Toolbar
+          sx={{ 
+            paddingLeft: '0 !important',
+            paddingRight: '0 !important',
+          }}
+        >
           <Stack direction={"row"} spacing={2}>
             <Button
               color={"primary"}
@@ -103,7 +108,7 @@ export function Header(props) {
                 size={isSM ? "small" : "medium"}
                 color={"primary"}
                 onClick={async () => {
-                  await HttpClient.signout()
+                  await HttpClient.signout();
                   CacheUtils.set(AppCache.isLogin, false);
                 }}
               >

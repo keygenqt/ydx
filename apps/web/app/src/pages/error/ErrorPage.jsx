@@ -15,7 +15,7 @@ export function ErrorPage(props) {
     <Stack
       spacing={2}
       sx={{
-        border: "6px solid",
+        border: "4px solid",
         borderColor: "primary.main",
         borderRadius: "50%",
         padding: 6,

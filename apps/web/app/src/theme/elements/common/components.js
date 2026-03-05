@@ -22,7 +22,8 @@ export const components = {
         theme.unstable_sx({
           boxShadow: "none !important",
           border: "4px solid",
-          borderColor: theme.palette.mode === 'dark' ? '#8FC76533' : '#1a3a1a33',
+          borderColor: "primary.main",
+          borderRadius: 3,
         }),
     },
   },

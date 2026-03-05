@@ -5,9 +5,9 @@
 export const palette = {
   mode: "light",
   background: {
-    default: "#FEFEFC",
+    default: "#FCFCF7",
     paper: "#FFFFFF",
-    footer: "#F8F8F2"
+    footer: "#F4F4EB"
   },
   primary: {
     main: '#1A3A1A',

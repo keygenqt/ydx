@@ -107,141 +107,125 @@ export function FormSignin(props) {
         handleChange,
         handleSubmit,
       }) => (
-        <form style={{ width: "100%" }} noValidate onSubmit={handleSubmit}>
+        <form
+          style={{
+            flex: 1,
+            display: "flex",
+          }}
+          noValidate
+          onSubmit={handleSubmit}
+        >
           <FormGroup
             sx={{
-              width: 1,
-              maxWidth: 480,
-              m: "0 auto",
-              "& .Logo": {
-                width: 100,
-                m: "0 auto",
-              },
+              flex: 1,
+              display: "flex",
             }}
           >
-            <Box id={"FormId"}>
-              <Card>
-                <Stack spacing={3} sx={{ p: 4 }}>
-                  <Stack spacing={1} sx={{ textAlign: "center" }}>
-                    <Typography variant="h3" color={"text.primary"}>
-                      {t("pages.signin.t_welcome")}
-                    </Typography>
-                    <Typography variant="caption" color={"text.primary"}>
-                      {t("pages.signin.t_subtitle")}
-                    </Typography>
-                  </Stack>
+            <Stack
+              spacing={3}
+              sx={{
+                flex: 1,
+                justifyContent: "space-between",
+              }}
+            >
+              <Stack spacing={3}>
+                {errors.submit && (
+                  <AlertError onClose={() => setErrors({ submit: null })}>
+                    {errors.submit}
+                  </AlertError>
+                )}
 
-                  {errors.submit && (
-                    <AlertError onClose={() => setErrors({ submit: null })}>
-                      {errors.submit}
-                    </AlertError>
-                  )}
+                {status && status.success && (
+                  <AlertSuccess onClose={() => setStatus({ success: false })}>
+                    {t("pages.signin.t_success")}
+                  </AlertSuccess>
+                )}
 
-                  {status && status.success && (
-                    <AlertSuccess onClose={() => setStatus({ success: false })}>
-                      {t("pages.signin.t_success")}
-                    </AlertSuccess>
-                  )}
+                <TextField
+                  disabled={isSubmitting || (status && status.success)}
+                  required
+                  type={"text"}
+                  name={"email"}
+                  value={values.email}
+                  slotProps={{
+                    htmlInput: {
+                      maxLength: 250,
+                    },
+                  }}
+                  helperText={touched.email && errors.email ? errors.email : ""}
+                  error={Boolean(touched.email && errors.email)}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  fullWidth
+                  label={t("pages.signin.t_label_email")}
+                  variant="filled"
+                />
 
-                  <TextField
-                    disabled={isSubmitting || (status && status.success)}
+                <FormControl
+                  disabled={isSubmitting || (status && status.success)}
+                  error={Boolean(touched.password && errors.password)}
+                  fullWidth
+                  variant="filled"
+                >
+                  <InputLabel required>
+                    {t("pages.signin.t_label_password")}
+                  </InputLabel>
+
+                  <FilledInput
                     required
-                    type={"text"}
-                    name={"email"}
-                    value={values.email}
-                    slotProps={{
-                      htmlInput: {
-                        maxLength: 250,
-                      },
-                    }}
-                    helperText={
-                      touched.email && errors.email ? errors.email : ""
-                    }
-                    error={Boolean(touched.email && errors.email)}
+                    type={showPassword ? "text" : "password"}
+                    name={"password"}
+                    value={values.password}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     fullWidth
-                    label={t("pages.signin.t_label_email")}
-                    variant="filled"
+                    inputProps={{
+                      maxLength: 16,
+                    }}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="Password visibility"
+                          onClick={() => {
+                            setShowPassword(!showPassword);
+                          }}
+                          onMouseDown={() => {
+                            setShowPassword(false);
+                          }}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                   />
 
-                  <FormControl
-                    disabled={isSubmitting || (status && status.success)}
-                    error={Boolean(touched.password && errors.password)}
-                    fullWidth
-                    variant="filled"
-                  >
-                    <InputLabel required>
-                      {t("pages.signin.t_label_password")}
-                    </InputLabel>
-
-                    <FilledInput
-                      required
-                      type={showPassword ? "text" : "password"}
-                      name={"password"}
-                      value={values.password}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      fullWidth
-                      inputProps={{
-                        maxLength: 16,
+                  {touched.password && errors.password && (
+                    <FormHelperText error>{errors.password}</FormHelperText>
+                  )}
+                </FormControl>
+              </Stack>
+              <Button
+                fullWidth
+                type={"submit"}
+                variant={"contained"}
+                size={"large"}
+                disabled={Boolean(isSubmitting || (status && status.success))}
+                startIcon={
+                  isSubmitting && !errors.submit ? (
+                    <CircularProgress
+                      sx={{
+                        mr: 0.5,
+                        height: "18px !important",
+                        width: "18px !important",
                       }}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="Password visibility"
-                            onClick={() => {
-                              setShowPassword(!showPassword);
-                            }}
-                            onMouseDown={() => {
-                              setShowPassword(false);
-                            }}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
                     />
-
-                    {touched.password && errors.password && (
-                      <FormHelperText error>{errors.password}</FormHelperText>
-                    )}
-                  </FormControl>
-
-                  <Button
-                    fullWidth
-                    type={"submit"}
-                    variant={"contained"}
-                    size={"large"}
-                    disabled={Boolean(
-                      isSubmitting ||
-                      (status && status.success) ||
-                      Object.keys(errors).length !== 0 ||
-                      Object.keys(touched).length === 0,
-                    )}
-                    startIcon={
-                      isSubmitting && !errors.submit ? (
-                        <CircularProgress
-                          sx={{
-                            mr: 0.5,
-                            height: "18px !important",
-                            width: "18px !important",
-                          }}
-                        />
-                      ) : (
-                        <DoneOutlined
-                          color={"text.primary"}
-                          sx={{ height: 18 }}
-                        />
-                      )
-                    }
-                  >
-                    {t("pages.signin.t_btn_submit")}
-                  </Button>
-                </Stack>
-              </Card>
-            </Box>
+                  ) : null
+                }
+              >
+                {t("pages.signin.t_btn_submit")}
+              </Button>
+            </Stack>
           </FormGroup>
         </form>
       )}

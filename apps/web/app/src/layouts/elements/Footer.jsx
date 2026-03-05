@@ -25,9 +25,7 @@ export function Footer(props) {
   // page
   return (
     <Stack
-      direction={isMD ? "column" : "row"}
       sx={{
-        paddingX: 3,
         paddingY: 4,
         backgroundColor: "background.footer",
       }}
