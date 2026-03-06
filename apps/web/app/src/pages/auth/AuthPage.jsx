@@ -13,6 +13,7 @@ import {
   IconButton,
   useTheme,
   useMediaQuery,
+  alpha,
 } from "@mui/material";
 import { Person, PersonAddAlt1, FiberManualRecord } from "@mui/icons-material";
 
@@ -38,23 +39,32 @@ export function AuthPage(props) {
       }}
     >
       <Card>
-        <Stack direction={isMD ? "column": "row"}>
+        <Stack direction={isMD ? "column" : "row"}>
           <Stack
             className="rt-circle"
             spacing={3}
             sx={{
-              p: isMD ? 3: 5,
+              p: isMD ? 3 : 5,
               flex: 1,
               justifyContent: "center",
               justifyItems: "center",
             }}
           >
-            <Typography variant="h4" color={"text.primary"}>
+            <Typography
+              variant="h4"
+              color={"text.primary"}
+              sx={{
+                borderRadius: 3,
+                p: isMD? 1 : 2,
+                backgroundColor: theme => alpha(theme.palette.background.footer, 0.7),
+                zIndex: 1
+              }}
+            >
               {toggleSignin
                 ? t("pages.auth.t_title_signin")
                 : t("pages.auth.t_title_signup")}
             </Typography>
-            <Stack spacing={2} sx={{display: isMD ? "none" : "inherit"}}>
+            <Stack spacing={2} sx={{ display: isMD ? "none" : "inherit" }}>
               <Typography variant="subtitle1" color={"text.primary"}>
                 {toggleSignin
                   ? t("pages.auth.t_subtitle_signin")
@@ -88,7 +98,7 @@ export function AuthPage(props) {
           <Stack
             spacing={4}
             sx={{
-              p: isMD ? 3: 5,
+              p: isMD ? 3 : 5,
               flex: 1,
               justifyContent: "center",
               justifyItems: "center",
