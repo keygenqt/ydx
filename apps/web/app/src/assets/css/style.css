@@ -7,14 +7,6 @@ body {
   height: 100%;
   width: 100%;
   font-family: "Noto Sans", sans-serif;
-  overflow: hidden;
-}
-
-#root.ScrollSection {
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: 100%;
 }
 
 a {
