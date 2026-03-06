@@ -20,11 +20,11 @@ HttpClient.init();
 // Check user is auth
 CacheUtils.set(AppCache.isLogin, await HttpClient.signcheck());
 
-// // Start app react
-// createRoot(document.getElementById("root")).render(
-//   <StrictMode>
-//     <Provider store={Store}>
-//       <App />
-//     </Provider>
-//   </StrictMode>
-// );
+// Start app react
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <Provider store={Store}>
+      <App />
+    </Provider>
+  </StrictMode>
+);
