@@ -1,25 +1,46 @@
 [workspace]
 resolver = "2"
-exclude = ["submodules"]
 members = [
+    "ydx_core",
     "ydx_android",
-    "ydx_auroraos",
-    "ydx_harmonyos",
-    "ydx_ios",
+    # "ydx_auroraos",
+    # "ydx_harmonyos",
+    # "ydx_ios",
     "ydx_linux",
-    "ydx_macos",
+    # "ydx_macos",
+    # "ydx_windows",
     "ydx_wasm",
-    "ydx_windows",
 ]
 
+[workspace.package]
+version = "0.0.1"
+edition = "2024"
+
+[workspace.dependencies]
+serde = { version = "1.0", features = ["derive"] }
+anyhow = "1.0"
+once_cell = "1.21.3"
+serde_json = "1.0"
+async-trait = "0.1.89"
+# FFI
+tokio = { version = "1.0", features = ["rt", "rt-multi-thread", "macros"] }
+reqwest = { version = "0.13", features = ["json"] }
+safer-ffi = "0.1.13"
+# WASM
+js-sys = "0.3"
+gloo-net = "0.5"
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+web-sys = { version = "0.3", features = ["console"] }
+
+# Build options
 [profile.dev]
-lto = true
+lto = false
 
 [profile.release]
 opt-level = 3
 lto = true
 panic = "abort"
-# strip = true # @todo
 
 # Cross Aurora OS
 [workspace.metadata.cross.target.x86_64-unknown-linux-gnu]

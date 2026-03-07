@@ -1,22 +1,50 @@
-use std::time::Instant;
-
 use ::safer_ffi::prelude::*;
+use ydx_core::{sffi_response, service::client::HttpClient};
 
-/// Test rust performance
+/// Init http client
 #[ffi_export]
-pub fn ydx_linux_performance_test() -> u64 {
-    // Get time
-    let start = Instant::now();
-    // Run functions
-    let mut counter = 0.0;
-    for _ in 0..100 {
-        counter += ydx_core::utils::tests::test_loop_computations() as f64;
-        counter += ydx_core::utils::tests::test_vector_operations() as f64;
-        counter += ydx_core::utils::tests::test_float_calculations() as f64;
-    }
-    println!("counter: {:?}", counter);
-    // Result time
-    start.elapsed().as_millis() as u64
+pub fn ydx_linux_request_init(base_url: char_p::Ref<'_>, uuid: char_p::Ref<'_>) {
+    HttpClient::init(base_url.to_str(), uuid.to_str());
+}
+
+/// Check auth user
+/// GET
+#[ffi_export]
+pub fn ydx_linux_request_signcheck() -> char_p::Box {
+    sffi_response!(HttpClient::instance().signcheck())
+}
+
+/// Signin user
+/// POST
+#[ffi_export]
+pub fn ydx_linux_request_signin(
+    email: char_p::Ref<'_>,
+    password: char_p::Ref<'_>
+) -> char_p::Box {
+    sffi_response!(HttpClient::instance().signin(
+        email.to_str().to_string(),
+        password.to_str().to_string()
+    ))
+}
+
+/// Signup user
+/// POST
+#[ffi_export]
+pub fn ydx_linux_request_signup(
+    email: char_p::Ref<'_>,
+    password: char_p::Ref<'_>
+) -> char_p::Box {
+    sffi_response!(HttpClient::instance().signup(
+        email.to_str().to_string(),
+        password.to_str().to_string()
+    ))
+}
+
+/// Signout user
+/// DELETE
+#[ffi_export]
+pub fn ydx_linux_request_signout() -> char_p::Box {
+    sffi_response!(HttpClient::instance().signout())
 }
 
 #[cfg(feature = "headers")]
