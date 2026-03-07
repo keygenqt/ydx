@@ -8,7 +8,7 @@ cd "$( dirname -- "${BASH_SOURCE[0]}"; )/../";
 # Is Linux
 if [[ "$OSTYPE" == "linux"* ]]; then
     bash scripts/android/build.sh
-    # bash scripts/auroraos/build.sh
+    bash scripts/auroraos/build.sh
     bash scripts/linux/build.sh
     bash scripts/web/build.sh
 fi

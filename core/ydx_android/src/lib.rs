@@ -1,6 +1,6 @@
+use jni::JNIEnv;
 use jni::objects::{JClass, JString};
 use jni::sys::jstring;
-use jni::JNIEnv;
 use ydx_core::{ffi_response, service::client::HttpClient};
 
 /// Init http client

@@ -1,5 +1,5 @@
 use ::safer_ffi::prelude::*;
-use ydx_core::{sffi_response, service::client::HttpClient};
+use ydx_core::{service::client::HttpClient, sffi_response};
 
 /// Init http client
 #[ffi_export]
@@ -17,27 +17,19 @@ pub fn ydx_linux_request_signcheck() -> char_p::Box {
 /// Signin user
 /// POST
 #[ffi_export]
-pub fn ydx_linux_request_signin(
-    email: char_p::Ref<'_>,
-    password: char_p::Ref<'_>
-) -> char_p::Box {
-    sffi_response!(HttpClient::instance().signin(
-        email.to_str().to_string(),
-        password.to_str().to_string()
-    ))
+pub fn ydx_linux_request_signin(email: char_p::Ref<'_>, password: char_p::Ref<'_>) -> char_p::Box {
+    sffi_response!(
+        HttpClient::instance().signin(email.to_str().to_string(), password.to_str().to_string())
+    )
 }
 
 /// Signup user
 /// POST
 #[ffi_export]
-pub fn ydx_linux_request_signup(
-    email: char_p::Ref<'_>,
-    password: char_p::Ref<'_>
-) -> char_p::Box {
-    sffi_response!(HttpClient::instance().signup(
-        email.to_str().to_string(),
-        password.to_str().to_string()
-    ))
+pub fn ydx_linux_request_signup(email: char_p::Ref<'_>, password: char_p::Ref<'_>) -> char_p::Box {
+    sffi_response!(
+        HttpClient::instance().signup(email.to_str().to_string(), password.to_str().to_string())
+    )
 }
 
 /// Signout user

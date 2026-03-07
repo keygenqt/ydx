@@ -2077,6 +2077,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "ydx_auroraos"
+version = "0.0.1"
+dependencies = [
+ "safer-ffi",
+ "ydx_core",
+]
+
+[[package]]
 name = "ydx_core"
 version = "0.0.1"
 dependencies = [
