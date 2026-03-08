@@ -45,7 +45,7 @@ done
 
 # Build cdylib libs
 for target in "${TARGETS[@]}"; do
-    cross build --target $target --$TYPE --package ydx-auroraos
+    cross build --target $target --$TYPE --package ydx_auroraos
 done
 
 # Build typelib libs

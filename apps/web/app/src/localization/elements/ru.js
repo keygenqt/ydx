@@ -76,6 +76,7 @@ export const ruLocalization = {
     "Icon file not found on server.": "Файл иконки не найден на сервере.",
     "User with this email already exists.":
       "Пользователь с таким email уже существует.",
+    "Passwords must match.": "Пароли должны совпадать.",
     "Password must contain at least one uppercase letter, one lowercase letter, and one number.":
       "Пароль должен содержать хотя бы одну заглавную букву, одну строчную букву и одну цифру.",
   },

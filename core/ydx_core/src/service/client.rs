@@ -1,27 +1,89 @@
 use anyhow::{Result, anyhow};
 use once_cell::sync::OnceCell;
+use serde_json::Value;
 
 const ERROR_JSON: &str = r#"{"code": 500, "message": "Internal error" }"#;
 
 static HTTP_CLIENT: OnceCell<HttpClient> = OnceCell::new();
 
+// Enum для разных платформ
+pub enum PlatformClient {
+    #[cfg(any(feature = "ffi", feature = "sffi"))]
+    Ffi(ClientFFI),
+    #[cfg(feature = "wasm")]
+    Wasm(ClientWASM),
+}
+
 pub struct HttpClient {
-    base_url: String,
-    uuid: String,
+    platform: PlatformClient,
 }
 
 impl HttpClient {
-    pub fn init(base_url: String, uuid: String) {
-        HTTP_CLIENT.set(Self { base_url, uuid }).ok();
+    pub fn init(base_url: &str, uuid: &str) {
+        #[cfg(any(feature = "ffi", feature = "sffi"))]
+        {
+            let platform = PlatformClient::Ffi(ClientFFI::new(base_url, uuid));
+            HTTP_CLIENT.set(Self { platform }).ok();
+        }
+
+        #[cfg(feature = "wasm")]
+        {
+            let platform = PlatformClient::Wasm(ClientWASM::new(base_url, uuid));
+            HTTP_CLIENT.set(Self { platform }).ok();
+        }
+
+        #[cfg(not(any(feature = "sffi", feature = "ffi", feature = "wasm")))]
+        compile_error!("Either 'sffi/ffi' or 'wasm' feature must be enabled");
     }
 
     pub fn instance() -> &'static Self {
         HTTP_CLIENT.get().expect("HttpClient not initialized")
     }
+
+    pub async fn get(&self, path: &str) -> Result<String> {
+        match &self.platform {
+            #[cfg(any(feature = "ffi", feature = "sffi"))]
+            PlatformClient::Ffi(client) => client.get(path).await,
+            #[cfg(feature = "wasm")]
+            PlatformClient::Wasm(client) => client.get(path).await,
+        }
+    }
+
+    pub async fn post(&self, path: &str, body: Value) -> Result<String> {
+        match &self.platform {
+            #[cfg(any(feature = "ffi", feature = "sffi"))]
+            PlatformClient::Ffi(client) => client.post(path, body).await,
+            #[cfg(feature = "wasm")]
+            PlatformClient::Wasm(client) => client.post(path, body).await,
+        }
+    }
+
+    pub async fn delete(&self, path: &str) -> Result<String> {
+        match &self.platform {
+            #[cfg(any(feature = "ffi", feature = "sffi"))]
+            PlatformClient::Ffi(client) => client.delete(path).await,
+            #[cfg(feature = "wasm")]
+            PlatformClient::Wasm(client) => client.delete(path).await,
+        }
+    }
 }
 
-#[cfg(not(target_arch = "wasm32"))]
-impl HttpClient {
+// FFI реализация
+#[cfg(any(feature = "ffi", feature = "sffi"))]
+pub struct ClientFFI {
+    base_url: String,
+    uuid: String,
+}
+
+#[cfg(any(feature = "ffi", feature = "sffi"))]
+impl ClientFFI {
+    pub fn new(base_url: &str, uuid: &str) -> Self {
+        Self {
+            base_url: base_url.into(),
+            uuid: uuid.into(),
+        }
+    }
+
     pub async fn get(&self, path: &str) -> Result<String> {
         let response = reqwest::Client::new()
             .get(&format!("{}{}", self.base_url, path))
@@ -33,15 +95,13 @@ impl HttpClient {
                 anyhow!(ERROR_JSON)
             })?;
 
-        let text = response.text().await.map_err(|e| {
+        response.text().await.map_err(|e| {
             eprintln!("Failed to read response body from {}: {}", path, e);
             anyhow!(ERROR_JSON)
-        })?;
-
-        Ok(text)
+        })
     }
 
-    pub async fn post(&self, path: &str, body: serde_json::Value) -> Result<String> {
+    pub async fn post(&self, path: &str, body: Value) -> Result<String> {
         let response = reqwest::Client::new()
             .post(&format!("{}{}", self.base_url, path))
             .header("X-Device-UUID", &self.uuid)
@@ -78,8 +138,22 @@ impl HttpClient {
     }
 }
 
-#[cfg(target_arch = "wasm32")]
-impl HttpClient {
+// WASM реализация
+#[cfg(feature = "wasm")]
+pub struct ClientWASM {
+    base_url: String,
+    uuid: String,
+}
+
+#[cfg(feature = "wasm")]
+impl ClientWASM {
+    pub fn new(base_url: &str, uuid: &str) -> Self {
+        Self {
+            base_url: base_url.into(),
+            uuid: uuid.into(),
+        }
+    }
+
     pub async fn get(&self, path: &str) -> Result<String> {
         let response = gloo_net::http::Request::get(&format!("{}{}", self.base_url, path))
             .header("X-Device-UUID", &self.uuid)
@@ -92,17 +166,15 @@ impl HttpClient {
                 anyhow!(ERROR_JSON)
             })?;
 
-        let text = response.text().await.map_err(|e| {
+        response.text().await.map_err(|e| {
             web_sys::console::error_1(
                 &format!("Failed to read response body from {}: {:?}", path, e).into(),
             );
             anyhow!(ERROR_JSON)
-        })?;
-
-        Ok(text)
+        })
     }
 
-    pub async fn post(&self, path: &str, body: serde_json::Value) -> Result<String> {
+    pub async fn post(&self, path: &str, body: Value) -> Result<String> {
         let response = gloo_net::http::Request::post(&format!("{}{}", self.base_url, path))
             .header("X-Device-UUID", &self.uuid)
             .header("Content-Type", "application/json")

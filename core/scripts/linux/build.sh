@@ -35,7 +35,6 @@ done
 mkdir -p "$PATH_HEADERS"
 for target in "${TARGETS[@]}"; do
     cargo run --target $target --$TYPE --features headers --bin ydx_linux-headers
-    # Fix GTK-Doc warnings
     sed -i '/\/\*\* \\brief/,/\*\//d' "$PATH_HEADERS/ydx_linux.h"
     sed -i '/\/\*\* <No documentation available> \*\//d' "$PATH_HEADERS/ydx_linux.h"
     break
@@ -43,10 +42,10 @@ done
 
 # Build cdylib libs
 for target in "${TARGETS[@]}"; do
-    cargo build --target $target --$TYPE --package ydx-linux
+    cargo build --target $target --$TYPE --package ydx_linux
 done
 
-# Build typelib libs
+# # Build typelib libs
 for target in "${TARGETS[@]}"; do
     # Prepare build folder
     rm -rf "$PATH_LIB_OUT/$target" && mkdir -p "$PATH_LIB_OUT/$target"
@@ -61,6 +60,8 @@ for target in "${TARGETS[@]}"; do
                 --library=ydx_linux \
                 --library-path="$PATH_LIB_OUT/$target" \
                 --include=GObject-2.0 \
+                --identifier-prefix=YdxLinux \
+                --symbol-prefix=ydx_linux \
                 --output="$PATH_LIB_OUT/$target/YdxLinux-1.0.gir" \
                 "$PATH_HEADERS/ydx_linux.h" || { exit 1; }
 

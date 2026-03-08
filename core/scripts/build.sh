@@ -11,6 +11,8 @@ if [[ "$OSTYPE" == "linux"* ]]; then
     bash scripts/auroraos/build.sh
     bash scripts/linux/build.sh
     bash scripts/web/build.sh
+    # Remove common headers dir
+    rm -rf build/headers
 fi
 
 # Is macOS
@@ -21,6 +23,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     bash scripts/ios/build.sh
     bash scripts/macos/build.sh
     bash scripts/web/build.sh
+    # Remove common headers dir
+    rm -rf build/headers
 fi
 
 # Is Windows

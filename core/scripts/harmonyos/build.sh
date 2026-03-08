@@ -31,7 +31,7 @@ cargo run --target aarch64-apple-darwin --$TYPE --features headers --bin ydx_har
 
 # Build cdylib libs
 for target in "${TARGETS[@]}"; do
-    cargo build --target $target --$TYPE --package ydx-harmonyos
+    cargo build --target $target --$TYPE --package ydx_harmonyos
 done
 
 # Build typelib libs
