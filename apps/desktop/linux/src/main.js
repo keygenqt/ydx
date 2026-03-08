@@ -1,29 +1,10 @@
-/* main.js
- *
- * Copyright 2026 keygenqt
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * 	http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
 
-import { YdxWindow } from './window.js';
+import { HomePage } from './pages/home/HomePage.js';
 
 pkg.initGettext();
 pkg.initFormat();
@@ -71,13 +52,13 @@ export const YdxApplication = GObject.registerClass(
         vfunc_activate() {
             let {active_window} = this;
             if (!active_window)
-                active_window = new YdxWindow(this);
+                active_window = new HomePage(this);
             active_window.present();
         }
 
         #loadStylesheet() {
             const provider = new Gtk.CssProvider();
-            provider.load_from_resource('/com/keygenqt/ydx/style.css');
+            provider.load_from_resource('/com/keygenqt/ydx/css/style.css');
             Gtk.StyleContext.add_provider_for_display(
                 Gdk.Display.get_default(),
                 provider,

@@ -1,0 +1,123 @@
+# English translations for com.keygenqt.ydx package.
+# Copyright (C) 2026 THE com.keygenqt.ydx'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.keygenqt.ydx package.
+# Automatically generated, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.keygenqt.ydx\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-08 19:51+0300\n"
+"PO-Revision-Date: 2026-03-08 19:44+0300\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/assets/ui/HomePage.ui:6 data/com.keygenqt.ydx.desktop.in:3
+#: data/com.keygenqt.ydx.metainfo.xml.in:7
+msgid "YDX"
+msgstr "YDX"
+
+#: data/assets/ui/HomePage.ui:17
+msgid "Main Menu"
+msgstr "Main Menu"
+
+#: data/assets/ui/HomePage.ui:33
+msgid "Gnome + Linux + Rust"
+msgstr "Gnome + Linux + Rust"
+
+#: data/assets/ui/HomePage.ui:78
+msgid "Run performance test"
+msgstr "Run performance test"
+
+#: data/assets/ui/HomePage.ui:85
+msgid "Click to test the performance of the Rust C library."
+msgstr "Click to test the performance of the Rust C library."
+
+#: data/assets/ui/HomePage.ui:99
+msgid "_Preferences"
+msgstr "_Preferences"
+
+#: data/assets/ui/HomePage.ui:103
+msgid "_Keyboard Shortcuts"
+msgstr "_Keyboard Shortcuts"
+
+#: data/assets/ui/HomePage.ui:107
+msgid "_About Demo-rust"
+msgstr "_About Demo-rust"
+
+#: data/com.keygenqt.ydx.desktop.in:9
+msgid "gtk;rust;demo;"
+msgstr "gtk;rust;demo;"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:8
+msgid "Edit collections, learn on any device!"
+msgstr "Edit collections, learn on any device!"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:10
+msgid ""
+"A powerful cross-platform application for creating and managing learning "
+"collections."
+msgstr ""
+"A powerful cross-platform application for creating and managing learning "
+"collections."
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:11
+msgid "Features:"
+msgstr "Features:"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:13
+msgid "Native interface on all 8 platforms"
+msgstr "Native interface on all 8 platforms"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:14
+msgid "Lightning fast on any device"
+msgstr "Lightning fast on any device"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:15
+msgid "Synchronization between all your devices"
+msgstr "Synchronization between all your devices"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:16
+msgid "Available in Russian, English, and Chinese on all platforms"
+msgstr "Available in Russian, English, and Chinese on all platforms"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:17
+msgid "Simple and intuitive interface"
+msgstr "Simple and intuitive interface"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:18
+msgid "AI-powered content generation"
+msgstr "AI-powered content generation"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:23
+msgid "Vitaliy Zarubin"
+msgstr "Vitaliy Zarubin"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:38
+msgid "Initial release"
+msgstr "Initial release"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:40
+msgid "Basic collection management"
+msgstr "Basic collection management"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:41
+msgid "Cross-platform UI"
+msgstr "Cross-platform UI"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:42
+msgid "Device synchronization"
+msgstr "Device synchronization"
+
+#: data/com.keygenqt.ydx.metainfo.xml.in:43
+msgid "Multi-language support (EN, RU, ZH)"
+msgstr "Multi-language support (EN, RU, ZH)"
+
+#: src/main.js:38
+msgid "translator-credits"
+msgstr "translator-credits"

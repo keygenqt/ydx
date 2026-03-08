@@ -2,8 +2,8 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
-  <template class="YdxWindow" parent="AdwApplicationWindow">
-    <property name="title" translatable="yes">Demo Rust</property>
+  <template class="HomePage" parent="AdwApplicationWindow">
+    <property name="title" translatable="yes">YDX</property>
     <property name="default-width">900</property>
     <property name="default-height">400</property>
     <property name="content">

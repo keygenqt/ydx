@@ -2,72 +2,47 @@
 <component type="desktop-application">
   <id>com.keygenqt.ydx</id>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>AGPL-3.0</project_license>
+  <project_license>AGPL-3.0-or-later</project_license>
 
   <name>YDX</name>
-  <summary>Keep the summary shorter, between 10 and 35 characters</summary>
+  <summary>Edit collections, learn on any device!</summary>
   <description>
-    <p>No description</p>
+    <p>A powerful cross-platform application for creating and managing learning collections.</p>
+    <p>Features:</p>
+    <ul>
+      <li>Native interface on all 8 platforms</li>
+      <li>Lightning fast on any device</li>
+      <li>Synchronization between all your devices</li>
+      <li>Available in Russian, English, and Chinese on all platforms</li>
+      <li>Simple and intuitive interface</li>
+      <li>AI-powered content generation</li>
+    </ul>
   </description>
 
-  <developer id="tld.vendor">
-    <name>Developer name</name>
+  <developer id="com.keygenqt">
+    <name>Vitaliy Zarubin</name>
   </developer>
 
-  <!-- Required: Should be a link to the upstream homepage for the component -->
-  <url type="homepage">https://example.org/</url>
-  <!-- Recommended: It is highly recommended for open-source projects to display the source code repository -->
-  <url type="vcs-browser">https://example.org/repository</url>
-  <!-- Should point to the software's bug tracking system, for users to report new bugs -->
-  <url type="bugtracker">https://example.org/issues</url>
-  <!-- Should link a FAQ page for this software, to answer some of the most-asked questions in detail -->
-  <!-- URLs of this type should point to a webpage where users can submit or modify translations of the upstream project -->
-  <url type="translate">https://example.org/translate</url>
-  <url type="faq">https://example.org/faq</url>
-  <!-- Should provide a web link to an online user's reference, a software manual or help page -->
-  <url type="help">https://example.org/help</url>
-  <!-- URLs of this type should point to a webpage showing information on how to donate to the described software project -->
-  <url type="donation">https://example.org/donate</url>
-  <!-- This could for example be an HTTPS URL to an online form or a page describing how to contact the developer -->
-  <url type="contact">https://example.org/contact</url>
-  <!-- URLs of this type should point to a webpage showing information on how to contribute to the described software project -->
-  <url type="contribute">https://example.org/contribute</url>
+  <url type="homepage">https://github.com/keygenqt/ydx</url>
+  <url type="vcs-browser">https://github.com/keygenqt/ydx</url>
+  <url type="bugtracker">https://github.com/keygenqt/ydx/issues</url>
 
-  <translation type="gettext">demo-rust</translation>
-  <!-- All graphical applications having a desktop file must have this tag in the MetaInfo.
-     If this is present, appstreamcli compose will pull icons, keywords and categories from the desktop file. -->
+  <translation type="gettext">com.keygenqt.ydx</translation>
   <launchable type="desktop-id">com.keygenqt.ydx.desktop</launchable>
-  <!-- Use the OARS website (https://hughsie.github.io/oars/generate.html) to generate these and make sure to use oars-1.1 -->
+
   <content_rating type="oars-1.1" />
 
-  <!-- Applications should set a brand color in both light and dark variants like so -->
-  <branding>
-    <color type="primary" scheme_preference="light">#ff00ff</color>
-    <color type="primary" scheme_preference="dark">#993d3d</color>
-  </branding>
-
-  <screenshots>
-    <screenshot type="default">
-      <image>https://example.org/example1.png</image>
-      <caption>A caption</caption>
-    </screenshot>
-    <screenshot>
-      <image>https://example.org/example2.png</image>
-      <caption>A caption</caption>
-    </screenshot>
-  </screenshots>
-
   <releases>
-    <release version="1.0.1" date="2024-01-18">
-      <url type="details">https://example.org/changelog.html#version_1.0.1</url>
-      <description translate="no">
-        <p>Release description</p>
+    <release version="0.1.0" date="2024-01-18">
+      <description>
+        <p>Initial release</p>
         <ul>
-          <li>List of changes</li>
-          <li>List of changes</li>
+          <li>Basic collection management</li>
+          <li>Cross-platform UI</li>
+          <li>Device synchronization</li>
+          <li>Multi-language support (EN, RU, ZH)</li>
         </ul>
       </description>
     </release>
   </releases>
-
 </component>

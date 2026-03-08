@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schemalist gettext-domain="demo-rust">
+<schemalist gettext-domain="com.keygenqt.ydx">
 	<schema id="com.keygenqt.ydx" path="/com/keygenqt/ydx/">
+		<!-- Add your settings here when needed -->
 	</schema>
 </schemalist>

@@ -6,7 +6,5 @@
 build-dir
 release
 
-# Subprojects
-subprojects/*
-!subprojects/libadwaita.wrap
-!subprojects/gstreamer.wrap
+# Application
+po/POTFILES.in

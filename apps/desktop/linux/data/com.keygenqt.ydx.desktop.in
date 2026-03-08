@@ -1,10 +1,9 @@
 [Desktop Entry]
-Name=demo-rust
+Name=YDX
 Exec=com.keygenqt.ydx
 Icon=com.keygenqt.ydx
 Terminal=false
 Type=Application
 Categories=Utility;
-Keywords=GTK;
+Keywords=gtk;rust;demo;
 StartupNotify=true
-DBusActivatable=true

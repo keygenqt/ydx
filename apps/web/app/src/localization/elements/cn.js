@@ -73,7 +73,6 @@ export const cnLocalization = {
     "Size must be between 8 and 16.": "长度必须在8到16之间。",
     "Icon file not found on server.": "服务器上未找到图标文件。",
     "User with this email already exists.": "该邮箱已被注册。",
-    "Passwords must match.": "密码必须匹配。",
     "Password must contain at least one uppercase letter, one lowercase letter, and one number.":
       "密码必须包含至少一个大写字母、一个小写字母和一个数字。",
   },

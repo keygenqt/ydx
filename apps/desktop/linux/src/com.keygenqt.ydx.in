@@ -3,7 +3,7 @@
 import { exit, programArgs, programInvocationName } from "system";
 
 imports.package.init({
-  name: "@PACKAGE_NAME@",
+  name: "@app_id@",
   version: "@PACKAGE_VERSION@",
   prefix: "@prefix@",
   libdir: "@libdir@",

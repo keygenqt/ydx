@@ -1,33 +1,39 @@
-pkgdatadir = get_option('datadir') / meson.project_name()
+pkgdatadir = get_option('datadir') / app_id
 gnome = import('gnome')
 
-src_res = gnome.compile_resources('com.keygenqt.ydx.src',
-  'com.keygenqt.ydx.src.gresource.xml',
+# Path to resource files in data directory
+src_resources_xml = join_paths(meson.project_source_root(), 'data', app_id + '.src.gresource.xml')
+data_resources_xml = join_paths(meson.project_source_root(), 'data', app_id + '.data.gresource.xml')
+
+# Path to assets for source_dir
+assets_dir = join_paths(meson.project_source_root(), 'data', 'assets')
+
+# Compile source resources (JS files)
+src_res = gnome.compile_resources(app_id + '.src',
+  src_resources_xml,
+  source_dir: meson.current_source_dir(),
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
 )
 
-data_res = gnome.compile_resources('com.keygenqt.ydx.data',
-  'com.keygenqt.ydx.data.gresource.xml',
+# Compile data resources (UI, CSS, images)
+data_res = gnome.compile_resources(app_id + '.data',
+  data_resources_xml,
+  source_dir: [
+    meson.current_source_dir(),
+    assets_dir,
+  ],
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
 )
 
-bin_conf = configuration_data()
-bin_conf.set('GJS', find_program('gjs').full_path())
-bin_conf.set('PACKAGE_VERSION', meson.project_version())
-bin_conf.set('PACKAGE_NAME', meson.project_name())
-bin_conf.set('prefix', get_option('prefix'))
-bin_conf.set('libdir', get_option('prefix') / get_option('libdir'))
-bin_conf.set('datadir', get_option('prefix') / get_option('datadir'))
-bin_conf.set('resource_path', '/com/keygenqt/ydx')
-
+# Configure and install the main executable using the global conf
 configure_file(
-  input: 'com.keygenqt.ydx.in',
-  output: 'com.keygenqt.ydx',
-  configuration: bin_conf,
+  input: app_id + '.in',
+  output: app_id,
+  configuration: conf,
   install: true,
   install_dir: get_option('bindir')
 )

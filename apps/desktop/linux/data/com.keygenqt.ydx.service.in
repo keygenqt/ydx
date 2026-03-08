@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=com.keygenqt.ydx
-Exec=@bindir@/com.keygenqt.ydx --gapplication-service
