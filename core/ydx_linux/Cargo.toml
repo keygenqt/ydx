@@ -1,20 +1,19 @@
 [package]
-name = "ydx-linux"
-edition = "2024"
-version = "0.0.1"
-
-[lib]
 name = "ydx_linux"
-crate-type = ["lib", "cdylib"]
+version.workspace = true
+edition.workspace = true
 
 [dependencies]
-ydx-core = { path = "../ydx_core" }
-safer-ffi = "0.1.13"
+ydx_core = { path = "../ydx_core", features = ["sffi"] }
+safer-ffi.workspace = true
+
+[lib]
+crate-type = ["lib", "cdylib"]
+
+[features]
+headers = ["safer-ffi/headers"]
 
 # Safer FFI
 [[bin]]
 name = "ydx_linux-headers"
 required-features = ["headers"]
-
-[features]
-headers = ["safer-ffi/headers"]

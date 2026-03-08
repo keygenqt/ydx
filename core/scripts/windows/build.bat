@@ -27,7 +27,7 @@ for %%t in (%TARGETS%) do (
 @REM Build cdylib libs
 mkdir "%PATH_HEADERS%" 2>nul
 for %%t in (%TARGETS%) do (
-    cargo build --target %%t --%TYPE% -p ydx-windows
+    cargo build --target %%t --%TYPE% -p ydx_windows
 )
 
 @REM Copy dynamic library
@@ -35,6 +35,8 @@ for %%t in (%TARGETS%) do (
     if exist "%PATH_LIB_OUT%\%%t" rmdir /s /q "%PATH_LIB_OUT%\%%t"
     mkdir "%PATH_LIB_OUT%\%%t"
     copy /y "target\%%t\%TYPE%\*.dll" "%PATH_LIB_OUT%\%%t"
+    copy /y "%PATH_HEADERS%\ydx_windows.h" "%PATH_LIB_OUT%\%%t\"
+    if exist "%PATH_HEADERS%" rmdir /s /q "%PATH_HEADERS%"
     if exist "..\apps\desktop\windows\YDX\Native\ydx_windows.dll" del /f /q "..\apps\desktop\windows\YDX\Native\ydx_windows.dll"
     mklink /H "..\apps\desktop\windows\YDX\Native\ydx_windows.dll" "%PATH_LIB_OUT%\%%t\ydx_windows.dll"
 )

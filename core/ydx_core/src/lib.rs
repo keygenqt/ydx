@@ -1,5 +1,6 @@
+// pub mod macros;
 pub mod service;
-pub mod utils;
+// pub mod utils;
 
 /// Version core lib
 pub fn ydx_core_version() -> String {

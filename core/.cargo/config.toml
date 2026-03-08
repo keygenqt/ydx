@@ -12,9 +12,22 @@ rustflags = ["-C", "link-arg=-Wl,--build-id=sha1"]
 # macOS
 [target.aarch64-unknown-linux-ohos]
 linker = "/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/llvm/bin/clang"
+ar = "/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/llvm/bin/llvm-ar"
 rustflags = [
   "-C", "link-arg=--sysroot=/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/sysroot",
   "-C", "link-arg=--target=aarch64-linux-ohos",
   "-C", "relocation-model=pic",
   "-C", "link-arg=-D__MUSL__",
+  "-C", "link-arg=-L/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/llvm/lib",
+  "-C", "link-arg=-lunwind",
+  "-C", "link-arg=-lc",
 ]
+
+[target.aarch64-unknown-linux-ohos.env]
+AWS_LC_SYS_CMAKE_BUILDER = "1"
+CMAKE_SYSTEM_NAME = "OHOS"
+OHOS_ARCH = "arm64-v8a"
+
+[env]
+OHOS_SDK_NATIVE = { value = "/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native", relative = false }
+CMAKE_TOOLCHAIN_FILE = { value = "/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/native/build/cmake/ohos.toolchain.cmake", relative = false }

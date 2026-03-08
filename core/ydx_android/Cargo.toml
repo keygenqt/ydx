@@ -1,12 +1,11 @@
 [package]
-name = "ydx-android"
-edition = "2024"
-version = "0.0.1"
-
-[lib]
 name = "ydx_android"
-crate-type = ["lib", "cdylib"]
+version.workspace = true
+edition.workspace = true
 
 [dependencies]
-ydx-core = { path = "../ydx_core" }
+ydx_core = { path = "../ydx_core", features = ["ffi"] }
 jni = "0.21.1"
+
+[lib]
+crate-type = ["lib", "cdylib"]
