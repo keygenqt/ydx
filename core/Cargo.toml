@@ -1,15 +1,15 @@
 [workspace]
 resolver = "2"
 members = [
-    "ydx_core",
-    "ydx_android",
-    "ydx_auroraos",
-    "ydx_harmonyos",
-    "ydx_ios",
-    "ydx_linux",
-    "ydx_macos",
-    "ydx_windows",
-    "ydx_wasm",
+    "ydx_core",           # ❤️ Heart of the project
+    "ydx_android",        # 🤖 Android (JNI)
+    "ydx_auroraos",       # 🏔️ Aurora OS (C interop)
+    "ydx_harmonyos",      # 🎯 Harmony OS (NAPI)
+    "ydx_ios",            # 🍎 iOS (C interop)
+    "ydx_linux",          # 🐧 Linux (GObject)
+    "ydx_macos",          # 💻 macOS (C interop)
+    "ydx_windows",        # 🪟 Windows (C interop)
+    "ydx_wasm",           # 🌐 WebAssembly
 ]
 
 [workspace.package]

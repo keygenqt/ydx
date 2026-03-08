@@ -69,7 +69,7 @@ export function FormSignup(props) {
           .min(8, t("Size must be between 8 and 16."))
           .max(16, t("Size must be between 8 and 16."))
           .required(t("Must not be not blank."))
-          .oneOf([Yup.ref("password")], t("Passwords must match")),
+          .oneOf([Yup.ref("password")], t("Passwords must match.")),
       })}
       onSubmit={async (values, { setErrors, setStatus, resetForm }) => {
         setStatus({ success: null });
