@@ -2133,6 +2133,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "ydx_windows"
+version = "0.0.1"
+dependencies = [
+ "safer-ffi",
+ "ydx_core",
+]
+
+[[package]]
 name = "yoke"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"

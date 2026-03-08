@@ -8,7 +8,7 @@ members = [
     "ydx_ios",
     "ydx_linux",
     "ydx_macos",
-    # "ydx_windows",
+    "ydx_windows",
     "ydx_wasm",
 ]
 
