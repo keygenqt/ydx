@@ -34,7 +34,7 @@ done
 
 # Build cdylib libs
 for target in "${TARGETS[@]}"; do
-    cargo build --target $target --$TYPE --package ydx-macos
+    cargo build --target $target --$TYPE --package ydx_macos
 done
 
 # Build typelib libs

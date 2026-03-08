@@ -11,7 +11,3 @@ wasm-bindgen-futures.workspace = true
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-
-[features]
-default = ["wasm"]
-wasm = []

@@ -3,6 +3,10 @@ use jni::objects::{JClass, JString};
 use jni::sys::jstring;
 use ydx_core::{ffi_response, service::client::HttpClient};
 
+use crate::utils::JNIEnvExt;
+
+mod utils;
+
 /// Init http client
 #[unsafe(no_mangle)]
 pub extern "C" fn Java_com_keygenqt_ydx_YdxAndroid_requestInit<'local>(
@@ -11,16 +15,7 @@ pub extern "C" fn Java_com_keygenqt_ydx_YdxAndroid_requestInit<'local>(
     base_url: JString<'local>,
     uuid: JString<'local>,
 ) {
-    let base_url_str: String = env
-        .get_string(&base_url)
-        .expect("Couldn't get Java string")
-        .into();
-    let uuid_str: String = env
-        .get_string(&uuid)
-        .expect("Couldn't get Java string")
-        .into();
-
-    HttpClient::init(&base_url_str, &uuid_str);
+    HttpClient::init(&env.to_string(&base_url), &env.to_string(&uuid));
 }
 
 /// Check auth user
@@ -45,16 +40,9 @@ pub extern "C" fn Java_com_keygenqt_ydx_YdxAndroid_requestSignin<'local>(
     email: JString<'local>,
     password: JString<'local>,
 ) -> jstring {
-    let email_str: String = env
-        .get_string(&email)
-        .expect("Couldn't get Java string")
-        .into();
-    let password_str: String = env
-        .get_string(&password)
-        .expect("Couldn't get Java string")
-        .into();
-
-    let result = ffi_response!(HttpClient::instance().signin(email_str, password_str));
+    let result = ffi_response!(
+        HttpClient::instance().signin(env.to_string(&email), env.to_string(&password))
+    );
     env.new_string(result.as_str())
         .expect("Couldn't create Java string")
         .into_raw()
@@ -69,16 +57,9 @@ pub extern "C" fn Java_com_keygenqt_ydx_YdxAndroid_requestSignup<'local>(
     email: JString<'local>,
     password: JString<'local>,
 ) -> jstring {
-    let email_str: String = env
-        .get_string(&email)
-        .expect("Couldn't get Java string")
-        .into();
-    let password_str: String = env
-        .get_string(&password)
-        .expect("Couldn't get Java string")
-        .into();
-
-    let result = ffi_response!(HttpClient::instance().signup(email_str, password_str));
+    let result = ffi_response!(
+        HttpClient::instance().signup(env.to_string(&email), env.to_string(&password))
+    );
     env.new_string(result.as_str())
         .expect("Couldn't create Java string")
         .into_raw()

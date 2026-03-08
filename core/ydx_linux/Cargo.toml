@@ -12,8 +12,6 @@ crate-type = ["lib", "cdylib"]
 
 [features]
 headers = ["safer-ffi/headers"]
-default = ["ffi"]
-ffi = []
 
 # Safer FFI
 [[bin]]
