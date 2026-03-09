@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/com/keygenqt/ydx">
+    <!-- styles -->
     <file alias="css/style.css">css/style.css</file>
-    <file alias="ui/HomePage.ui">ui/HomePage.ui</file>
+    <!-- pages -->
+    <file alias="ui/pages/WelcomePage.ui">ui/pages/WelcomePage.ui</file>
+    <!-- dialogs -->
+    <file alias="ui/dialogs/AboutDialog.ui">ui/dialogs/AboutDialog.ui</file>
+    <!-- widgets -->
+    <file alias="ui/widgets/NavigationWidget.ui">ui/widgets/NavigationWidget.ui</file>
+    <file alias="ui/widgets/WindowWidget.ui">ui/widgets/WindowWidget.ui</file>
   </gresource>
+
   <gresource prefix="/com/keygenqt/ydx/images">
-    <file alias="gnome.svg">images/gnome.svg</file>
-    <file alias="linux.svg">images/linux.svg</file>
-    <file alias="rust.svg">images/rust.svg</file>
+    <file alias="ydx.svg">images/ydx.svg</file>
   </gresource>
 </gresources>

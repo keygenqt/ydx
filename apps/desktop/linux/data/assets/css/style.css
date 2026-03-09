@@ -1,23 +1,18 @@
-.CssGnomeIcon {
-	border: none;
-	background-image: url('resource:///com/keygenqt/ydx/images/gnome.svg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: contain;
+.CssAppIcon {
+  border: none;
+  background-image: url('resource:///com/keygenqt/ydx/images/ydx.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
 }
 
-.CssLinuxIcon {
-	border: none;
-	background-image: url('resource:///com/keygenqt/ydx/images/linux.svg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: contain;
+window.dark .CssAppIcon {
+  background-color: rgba(255, 255, 255, 0.25);
 }
 
-.CssRustIcon {
-	border: none;
-	background-image: url('resource:///com/keygenqt/ydx/images/rust.svg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: contain;
+.welcome-title {
+  font-size: 56px;
+  font-weight: bold;
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<template class="YdxWindowWidget">
+		<property name="width-request">950</property>
+		<property name="height-request">520</property>
+		<property name="content">
+			<object class="YdxNavigationWidget" id="IdNavigationWidget"/>
+		</property>
+	</template>
+</interface>

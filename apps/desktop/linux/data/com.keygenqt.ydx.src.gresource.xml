@@ -2,6 +2,12 @@
 <gresources>
   <gresource prefix="/com/keygenqt/ydx">
     <file alias="js/main.js">../src/main.js</file>
-    <file alias="js/pages/home/HomePage.js">../src/pages/home/HomePage.js</file>
+    <!-- pages -->
+    <file alias="js/pages/welcome/WelcomePage.js">../src/pages/welcome/WelcomePage.js</file>
+    <!-- dialogs -->
+    <file alias="js/dialogs/AboutDialog.js">../src/dialogs/AboutDialog.js</file>
+    <!-- widgets -->
+    <file alias="js/widgets/NavigationWidget.js">../src/widgets/NavigationWidget.js</file>
+    <file alias="js/widgets/WindowWidget.js">../src/widgets/WindowWidget.js</file>
   </gresource>
 </gresources>

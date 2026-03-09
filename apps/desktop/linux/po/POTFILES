@@ -1,5 +1,11 @@
-data/assets/ui/HomePage.ui
+data/assets/ui/dialogs/AboutDialog.ui
+data/assets/ui/pages/HomePage.ui
 data/com.keygenqt.ydx.desktop.in
 data/com.keygenqt.ydx.metainfo.xml.in
-src/main.js
+src/Application.js
+src/dialogs/AboutDialog.js
 src/pages/home/HomePage.js
+src/pages/signIn/HomePage.js
+src/pages/signup/HomePage.js
+src/pages/welcome/HomePage.js
+src/Window.js

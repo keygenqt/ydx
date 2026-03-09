@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.keygenqt.ydx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-08 19:51+0300\n"
-"PO-Revision-Date: 2026-03-08 19:44+0300\n"
+"POT-Creation-Date: 2026-03-09 12:49+0300\n"
+"PO-Revision-Date: 2026-03-08 19:51+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -16,36 +16,41 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/assets/ui/HomePage.ui:6 data/com.keygenqt.ydx.desktop.in:3
+#: data/assets/ui/dialogs/AboutDialog.ui:9 src/Application.js:57
+#: src/Window.js:38
+msgid "translator-credits"
+msgstr ""
+
+#: data/assets/ui/pages/HomePage.ui:6 data/com.keygenqt.ydx.desktop.in:3
 #: data/com.keygenqt.ydx.metainfo.xml.in:7
 msgid "YDX"
 msgstr ""
 
-#: data/assets/ui/HomePage.ui:17
+#: data/assets/ui/pages/HomePage.ui:17
 msgid "Main Menu"
 msgstr ""
 
-#: data/assets/ui/HomePage.ui:33
+#: data/assets/ui/pages/HomePage.ui:33
 msgid "Gnome + Linux + Rust"
 msgstr ""
 
-#: data/assets/ui/HomePage.ui:78
+#: data/assets/ui/pages/HomePage.ui:78
 msgid "Run performance test"
 msgstr ""
 
-#: data/assets/ui/HomePage.ui:85
+#: data/assets/ui/pages/HomePage.ui:85
 msgid "Click to test the performance of the Rust C library."
 msgstr ""
 
-#: data/assets/ui/HomePage.ui:99
+#: data/assets/ui/pages/HomePage.ui:99
 msgid "_Preferences"
 msgstr ""
 
-#: data/assets/ui/HomePage.ui:103
+#: data/assets/ui/pages/HomePage.ui:103
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
-#: data/assets/ui/HomePage.ui:107
+#: data/assets/ui/pages/HomePage.ui:107
 msgid "_About Demo-rust"
 msgstr ""
 
@@ -113,8 +118,4 @@ msgstr ""
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:43
 msgid "Multi-language support (EN, RU, ZH)"
-msgstr ""
-
-#: src/main.js:38
-msgid "translator-credits"
 msgstr ""
