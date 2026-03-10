@@ -18,6 +18,7 @@ pub struct HttpClient {
     platform: PlatformClient,
 }
 
+#[allow(unused_variables)]
 impl HttpClient {
     pub fn init(base_url: &str, uuid: &str) {
         #[cfg(any(feature = "ffi", feature = "sffi"))]
@@ -40,28 +41,28 @@ impl HttpClient {
         HTTP_CLIENT.get().expect("HttpClient not initialized")
     }
 
-    pub async fn get(&self, path: &str) -> Result<String> {
+    pub async fn get(&self, path: &str, token: Option<String>) -> Result<String> {
         match &self.platform {
             #[cfg(any(feature = "ffi", feature = "sffi"))]
-            PlatformClient::Ffi(client) => client.get(path).await,
+            PlatformClient::Ffi(client) => client.get(path, token).await,
             #[cfg(feature = "wasm")]
             PlatformClient::Wasm(client) => client.get(path).await,
         }
     }
 
-    pub async fn post(&self, path: &str, body: Value) -> Result<String> {
+    pub async fn post(&self, path: &str, token: Option<String>, body: Value) -> Result<String> {
         match &self.platform {
             #[cfg(any(feature = "ffi", feature = "sffi"))]
-            PlatformClient::Ffi(client) => client.post(path, body).await,
+            PlatformClient::Ffi(client) => client.post(path, body, token).await,
             #[cfg(feature = "wasm")]
             PlatformClient::Wasm(client) => client.post(path, body).await,
         }
     }
 
-    pub async fn delete(&self, path: &str) -> Result<String> {
+    pub async fn delete(&self, path: &str, token: Option<String>) -> Result<String> {
         match &self.platform {
             #[cfg(any(feature = "ffi", feature = "sffi"))]
-            PlatformClient::Ffi(client) => client.delete(path).await,
+            PlatformClient::Ffi(client) => client.delete(path, token).await,
             #[cfg(feature = "wasm")]
             PlatformClient::Wasm(client) => client.delete(path).await,
         }
@@ -69,6 +70,22 @@ impl HttpClient {
 }
 
 // FFI реализация
+#[cfg(any(feature = "ffi", feature = "sffi"))]
+trait RequestBuilderExt: Sized {
+    fn with_optional_auth(self, token: Option<String>) -> Self;
+}
+
+#[cfg(any(feature = "ffi", feature = "sffi"))]
+impl RequestBuilderExt for reqwest::RequestBuilder {
+    fn with_optional_auth(self, token: Option<String>) -> Self {
+        if let Some(token) = token {
+            self.header("Authorization", format!("Bearer {}", token))
+        } else {
+            self
+        }
+    }
+}
+
 #[cfg(any(feature = "ffi", feature = "sffi"))]
 pub struct ClientFFI {
     base_url: String,
@@ -84,10 +101,11 @@ impl ClientFFI {
         }
     }
 
-    pub async fn get(&self, path: &str) -> Result<String> {
+    pub async fn get(&self, path: &str, token: Option<String>) -> Result<String> {
         let response = reqwest::Client::new()
             .get(&format!("{}{}", self.base_url, path))
             .header("X-Device-UUID", &self.uuid)
+            .with_optional_auth(token)
             .send()
             .await
             .map_err(|e| {
@@ -101,11 +119,12 @@ impl ClientFFI {
         })
     }
 
-    pub async fn post(&self, path: &str, body: Value) -> Result<String> {
+    pub async fn post(&self, path: &str, body: Value, token: Option<String>) -> Result<String> {
         let response = reqwest::Client::new()
             .post(&format!("{}{}", self.base_url, path))
             .header("X-Device-UUID", &self.uuid)
             .header("Content-Type", "application/json")
+            .with_optional_auth(token)
             .body(body.to_string())
             .send()
             .await
@@ -120,10 +139,11 @@ impl ClientFFI {
         })
     }
 
-    pub async fn delete(&self, path: &str) -> Result<String> {
+    pub async fn delete(&self, path: &str, token: Option<String>) -> Result<String> {
         let response = reqwest::Client::new()
             .delete(&format!("{}{}", self.base_url, path))
             .header("X-Device-UUID", &self.uuid)
+            .with_optional_auth(token)
             .send()
             .await
             .map_err(|e| {

@@ -12,12 +12,13 @@ export const WindowWidget = GObject.registerClass({
 	],
 }, class extends Adw.ApplicationWindow {
 
-	#settings = new Gio.Settings({
+	#settingsGnome = new Gio.Settings({
 		schema: 'org.gnome.desktop.interface'
 	});
 
 	constructor(params) {
 		super(params);
+		this.#bindSettings();
 		this.#setupColorScheme();
 	}
 
@@ -29,11 +30,24 @@ export const WindowWidget = GObject.registerClass({
 		return this._IdNavigationWidget;
 	}
 
+	#bindSettings() {
+		this.utils.settings.bind(
+			this.utils.constants.SettingsKeys.WindowWidth,
+			this, 'default-width',
+			Gio.SettingsBindFlags.DEFAULT
+		);
+		this.utils.settings.bind(
+			this.utils.constants.SettingsKeys.WindowHeight,
+			this, 'default-height',
+			Gio.SettingsBindFlags.DEFAULT
+		);
+	}
+
 	#setupColorScheme() {
 		try {
-			const colorScheme = this.#settings.get_string('color-scheme');
+			const colorScheme = this.#settingsGnome.get_string('color-scheme');
 			this.#applyColorScheme(colorScheme);
-			this.#settings.connect('changed::color-scheme', (settings, key) => {
+			this.#settingsGnome.connect('changed::color-scheme', (settings, key) => {
 				const scheme = settings.get_string(key);
 				this.#applyColorScheme(scheme);
 			});
@@ -44,9 +58,11 @@ export const WindowWidget = GObject.registerClass({
 
 	#applyColorScheme(scheme) {
 		if (scheme === 'prefer-dark') {
-			this.add_css_class('dark');
+			this.add_css_class('is-dark');
+			this.remove_css_class('is-light');
 		} else {
-			this.remove_css_class('dark');
+			this.add_css_class('is-light');
+			this.remove_css_class('is-dark');
 		}
 	}
 });

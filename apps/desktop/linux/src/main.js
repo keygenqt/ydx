@@ -4,6 +4,8 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
 
+import './widgets/GtkWidget.js';
+
 import { WindowWidget } from './widgets/WindowWidget.js';
 
 pkg.initGettext();

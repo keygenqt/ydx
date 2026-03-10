@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="com.keygenqt.ydx">
 	<schema id="com.keygenqt.ydx" path="/com/keygenqt/ydx/">
-		<!-- Add your settings here when needed -->
+		<key name="window-width" type="i">
+			<default>950</default>
+		</key>
+		<key name="window-height" type="i">
+			<default>520</default>
+		</key>
 	</schema>
 </schemalist>

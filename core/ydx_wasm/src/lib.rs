@@ -13,7 +13,7 @@ pub fn ydx_wasm_request_init(uuid: String) {
 /// GET
 #[wasm_bindgen]
 pub fn ydx_wasm_request_signcheck() -> Promise {
-    wasm_response!(HttpClient::instance().signcheck())
+    wasm_response!(HttpClient::instance().signcheck(None))
 }
 
 /// Signin user
@@ -34,5 +34,5 @@ pub fn ydx_wasm_request_signup(email: String, password: String) -> Promise {
 /// DELETE
 #[wasm_bindgen]
 pub fn ydx_wasm_request_signout() -> Promise {
-    wasm_response!(HttpClient::instance().signout())
+    wasm_response!(HttpClient::instance().signout(None))
 }

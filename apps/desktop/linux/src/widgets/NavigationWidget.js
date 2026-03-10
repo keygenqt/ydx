@@ -1,6 +1,9 @@
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 
+import '../pages/home/HomePage.js';
+import '../pages/signin/SignInPage.js';
+import '../pages/signup/SignUpPage.js';
 import '../pages/welcome/WelcomePage.js';
 
 export const NavigationWidget = GObject.registerClass({

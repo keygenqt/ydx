@@ -22,10 +22,12 @@ pub extern "C" fn Java_com_keygenqt_ydx_YdxAndroid_requestInit<'local>(
 /// GET
 #[unsafe(no_mangle)]
 pub extern "C" fn Java_com_keygenqt_ydx_YdxAndroid_requestSigncheck<'local>(
-    env: JNIEnv<'local>,
+    mut env: JNIEnv<'local>,
     _class: JClass<'local>,
+    token: JString<'local>,
 ) -> jstring {
-    let result = ffi_response!(HttpClient::instance().signcheck());
+    let token = env.to_string(&token);
+    let result = ffi_response!(HttpClient::instance().signcheck(Some(token)));
     env.new_string(result.as_str())
         .expect("Couldn't create Java string")
         .into_raw()
@@ -69,10 +71,12 @@ pub extern "C" fn Java_com_keygenqt_ydx_YdxAndroid_requestSignup<'local>(
 /// DELETE
 #[unsafe(no_mangle)]
 pub extern "C" fn Java_com_keygenqt_ydx_YdxAndroid_requestSignout<'local>(
-    env: JNIEnv<'local>,
+    mut env: JNIEnv<'local>,
     _class: JClass<'local>,
+    token: JString<'local>,
 ) -> jstring {
-    let result = ffi_response!(HttpClient::instance().signout());
+    let token = env.to_string(&token);
+    let result = ffi_response!(HttpClient::instance().signout(Some(token)));
     env.new_string(result.as_str())
         .expect("Couldn't create Java string")
         .into_raw()

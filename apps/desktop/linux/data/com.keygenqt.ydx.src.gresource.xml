@@ -3,11 +3,21 @@
   <gresource prefix="/com/keygenqt/ydx">
     <file alias="js/main.js">../src/main.js</file>
     <!-- pages -->
+    <file alias="js/pages/home/HomePage.js">../src/pages/home/HomePage.js</file>
+    <file alias="js/pages/signin/SignInPage.js">../src/pages/signin/SignInPage.js</file>
+    <file alias="js/pages/signup/SignUpPage.js">../src/pages/signup/SignUpPage.js</file>
     <file alias="js/pages/welcome/WelcomePage.js">../src/pages/welcome/WelcomePage.js</file>
     <!-- dialogs -->
     <file alias="js/dialogs/AboutDialog.js">../src/dialogs/AboutDialog.js</file>
     <!-- widgets -->
+    <file alias="js/widgets/GtkWidget.js">../src/widgets/GtkWidget.js</file>
     <file alias="js/widgets/NavigationWidget.js">../src/widgets/NavigationWidget.js</file>
     <file alias="js/widgets/WindowWidget.js">../src/widgets/WindowWidget.js</file>
+    <!-- services -->
+    <file alias="js/services/SecretService.js">../src/services/SecretService.js</file>
+    <file alias="js/services/SettingsService.js">../src/services/SettingsService.js</file>
+    <!-- utils -->
+    <file alias="js/utils/AppConstants.js">../src/utils/AppConstants.js</file>
+    <file alias="js/utils/AppLog.js">../src/utils/AppLog.js</file>
   </gresource>
 </gresources>

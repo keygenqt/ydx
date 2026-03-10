@@ -4,6 +4,9 @@
     <!-- styles -->
     <file alias="css/style.css">css/style.css</file>
     <!-- pages -->
+    <file alias="ui/pages/HomePage.ui">ui/pages/HomePage.ui</file>
+    <file alias="ui/pages/SignInPage.ui">ui/pages/SignInPage.ui</file>
+    <file alias="ui/pages/SignUpPage.ui">ui/pages/SignUpPage.ui</file>
     <file alias="ui/pages/WelcomePage.ui">ui/pages/WelcomePage.ui</file>
     <!-- dialogs -->
     <file alias="ui/dialogs/AboutDialog.ui">ui/dialogs/AboutDialog.ui</file>

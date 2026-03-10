@@ -9,6 +9,15 @@
 					<!-- First page for stack -->
 					<object class="YdxWelcomePage"/>
 				</child>
+				<child>
+					<object class="YdxHomePage"/>
+				</child>
+				<child>
+					<object class="YdxSignInPage"/>
+				</child>
+				<child>
+					<object class="YdxSignUpPage"/>
+				</child>
 			</object>
 		</child>
 	</template>
