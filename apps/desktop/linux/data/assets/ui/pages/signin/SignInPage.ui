@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="YdxSignInPage" parent="AdwNavigationPage">
+    <property name="title" translatable="yes">YDX | Sign In</property>
+    <property name="can-pop">true</property>
+    <property name="child">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar" />
+        </child>
+        <property name="content">
+          <object class="GtkBox">
+            <property name="margin-start">20</property>
+            <property name="margin-end">20</property>
+            <property name="margin-top">40</property>
+            <property name="margin-bottom">40</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">24</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+            <property name="width-request">360</property>
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="spacing">20</property>
+                <property name="halign">center</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="icon-name">avatar-default-symbolic</property>
+                    <property name="pixel-size">64</property>
+                    <property name="halign">center</property>
+                    <property name="margin-bottom">10</property>
+                    <style>
+                      <class name="dim-label" />
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">👋 Welcome back!</property>
+                    <style>
+                      <class name="title-2" />
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwEntryRow" id="IdEmailEntry">
+                <property name="title" translatable="yes">Email</property>
+                <property name="input-purpose">email</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPasswordEntryRow" id="IdPasswordEntry">
+                <property name="title" translatable="yes">Password</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="IdSubmitButton">
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <property name="child">
+                  <object class="GtkBox">
+                    <property name="spacing">8</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Sign In</property>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+                <style>
+                  <class name="pill" />
+                  <class name="suggested-action" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <property name="spacing">4</property>
+                <property name="halign">center</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Don't have an account?</property>
+                    <style>
+                      <class name="caption" />
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="IdSignUpLink">
+                    <property name="label" translatable="yes">Sign Up</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <style>
+                      <class name="flat" />
+                      <class name="link" />
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+</interface>

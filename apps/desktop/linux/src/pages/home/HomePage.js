@@ -3,14 +3,14 @@ import Adw from 'gi://Adw';
 
 export const HomePage = GObject.registerClass({
     GTypeName: 'YdxHomePage',
-    Template: 'resource:///com/keygenqt/ydx/ui/pages/HomePage.ui',
+    Template: 'resource:///com/keygenqt/ydx/ui/pages/home/HomePage.ui',
     InternalChildren: [],
 }, class extends Adw.NavigationPage {
     #window
 
     constructor(params) {
         super(params);
-        this.tag = this.utils.constants.Pages.HomePage;
+        this.tag = this.utils.constants.Pages.Home;
     }
 
     vfunc_realize() {

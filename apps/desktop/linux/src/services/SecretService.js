@@ -56,4 +56,16 @@ export const SecretService = class {
     reset(key) {
         this.set(key, '');
     }
+
+    /**
+     * Clear all stored secrets
+     * Removes all tokens from AppConstants.SecretKeys
+     * Useful for logout or account switching
+     */
+    clearAll() {
+        const keys = Object.values(AppConstants.SecretKeys);
+        for (const key of keys) {
+            this.reset(key);
+        }
+    }
 };

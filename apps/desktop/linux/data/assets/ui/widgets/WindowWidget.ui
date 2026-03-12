@@ -2,9 +2,9 @@
 <interface>
 	<template class="YdxWindowWidget">
 		<property name="width-request">950</property>
-		<property name="height-request">520</property>
+		<property name="height-request">550</property>
 		<property name="content">
-			<object class="YdxNavigationWidget" id="IdNavigationWidget"/>
+			<object class="YdxNavigationAppWidget" id="IdNavigationAppWidget"/>
 		</property>
 	</template>
 </interface>

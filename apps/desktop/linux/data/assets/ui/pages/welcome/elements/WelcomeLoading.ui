@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<template class="YdxWelcomeLoading" parent="GtkBox">
+		<property name="halign">center</property>
+		<property name="valign">center</property>
+		<property name="orientation">vertical</property>
+		<property name="spacing">24</property>
+		<property name="hexpand">True</property>
+		<property name="vexpand">True</property>
+
+		<child>
+			<object class="GtkLabel" id="IdMessage">
+				<property name="label"></property>
+				<property name="wrap">true</property>
+				<property name="justify">center</property>
+				<style>
+					<class name="title-2"/>
+				</style>
+			</object>
+		</child>
+
+		<child>
+			<object class="GtkProgressBar" id="IdProgressBar">
+				<property name="show-text">false</property>
+				<property name="width-request">400</property>
+				<property name="halign">center</property>
+			</object>
+		</child>
+
+		<child>
+			<object class="GtkLabel">
+				<property name="label" translatable="yes">Please wait...</property>
+				<property name="wrap">true</property>
+				<property name="justify">center</property>
+				<style>
+					<class name="caption"/>
+				</style>
+			</object>
+		</child>
+	</template>
+</interface>

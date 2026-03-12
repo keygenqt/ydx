@@ -7,11 +7,16 @@
     <file alias="js/pages/signin/SignInPage.js">../src/pages/signin/SignInPage.js</file>
     <file alias="js/pages/signup/SignUpPage.js">../src/pages/signup/SignUpPage.js</file>
     <file alias="js/pages/welcome/WelcomePage.js">../src/pages/welcome/WelcomePage.js</file>
+    <file alias="js/pages/welcome/elements/WelcomeAuth.js">../src/pages/welcome/elements/WelcomeAuth.js</file>
+    <file alias="js/pages/welcome/elements/WelcomeLoading.js">../src/pages/welcome/elements/WelcomeLoading.js</file>
     <!-- dialogs -->
     <file alias="js/dialogs/AboutDialog.js">../src/dialogs/AboutDialog.js</file>
     <!-- widgets -->
     <file alias="js/widgets/GtkWidget.js">../src/widgets/GtkWidget.js</file>
-    <file alias="js/widgets/NavigationWidget.js">../src/widgets/NavigationWidget.js</file>
+    <file alias="js/widgets/NavigationAppWidget.js">../src/widgets/NavigationAppWidget.js</file>
+    <file alias="js/widgets/NavigationBaseWidget.js">../src/widgets/NavigationBaseWidget.js</file>
+    <file alias="js/widgets/NavigationGuestWidget.js">../src/widgets/NavigationGuestWidget.js</file>
+    <file alias="js/widgets/NavigationUserWidget.js">../src/widgets/NavigationUserWidget.js</file>
     <file alias="js/widgets/WindowWidget.js">../src/widgets/WindowWidget.js</file>
     <!-- services -->
     <file alias="js/services/SecretService.js">../src/services/SecretService.js</file>

@@ -4,14 +4,18 @@
     <!-- styles -->
     <file alias="css/style.css">css/style.css</file>
     <!-- pages -->
-    <file alias="ui/pages/HomePage.ui">ui/pages/HomePage.ui</file>
-    <file alias="ui/pages/SignInPage.ui">ui/pages/SignInPage.ui</file>
-    <file alias="ui/pages/SignUpPage.ui">ui/pages/SignUpPage.ui</file>
-    <file alias="ui/pages/WelcomePage.ui">ui/pages/WelcomePage.ui</file>
+    <file alias="ui/pages/home/HomePage.ui">ui/pages/home/HomePage.ui</file>
+    <file alias="ui/pages/signin/SignInPage.ui">ui/pages/signin/SignInPage.ui</file>
+    <file alias="ui/pages/signup/SignUpPage.ui">ui/pages/signup/SignUpPage.ui</file>
+    <file alias="ui/pages/welcome/WelcomePage.ui">ui/pages/welcome/WelcomePage.ui</file>
+    <file alias="ui/pages/welcome/elements/WelcomeAuth.ui">ui/pages/welcome/elements/WelcomeAuth.ui</file>
+    <file alias="ui/pages/welcome/elements/WelcomeLoading.ui">ui/pages/welcome/elements/WelcomeLoading.ui</file>
     <!-- dialogs -->
     <file alias="ui/dialogs/AboutDialog.ui">ui/dialogs/AboutDialog.ui</file>
     <!-- widgets -->
-    <file alias="ui/widgets/NavigationWidget.ui">ui/widgets/NavigationWidget.ui</file>
+    <file alias="ui/widgets/NavigationAppWidget.ui">ui/widgets/NavigationAppWidget.ui</file>
+    <file alias="ui/widgets/NavigationGuestWidget.ui">ui/widgets/NavigationGuestWidget.ui</file>
+    <file alias="ui/widgets/NavigationUserWidget.ui">ui/widgets/NavigationUserWidget.ui</file>
     <file alias="ui/widgets/WindowWidget.ui">ui/widgets/WindowWidget.ui</file>
   </gresource>
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<template class="YdxNavigationUserWidget">
+		<style>
+			<class name="navigation-bg" />
+		</style>
+		<child>
+			<object class="AdwToastOverlay" id="IdToastOverlay">
+				<property name="child">
+					<object class="AdwNavigationView" id="IdNavigation">
+						<property name="hexpand">True</property>
+						<property name="vexpand">True</property>
+						<child>
+							<!-- First page for stack -->
+							<object class="YdxHomePage" />
+						</child>
+					</object>
+				</property>
+			</object>
+		</child>
+	</template>
+</interface>

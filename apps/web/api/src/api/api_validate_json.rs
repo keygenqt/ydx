@@ -26,7 +26,7 @@ where
         })?;
         data.validate().map_err(|e| {
             let response = ApiResponse::new_422()
-                .with_message("Error validate json")
+                .with_message("Please review the information you entered")
                 .with_data(serde_json::json!({
                     "errors": e.errors()
                 }));

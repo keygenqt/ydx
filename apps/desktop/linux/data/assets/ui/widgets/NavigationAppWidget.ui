@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<template class="YdxNavigationAppWidget" parent="GtkBox">
+		<child>
+			<object class="GtkStack" id="IdStack">
+				<property name="hexpand">True</property>
+				<property name="vexpand">True</property>
+				<property name="transition-type">over-left</property>
+			</object>
+		</child>
+	</template>
+</interface>

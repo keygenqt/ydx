@@ -54,4 +54,14 @@ export const SettingsService = class {
     bind(key, object, property, flags) {
         this.#settings.bind(key, object, property, flags);
     }
+
+    /**
+     * Reset all settings to their default values
+     */
+    resetAll() {
+        const keys = Object.values(AppConstants.SettingsKeys);
+        for (const key of keys) {
+            this.reset(key);
+        }
+    }
 };

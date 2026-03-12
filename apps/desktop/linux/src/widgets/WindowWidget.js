@@ -2,13 +2,13 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw';
 import Gio from 'gi://Gio';
 
-import './NavigationWidget.js';
+import './NavigationAppWidget.js';
 
 export const WindowWidget = GObject.registerClass({
 	GTypeName: 'YdxWindowWidget',
 	Template: 'resource:///com/keygenqt/ydx/ui/widgets/WindowWidget.ui',
 	InternalChildren: [
-		'IdNavigationWidget'
+		'IdNavigationAppWidget'
 	],
 }, class extends Adw.ApplicationWindow {
 
@@ -20,6 +20,8 @@ export const WindowWidget = GObject.registerClass({
 		super(params);
 		this.#bindSettings();
 		this.#setupColorScheme();
+		// clear data @todo
+		// this.#clearData();
 	}
 
 	vfunc_close_request() {
@@ -27,7 +29,7 @@ export const WindowWidget = GObject.registerClass({
 	}
 
 	navigation() {
-		return this._IdNavigationWidget;
+		return this._IdNavigationAppWidget;
 	}
 
 	#bindSettings() {
@@ -64,5 +66,10 @@ export const WindowWidget = GObject.registerClass({
 			this.add_css_class('is-light');
 			this.remove_css_class('is-dark');
 		}
+	}
+
+	#clearData() {
+		this.utils.secret.clearAll();
+		this.utils.settings.resetAll();
 	}
 });

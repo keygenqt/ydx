@@ -7,10 +7,10 @@ export const AppConstants = Object.freeze({
         uuid: "uuid-linux", // @todo
     },
     Pages: {
-        HomePage: 'tag-HomePage',
-        SignInPage: 'tag-SignInPage',
-        SignUpPage: 'tag-SignUpPage',
-        WelcomePage: 'tag-WelcomePage',
+        Home: 'tag-HomePage',
+        SignIn: 'tag-SignInPage',
+        SignUp: 'tag-SignUpPage',
+        Welcome: 'tag-WelcomePage',
     },
     SecretKeys: {
         AccessToken: 'access_token',
