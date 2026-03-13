@@ -17,7 +17,7 @@ use crate::{
 
 #[derive(Deserialize, Debug, Validate)]
 pub struct SignInParams {
-    #[validate(email(message = "Must be a well-formed email address."))]
+    #[validate(email(message = "Please enter a valid email address."))]
     email: String,
     #[validate(length(
         min = 8,

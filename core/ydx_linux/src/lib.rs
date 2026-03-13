@@ -32,11 +32,18 @@ pub fn ydx_linux_request_signup(email: char_p::Ref<'_>, password: char_p::Ref<'_
     )
 }
 
+/// Get user by id
+/// GET
+#[ffi_export]
+pub fn ydx_linux_request_get_user(id: char_p::Ref<'_>, token: char_p::Ref<'_>) -> char_p::Box {
+    sffi_response!(HttpClient::instance().get_user(id.to_str().to_string(), Some(token.to_str().to_string())))
+}
+
 /// Signout user
 /// DELETE
 #[ffi_export]
-pub fn ydx_linux_request_signout(token: &repr_c::String) -> char_p::Box {
-    sffi_response!(HttpClient::instance().signout(Some(token.to_string())))
+pub fn ydx_linux_request_signout(token: char_p::Ref<'_>) -> char_p::Box {
+    sffi_response!(HttpClient::instance().signout(Some(token.to_str().to_string())))
 }
 
 #[cfg(feature = "headers")]

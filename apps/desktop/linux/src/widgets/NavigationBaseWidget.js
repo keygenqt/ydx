@@ -100,4 +100,21 @@ export const NavigationBaseWidget = GObject.registerClass({
         }
         this._IdNavigation.pop();
     }
+
+    /**
+     * Reset the navigation stack to its root page.
+     * Pops all pages until only the root remains.
+     * The root page is the first page added to the navigation view.
+     */
+    to_root() {
+        const nav = this._IdNavigation;
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
+            nav.set_animate_transitions(false);
+            for (let i = 0; i < 50; i++) {
+                nav.pop();
+            }
+            nav.set_animate_transitions(true);
+            return GLib.SOURCE_REMOVE;
+        });
+    }
 });

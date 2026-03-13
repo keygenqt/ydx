@@ -18,10 +18,9 @@ export const WindowWidget = GObject.registerClass({
 
 	constructor(params) {
 		super(params);
+		this.#checkVersion();
 		this.#bindSettings();
 		this.#setupColorScheme();
-		// clear data @todo
-		// this.#clearData();
 	}
 
 	vfunc_close_request() {
@@ -67,6 +66,15 @@ export const WindowWidget = GObject.registerClass({
 			this.remove_css_class('is-dark');
 		}
 	}
+
+    #checkVersion() {
+        const savedVersion = this.utils.settings.get(this.utils.constants.SettingsKeys.Version);
+        const currentVersion = this.utils.constants.Gtk.dataVersion;
+        if (savedVersion !== currentVersion) {
+            this.#clearData();
+            this.utils.settings.set(this.utils.constants.SettingsKeys.Version, currentVersion);
+        }
+    }
 
 	#clearData() {
 		this.utils.secret.clearAll();

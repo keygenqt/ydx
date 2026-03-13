@@ -37,10 +37,14 @@ export const NavigationAppWidget = GObject.registerClass({
     switchNavigation(isAuth) {
         const target = isAuth ? this.#userNav : this.#guestNav;
         const targetName = isAuth ? 'user' : 'guest';
-
         if (this.#current !== target) {
             this._IdStack.set_visible_child_name(targetName);
             this.#current = target;
+        }
+        if (isAuth) {
+            this.#guestNav.to_root();
+        } else {
+            this.#userNav.to_root();
         }
     }
 
@@ -110,5 +114,15 @@ export const NavigationAppWidget = GObject.registerClass({
      */
     pop(key = undefined, disposable = undefined) {
         this.#current.pop(key, disposable);
+    }
+
+    /**
+     * Reset the current navigation stack to its root page.
+     * For guest: shows Welcome page
+     * For user: shows Home page
+     * Clears all navigation history.
+     */
+    to_root() {
+        this.#current.to_root();
     }
 });

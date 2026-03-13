@@ -70,7 +70,7 @@ export const ruLocalization = {
     "Invalid email or password.": "Неверный email или пароль.",
     "Size must be between 3 and 250.": "Размер должен быть от 3 до 250.",
     "Must not be not blank.": "Не должно быть пустым.",
-    "Must be a well-formed email address.":
+    "Please enter a valid email address.":
       "Должен быть корректный email адрес.",
     "Size must be between 8 and 16.": "Размер должен быть от 8 до 16.",
     "Icon file not found on server.": "Файл иконки не найден на сервере.",

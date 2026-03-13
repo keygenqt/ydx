@@ -7,51 +7,117 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.keygenqt.ydx\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 12:49+0300\n"
+"POT-Creation-Date: 2026-03-13 20:03+0300\n"
 "PO-Revision-Date: 2026-03-08 19:51+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/assets/ui/dialogs/AboutDialog.ui:9 src/Application.js:57
-#: src/Window.js:38
-msgid "translator-credits"
-msgstr ""
-
-#: data/assets/ui/pages/HomePage.ui:6 data/com.keygenqt.ydx.desktop.in:3
-#: data/com.keygenqt.ydx.metainfo.xml.in:7
+#: data/assets/ui/dialogs/AboutDialog.ui:6
+#: data/assets/ui/pages/welcome/WelcomePage.ui:4
+#: data/com.keygenqt.ydx.desktop.in:3 data/com.keygenqt.ydx.metainfo.xml.in:7
 msgid "YDX"
 msgstr ""
 
-#: data/assets/ui/pages/HomePage.ui:17
-msgid "Main Menu"
+#: data/assets/ui/dialogs/AboutDialog.ui:9
+#: data/com.keygenqt.ydx.metainfo.xml.in:23
+msgid "Vitaliy Zarubin"
 msgstr ""
 
-#: data/assets/ui/pages/HomePage.ui:33
-msgid "Gnome + Linux + Rust"
+#: data/assets/ui/pages/home/HomePage.ui:4
+msgid "YDX | Home"
 msgstr ""
 
-#: data/assets/ui/pages/HomePage.ui:78
-msgid "Run performance test"
+#: data/assets/ui/pages/home/HomePage.ui:14
+#: data/assets/ui/pages/welcome/WelcomePage.ui:14
+msgid "Menu"
 msgstr ""
 
-#: data/assets/ui/pages/HomePage.ui:85
-msgid "Click to test the performance of the Rust C library."
+#: data/assets/ui/pages/home/HomePage.ui:30
+#: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:29
+msgid "Welcome to YDX!"
 msgstr ""
 
-#: data/assets/ui/pages/HomePage.ui:99
-msgid "_Preferences"
+#: data/assets/ui/pages/home/HomePage.ui:39
+msgid "Click the button to fetch data"
 msgstr ""
 
-#: data/assets/ui/pages/HomePage.ui:103
-msgid "_Keyboard Shortcuts"
+#: data/assets/ui/pages/home/HomePage.ui:47 src/pages/home/HomePage.js:30
+msgid "Fetch Data"
 msgstr ""
 
-#: data/assets/ui/pages/HomePage.ui:107
-msgid "_About Demo-rust"
+#: data/assets/ui/pages/home/HomePage.ui:63
+#: data/assets/ui/pages/welcome/WelcomePage.ui:65
+msgid "_About"
+msgstr ""
+
+#: data/assets/ui/pages/home/HomePage.ui:67
+msgid "_Logout"
+msgstr ""
+
+#: data/assets/ui/pages/signin/SignInPage.ui:4
+msgid "YDX | Sign In"
+msgstr ""
+
+#: data/assets/ui/pages/signin/SignInPage.ui:40
+msgid "👋 Welcome back!"
+msgstr ""
+
+#: data/assets/ui/pages/signin/SignInPage.ui:50
+#: data/assets/ui/pages/signup/SignUpPage.ui:50
+msgid "Email"
+msgstr ""
+
+#: data/assets/ui/pages/signin/SignInPage.ui:56
+#: data/assets/ui/pages/signup/SignUpPage.ui:56
+msgid "Password"
+msgstr ""
+
+#: data/assets/ui/pages/signin/SignInPage.ui:68
+#: data/assets/ui/pages/signup/SignUpPage.ui:94
+#: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:107
+msgid "Sign In"
+msgstr ""
+
+#: data/assets/ui/pages/signin/SignInPage.ui:86
+msgid "Don't have an account?"
+msgstr ""
+
+#: data/assets/ui/pages/signin/SignInPage.ui:94
+#: data/assets/ui/pages/signup/SignUpPage.ui:68
+#: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:133
+msgid "Sign Up"
+msgstr ""
+
+#: data/assets/ui/pages/signup/SignUpPage.ui:4
+msgid "YDX | Sign Up"
+msgstr ""
+
+#: data/assets/ui/pages/signup/SignUpPage.ui:40
+msgid "🌟 Create your space"
+msgstr ""
+
+#: data/assets/ui/pages/signup/SignUpPage.ui:86
+msgid "Already have an account?"
+msgstr ""
+
+#: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:60
+msgid "✓ Native experience on all 8 platforms"
+msgstr ""
+
+#: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:68
+msgid "✓ Lightning fast on any device"
+msgstr ""
+
+#: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:76
+msgid "✓ Sync across all devices"
+msgstr ""
+
+#: data/assets/ui/pages/welcome/elements/WelcomeLoading.ui:32
+msgid "Please wait..."
 msgstr ""
 
 #: data/com.keygenqt.ydx.desktop.in:9
@@ -96,10 +162,6 @@ msgstr ""
 msgid "AI-powered content generation"
 msgstr ""
 
-#: data/com.keygenqt.ydx.metainfo.xml.in:23
-msgid "Vitaliy Zarubin"
-msgstr ""
-
 #: data/com.keygenqt.ydx.metainfo.xml.in:38
 msgid "Initial release"
 msgstr ""
@@ -118,4 +180,64 @@ msgstr ""
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:43
 msgid "Multi-language support (EN, RU, ZH)"
+msgstr ""
+
+#: src/pages/signin/SignInPage.js:81 src/pages/signup/SignUpPage.js:83
+msgid "Please fill in all fields."
+msgstr ""
+
+#: src/pages/signin/SignInPage.js:86 src/pages/signup/SignUpPage.js:88
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: src/pages/signin/SignInPage.js:91 src/pages/signup/SignUpPage.js:93
+msgid "Password needs uppercase, lowercase and number."
+msgstr ""
+
+#: src/pages/welcome/elements/WelcomeLoading.js:12
+msgid "☕ Brewing coffee"
+msgstr ""
+
+#: src/pages/welcome/elements/WelcomeLoading.js:13
+msgid "🫖 Steeping tea"
+msgstr ""
+
+#: src/pages/welcome/elements/WelcomeLoading.js:14
+msgid "🗄️ Tickling the database"
+msgstr ""
+
+#: src/pages/welcome/elements/WelcomeLoading.js:15
+msgid "🚀 Igniting the reactor"
+msgstr ""
+
+#: src/pages/welcome/elements/WelcomeLoading.js:16
+msgid "🔐 Inspecting tokens"
+msgstr ""
+
+#: src/pages/welcome/elements/WelcomeLoading.js:17
+msgid "🧙 Casting authorization spells"
+msgstr ""
+
+#: src/pages/welcome/elements/WelcomeLoading.js:18
+msgid "🎩 Pulling rabbit out of hat"
+msgstr ""
+
+#: src/pages/welcome/elements/WelcomeLoading.js:19
+msgid "🦄 Feeding unicorns"
+msgstr ""
+
+#: src/pages/welcome/elements/WelcomeLoading.js:20
+msgid "⚡ Accelerating neutrons"
+msgstr ""
+
+#: src/pages/welcome/elements/WelcomeLoading.js:21
+msgid "🧪 Mixing reagents"
+msgstr ""
+
+#: src/pages/welcome/elements/WelcomeLoading.js:22
+msgid "🌱 Watering the server"
+msgstr ""
+
+#: src/widgets/GtkWidget.js:173
+msgid "Validate form failed"
 msgstr ""

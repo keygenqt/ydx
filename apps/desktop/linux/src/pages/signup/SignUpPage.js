@@ -13,13 +13,12 @@ export const SignUpPage = GObject.registerClass({
     ],
 }, class extends Adw.NavigationPage {
     #window
-    #errorToast = null
 
     constructor(params) {
         super(params);
         this.tag = this.utils.constants.Pages.SignUp;
         this.#setupActions();
-        this.#setupValidation();
+        this.#setupChangeValidation();
     }
 
     vfunc_realize() {
@@ -29,41 +28,35 @@ export const SignUpPage = GObject.registerClass({
 
     vfunc_map() {
         super.vfunc_map();
-        this.#clearFields();
-        this.#removeErrorStyles();
+        // clear form after start
+        this.fieldClearFull('IdEmailEntry', 'IdPasswordEntry');
+        // enable button
+        this._IdSubmitButton.sensitive = true;
+        // set focus to submit button
         GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
             this._IdSubmitButton.grab_focus();
             return GLib.SOURCE_REMOVE;
         });
     }
 
-    #clearFields() {
-        this._IdEmailEntry.set_text('');
-        this._IdPasswordEntry.set_text('');
+    #setupActions() {
+        this._IdSubmitButton.connect('clicked', () => {
+            this.#handleSubmit();
+        });
+        this._IdEmailEntry.connect('activate', () => {
+            this.#handleSubmit();
+        });
+        this._IdPasswordEntry.connect('activate', () => {
+            this.#handleSubmit();
+        });
+        this._IdSignInLink.connect('clicked', () => {
+            this.#window.navigation().replace(this.utils.constants.Pages.SignIn);
+        });
     }
 
-    #removeErrorStyles() {
-        this._IdEmailEntry.remove_css_class('error');
-        this._IdPasswordEntry.remove_css_class('error');
-    }
-
-    #setupValidation() {
-        this._IdEmailEntry.connect('changed', () => {
-            const email = this._IdEmailEntry.get_text();
-            if (email && !this.#isValidEmail(email)) {
-                this._IdEmailEntry.add_css_class('error');
-            } else {
-                this._IdEmailEntry.remove_css_class('error');
-            }
-        });
-        this._IdPasswordEntry.connect('changed', () => {
-            const password = this._IdPasswordEntry.get_text();
-            if (password && !this.#isValidPassword(password)) {
-                this._IdPasswordEntry.add_css_class('error');
-            } else {
-                this._IdPasswordEntry.remove_css_class('error');
-            }
-        });
+    #setupChangeValidation() {
+        this.fieldChangedValidate('IdEmailEntry', this.#isValidEmail);
+        this.fieldChangedValidate('IdPasswordEntry', this.#isValidPassword);
     }
 
     #isValidEmail(email) {
@@ -77,81 +70,47 @@ export const SignUpPage = GObject.registerClass({
         return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/.test(password);
     }
 
-    #showError(message, ...entries) {
-        this.#window.navigation().showToast(message);
-        if (entries) {
-            entries.forEach((entry, index) => {
-                if (entry) {
-                    entry.add_css_class('error');
-                    if (index === 0) {
-                        entry.grab_focus();
-                    }
-                }
-            });
-        }
-    }
-
-    #setupActions() {
-        this._IdSubmitButton.connect('clicked', () => {
-            this.#handleSignUp();
-        });
-        this._IdEmailEntry.connect('activate', () => {
-            this.#handleSignUp();
-        });
-        this._IdPasswordEntry.connect('activate', () => {
-            this.#handleSignUp();
-        });
-        this._IdSignInLink.connect('clicked', () => {
-            this.#window.navigation().replace(this.utils.constants.Pages.SignIn);
-        });
-    }
-
-    #handleSignUp() {
-        this.#removeErrorStyles();
-
+    #handleSubmit() {
+        // block button
+        this._IdSubmitButton.sensitive = false;
+        // clear validate from fields
+        this.fieldClearValidate('IdEmailEntry', 'IdPasswordEntry');
+        // get value
         const email = this._IdEmailEntry.get_text().trim();
         const password = this._IdPasswordEntry.get_text();
-
+        // check is not empty
         if (!email && !password) {
-            this.#showError(
-                _('Please fill in all fields.'),
-                this._IdEmailEntry, this._IdPasswordEntry
-            );
+            this.showToastError(_('Please fill in all fields.'), 'IdEmailEntry', 'IdPasswordEntry');
             return;
         }
-
+        // check email
         if (!this.#isValidEmail(email)) {
-            this.#showError(
-                _('Please enter a valid email address.'),
-                this._IdEmailEntry
-            );
+            this.showToastError(_('Please enter a valid email address.'), 'IdEmailEntry');
             return;
         }
-
+        // check password
         if (!this.#isValidPassword(password)) {
-            this.#showError(
-                _('Password must contain at least one uppercase letter, one lowercase letter, and one number.'),
-                this._IdPasswordEntry
-            );
+            this.showToastError(_('Password needs uppercase, lowercase and number.'), 'IdPasswordEntry');
             return;
         }
-
-        this._IdSubmitButton.sensitive = false;
-
+        // send query
         GLib.timeout_add(GLib.PRIORITY_DEFAULT, 50, () => {
-            this._IdSubmitButton.sensitive = true;
             const response = JSON.parse(this.utils.core.request_signup(email, password));
             if (response.code === 200) {
+                // save secure data
+                this.utils.secret.set(this.utils.constants.SecretKeys.UserID, response.data.user_id);
                 this.utils.secret.set(this.utils.constants.SecretKeys.AccessToken, response.data.access_token);
                 this.utils.secret.set(this.utils.constants.SecretKeys.RefreshToken, response.data.refresh_token);
+                // change navigation stack for user
                 this.#window.navigation().switchNavigation(true);
             } else {
-                this.#handleServerError(response, {
-                    'email': this._IdEmailEntry,
-                    'password': this._IdPasswordEntry
+                // show error
+                this.handleServerError(response, {
+                    'email': 'IdEmailEntry',
+                    'password': 'IdPasswordEntry'
                 }, (obj) => {
                     if (obj.code === 409) {
-                        this.#showError(obj.message, this._IdEmailEntry);
+                        this.showToastError(obj.message, 'IdEmailEntry');
                         return true;
                     }
                     return false;
@@ -159,29 +118,5 @@ export const SignUpPage = GObject.registerClass({
             }
             return GLib.SOURCE_REMOVE;
         });
-    }
-
-    #handleServerError(obj, fieldMap, customHandler = null) {
-        if (customHandler && customHandler(obj)) {
-            return;
-        }
-        const errors = obj.data?.errors;
-        if (!errors) {
-            this.#showError(obj.message || _('Registration failed'));
-            return;
-        }
-        let firstError = null;
-        Object.entries(errors).forEach(([field, fieldErrors]) => {
-            const uiField = fieldMap[field];
-            if (uiField && fieldErrors.length > 0) {
-                uiField.add_css_class('error');
-            }
-            if (!firstError && fieldErrors[0]?.message) {
-                firstError = fieldErrors[0].message;
-            }
-        });
-        if (firstError) {
-            this.#showError(firstError);
-        }
     }
 });

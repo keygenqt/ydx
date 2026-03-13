@@ -30,6 +30,13 @@ pub fn ydx_wasm_request_signup(email: String, password: String) -> Promise {
     wasm_response!(HttpClient::instance().signup(email, password))
 }
 
+/// Get user by id
+/// GET
+#[wasm_bindgen]
+pub fn ydx_wasm_request_get_user(id: String) -> Promise {
+    wasm_response!(HttpClient::instance().get_user(id, None))
+}
+
 /// Signout user
 /// DELETE
 #[wasm_bindgen]

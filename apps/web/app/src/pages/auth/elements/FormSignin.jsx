@@ -57,7 +57,7 @@ export function FormSignin(props) {
         email: Yup.string()
           .min(3, t("Size must be between 3 and 250."))
           .max(250, t("Size must be between 3 and 250."))
-          // .email(t("Must be a well-formed email address."))
+          .email(t("Please enter a valid email address."))
           .required(t("Must not be not blank.")),
         password: Yup.string()
           .min(8, t("Size must be between 8 and 16."))

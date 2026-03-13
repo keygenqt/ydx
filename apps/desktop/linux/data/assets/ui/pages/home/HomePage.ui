@@ -1,25 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="YdxHomePage" parent="AdwNavigationPage">
-    <property name="title" translatable="yes">YDX</property>
-    <property name="can-pop">true</property>
+    <property name="title" translatable="yes">YDX | Home</property>
+    <property name="can-pop">false</property>
     <property name="child">
       <object class="AdwToolbarView">
         <child type="top">
-          <object class="AdwHeaderBar" />
+          <object class="AdwHeaderBar">
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="menu-model">primary_menu</property>
+                <property name="tooltip-text" translatable="yes">Menu</property>
+              </object>
+            </child>
+          </object>
         </child>
         <property name="content">
           <object class="GtkBox">
-            <property name="margin-start">20</property>
-            <property name="margin-end">20</property>
             <property name="orientation">vertical</property>
+            <property name="spacing">24</property>
             <property name="halign">center</property>
             <property name="valign">center</property>
+            <property name="margin-start">20</property>
+            <property name="margin-end">20</property>
+
             <child>
-              <object class="GtkLabel" id="label">
-                <property name="label" translatable="yes">Home</property>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Welcome to YDX!</property>
                 <style>
-                  <class name="welcome-title" />
+                  <class name="title-1" />
+                </style>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkLabel" id="IdDataLabel">
+                <property name="label" translatable="yes">Click the button to fetch data</property>
+                <property name="wrap">true</property>
+                <property name="justify">center</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkButton" id="IdFetchButton">
+                <property name="label" translatable="yes">Fetch Data</property>
+                <property name="halign">center</property>
+                <style>
+                  <class name="pill" />
+                  <class name="suggested-action" />
                 </style>
               </object>
             </child>
@@ -28,4 +57,16 @@
       </object>
     </property>
   </template>
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_About</attribute>
+        <attribute name="action">homePage.about</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Logout</attribute>
+        <attribute name="action">homePage.logout</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>

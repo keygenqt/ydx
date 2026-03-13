@@ -36,6 +36,19 @@ pub fn ydx_ios_request_signup(email: &repr_c::String, password: &repr_c::String)
     )
 }
 
+/// Get user by id
+/// GET
+#[ffi_export]
+pub fn ydx_ios_request_get_user(
+    id: &repr_c::String,
+    token: &repr_c::String,
+) -> repr_c::String {
+    repr_c::String::from(
+        sffi_response!(HttpClient::instance().get_user(id.to_string(), Some(token.to_string())))
+            .to_str(),
+    )
+}
+
 /// Signout user
 /// DELETE
 #[ffi_export]

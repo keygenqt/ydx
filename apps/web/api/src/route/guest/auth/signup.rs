@@ -29,7 +29,7 @@ static PASSWORD_REGEX: LazyLock<Regex> = LazyLock::new(|| {
 pub struct SignUpParams {
     #[validate(custom(function = "validate_image"))]
     icon: Option<String>,
-    #[validate(email(message = "Invalid email format"))]
+    #[validate(email(message = "Please enter a valid email address."))]
     email: String,
     #[validate(length(
         min = 8,

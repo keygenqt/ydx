@@ -2,9 +2,6 @@ import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 import GLib from 'gi://GLib';
 
-// import { AboutDialog } from '../../../dialogs/AboutDialog.js';
-// new AboutDialog().present(this);
-
 export const WelcomeAuth = GObject.registerClass({
 	GTypeName: 'YdxWelcomeAuth',
 	Template: 'resource:///com/keygenqt/ydx/ui/pages/welcome/elements/WelcomeAuth.ui',

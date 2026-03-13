@@ -18,6 +18,7 @@ export const SignInPage = GObject.registerClass({
         super(params);
         this.tag = this.utils.constants.Pages.SignIn;
         this.#setupActions();
+        this.#setupChangeValidation();
     }
 
     vfunc_realize() {
@@ -27,51 +28,95 @@ export const SignInPage = GObject.registerClass({
 
     vfunc_map() {
         super.vfunc_map();
-        this.#clearFields();
+        // clear form after start
+        this.fieldClearFull('IdEmailEntry', 'IdPasswordEntry');
+        // enable button
+        this._IdSubmitButton.sensitive = true;
+        // set focus to submit button
         GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
             this._IdSubmitButton.grab_focus();
             return GLib.SOURCE_REMOVE;
         });
     }
 
-    #clearFields() {
-        this._IdEmailEntry.set_text('');
-        this._IdPasswordEntry.set_text('');
-    }
-
     #setupActions() {
         this._IdSubmitButton.connect('clicked', () => {
-            this.#handleSignIn();
+            this.#handleSubmit();
         });
         this._IdEmailEntry.connect('activate', () => {
-            this.#handleSignIn();
+            this.#handleSubmit();
         });
         this._IdPasswordEntry.connect('activate', () => {
-            this.#handleSignIn();
+            this.#handleSubmit();
         });
         this._IdSignUpLink.connect('clicked', () => {
             this.#window.navigation().replace(this.utils.constants.Pages.SignUp);
         });
     }
 
-    #handleSignIn() {
-        const email = this._IdEmailEntry.get_text();
-        const password = this._IdPasswordEntry.get_text();
-
-        if (!email || !password) {
-            this.#showError('Please fill in all fields');
-            return;
-        }
-        this._IdSubmitButton.sensitive = false;
-        this.utils.log.debug('Sign in attempt', { email });
-        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000, () => {
-            this._IdSubmitButton.sensitive = true;
-            this.#window.navigation().push(this.utils.constants.Pages.Home);
-            return GLib.SOURCE_REMOVE;
-        });
+    #setupChangeValidation() {
+        this.fieldChangedValidate('IdEmailEntry', this.#isValidEmail);
+        this.fieldChangedValidate('IdPasswordEntry', this.#isValidPassword);
     }
 
-    #showError(message) {
-        this.utils.log.error(message);
+    #isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    #isValidPassword(password) {
+        if (password.length < 8 || password.length > 16) {
+            return false;
+        }
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/.test(password);
+    }
+
+    #handleSubmit() {
+        // clear validate from fields
+        this.fieldClearValidate('IdEmailEntry', 'IdPasswordEntry');
+        // get value
+        const email = this._IdEmailEntry.get_text().trim();
+        const password = this._IdPasswordEntry.get_text();
+        // check is not empty
+        if (!email && !password) {
+            this.showToastError(_('Please fill in all fields.'), 'IdEmailEntry', 'IdPasswordEntry');
+            return;
+        }
+        // check email
+        if (!this.#isValidEmail(email)) {
+            this.showToastError(_('Please enter a valid email address.'), 'IdEmailEntry');
+            return;
+        }
+        // check password
+        if (!this.#isValidPassword(password)) {
+            this.showToastError(_('Password needs uppercase, lowercase and number.'), 'IdPasswordEntry');
+            return;
+        }
+        // block button
+        this._IdSubmitButton.sensitive = false;
+        // send query
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 50, () => {
+            const response = JSON.parse(this.utils.core.request_signin(email, password));
+            if (response.code === 200) {
+                // save secure data
+                this.utils.secret.set(this.utils.constants.SecretKeys.UserID, response.data.user_id.toString());
+                this.utils.secret.set(this.utils.constants.SecretKeys.AccessToken, response.data.access_token);
+                this.utils.secret.set(this.utils.constants.SecretKeys.RefreshToken, response.data.refresh_token);
+                // change navigation stack for user
+                this.#window.navigation().switchNavigation(true);
+            } else {
+                // show error
+                this.handleServerError(response, {
+                    'email': 'IdEmailEntry',
+                    'password': 'IdPasswordEntry'
+                }, (obj) => {
+                    if (obj.code === 401) {
+                        this.showToastError(obj.message, 'IdEmailEntry', 'IdPasswordEntry');
+                        return true;
+                    }
+                    return false;
+                })
+            }
+            return GLib.SOURCE_REMOVE;
+        });
     }
 });

@@ -42,6 +42,19 @@ pub fn ydx_windows_request_signup(
     )
 }
 
+/// Get user by id
+/// GET
+#[ffi_export]
+pub fn ydx_windows_request_get_user(
+    id: &repr_c::String,
+    token: &repr_c::String,
+) -> repr_c::String {
+    repr_c::String::from(
+        sffi_response!(HttpClient::instance().get_user(id.to_string(), Some(token.to_string())))
+            .to_str(),
+    )
+}
+
 /// Signout user
 /// DELETE
 #[ffi_export]

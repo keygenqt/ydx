@@ -67,6 +67,23 @@ pub extern "C" fn Java_com_keygenqt_ydx_YdxAndroid_requestSignup<'local>(
         .into_raw()
 }
 
+/// Get user by id
+/// GET
+#[unsafe(no_mangle)]
+pub extern "C" fn Java_com_keygenqt_ydx_YdxAndroid_requestGetUser<'local>(
+    mut env: JNIEnv<'local>,
+    _class: JClass<'local>,
+    id: JString<'local>,
+    token: JString<'local>,
+) -> jstring {
+    let id = env.to_string(&id);
+    let token = env.to_string(&token);
+    let result = ffi_response!(HttpClient::instance().get_user(id, Some(token)));
+    env.new_string(result.as_str())
+        .expect("Couldn't create Java string")
+        .into_raw()
+}
+
 /// Signout user
 /// DELETE
 #[unsafe(no_mangle)]
