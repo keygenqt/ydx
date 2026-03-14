@@ -19,7 +19,7 @@ if [[ -z $(meson --version 2> /dev/null) ]]; then
     source scripts/tools.sh || exit
 fi
 
-# Build lib @todo
+# @todo
 # bash ../../../core/scripts/linux/build.sh || exit 1
 
 # Export lib paths

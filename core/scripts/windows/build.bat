@@ -18,17 +18,18 @@ for %%t in (%TARGETS%) do (
     rustup target add %%t
 )
 
-@REM Build headers
-mkdir "%PATH_HEADERS%" 2>nul
-for %%t in (%TARGETS%) do (
-    cargo run --target %%t --%TYPE% --features headers --bin ydx_windows-headers
-)
+@REM @todo
+@REM @REM Build headers
+@REM mkdir "%PATH_HEADERS%" 2>nul
+@REM for %%t in (%TARGETS%) do (
+@REM     cargo run --target %%t --%TYPE% --features headers --bin ydx_windows-headers
+@REM )
 
-@REM Build cdylib libs
-mkdir "%PATH_HEADERS%" 2>nul
-for %%t in (%TARGETS%) do (
-    cargo build --target %%t --%TYPE% -p ydx_windows
-)
+@REM @REM Build cdylib libs
+@REM mkdir "%PATH_HEADERS%" 2>nul
+@REM for %%t in (%TARGETS%) do (
+@REM     cargo build --target %%t --%TYPE% -p ydx_windows
+@REM )
 
 @REM Copy dynamic library
 for %%t in (%TARGETS%) do (

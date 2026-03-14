@@ -9,18 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="images\rust.png" />
-    <None Remove="images\windows.png" />
+    <Compile Remove="images\**" />
+    <EmbeddedResource Remove="images\**" />
+    <None Remove="images\**" />
+    <Page Remove="images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Images\svg\ydx.svg" />
     <None Remove="Native\shared.dll" />
     <None Remove="Native\ydx_windows.dll" />
     <None Remove="windows.svg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\rust.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="images\windows.png">
+    <Resource Include="Assets\Images\svg\ydx.svg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Content Include="Native\ydx_windows.dll">
@@ -28,7 +31,12 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
+    <PackageReference Include="SharpVectors" Version="1.8.5" />
+  </ItemGroup>
+
   <Target Name="PreBuild" BeforeTargets="BeforeBuild">
-    <Exec Command="call &quot;$(SolutionDir)..\..\..\core\scripts\windows\build.bat&quot;" />
+    <Exec Command="call &quot;$(MSBuildProjectDirectory)\..\..\..\..\core\scripts\windows\build.bat&quot;" />
   </Target>
 </Project>

@@ -1,0 +1,22 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:svg="clr-namespace:SharpVectors.Converters;assembly=SharpVectors.Converters.Wpf">
+
+    <Style x:Key="AppIconStyle" TargetType="ContentControl">
+        <Setter Property="Content">
+            <Setter.Value>
+                <svg:SvgViewbox Source="/Assets/Images/svg/ydx.svg"
+                                Stretch="Uniform"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Width" Value="100"/>
+        <Setter Property="Height" Value="100"/>
+    </Style>
+
+    <Style x:Key="AppIconSmallStyle" TargetType="ContentControl"
+           BasedOn="{StaticResource AppIconStyle}">
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+    </Style>
+
+</ResourceDictionary>

@@ -6,7 +6,7 @@
 		<property name="vexpand">True</property>
 		<property name="halign">fill</property>
 		<property name="valign">fill</property>
-		
+
 		<!-- Фон на всю страницу -->
 		<style>
 			<class name="navigation-bg" />
