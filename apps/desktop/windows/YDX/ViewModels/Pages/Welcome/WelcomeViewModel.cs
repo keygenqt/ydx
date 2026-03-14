@@ -1,5 +1,6 @@
 using System.Windows.Input;
 using YDX.Commands;
+using YDX.Native;
 
 namespace YDX.ViewModels.Pages.Welcome
 {
@@ -57,21 +58,47 @@ namespace YDX.ViewModels.Pages.Welcome
             SignInCommand = new RelayCommand(OnSignIn);
             SignUpCommand = new RelayCommand(OnSignUp);
 
-            // Simulate authentication check
-            Task.Delay(5000).ContinueWith(_ =>
+            // Check authentication token
+            Task.Delay(1000).ContinueWith(_ =>
+            {
+                CheckAuthToken();
+            });
+        }
+
+        private void CheckAuthToken()
+        {
+            try
+            {
+                // TODO: Get token from secure storage
+                // For now, using empty token to simulate unauthenticated state
+                string token = "TODO"; // This should come from SecretService
+
+                if (!string.IsNullOrEmpty(token))
+                {
+                    string response = NativeMethods.RequestSignCheck(token);
+                    if (response.Contains("\"code\":200"))
+                    {
+                        println("User is authenticated, navigating to home");
+                        // TODO: Navigate to home page
+                    }
+                }
+            }
+            finally
             {
                 IsLoading = false;
-            });
+            }
         }
 
         private void OnSignIn()
         {
             println("Sign In clicked");
+            // TODO: Navigate to SignIn page
         }
 
         private void OnSignUp()
         {
             println("Sign Up clicked");
+            // TODO: Navigate to SignUp page
         }
     }
 }

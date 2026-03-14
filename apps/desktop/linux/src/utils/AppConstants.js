@@ -4,7 +4,7 @@ export const AppConstants = Object.freeze({
         dataVersion: 1
     },
     Api: {
-        base_url: "http://0.0.0.0:3002",
+        base_url: "http://localhost:3002",
         uuid: "uuid-linux", // @todo
     },
     Pages: {

@@ -109,7 +109,7 @@ impl ClientFFI {
             .send()
             .await
             .map_err(|e| {
-                eprintln!("Request failed for URL {}: {}", path, e);
+                eprintln!("Request failed for URL {}/{}: {}", self.base_url, path, e);
                 anyhow!(ERROR_JSON)
             })?;
 

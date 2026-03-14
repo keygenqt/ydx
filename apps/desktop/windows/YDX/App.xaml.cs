@@ -4,6 +4,7 @@ using YDX.ViewModels;
 using YDX.ViewModels.Pages.Welcome;
 using YDX.Views;
 using YDX.Native;
+using static YDX.Utils.AppConstants;
 
 namespace YDX
 {
@@ -47,7 +48,7 @@ namespace YDX
             base.OnStartup(e);
 
             // init http client
-            NativeMethods.Init("http://localhost:3002", "uuid-windows");
+            NativeMethods.HttpClientInit(Api.BaseUrl, Api.Uuid);
 
             var viewModel = Services.GetRequiredService<MainWindowViewModel>();
             var mainWindow = new MainWindow

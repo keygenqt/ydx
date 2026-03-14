@@ -7,89 +7,223 @@ namespace YDX.Native
     {
         private const string DllName = @"Native\ydx_windows.dll";
 
-        // Init http client
-        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        private static extern void ydx_windows_request_init(byte[] base_url, byte[] uuid);
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RustString
+        {
+            public IntPtr ptr;
+            public ulong len;
+            public ulong capacity;
+        }
 
-        // Free function
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void ydx_windows_free_string(IntPtr ptr, ulong len, ulong cap);
 
-        // Signin user
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        private static extern VecUint8 ydx_windows_request_signin(byte[] email, byte[] password);
+        private static extern void ydx_windows_request_init(ref RustString base_url, ref RustString uuid);
 
-        // Signup user
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        private static extern VecUint8 ydx_windows_request_signup(byte[] email, byte[] password);
+        private static extern VecUint8 ydx_windows_request_signin(ref RustString email, ref RustString password);
 
-        // Check auth
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        private static extern VecUint8 ydx_windows_request_signcheck(byte[] token);
+        private static extern VecUint8 ydx_windows_request_signup(ref RustString email, ref RustString password);
 
-        // Get user
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        private static extern VecUint8 ydx_windows_request_get_user(byte[] id, byte[] token);
+        private static extern VecUint8 ydx_windows_request_signcheck(ref RustString token);
 
-        // Signout user
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        private static extern VecUint8 ydx_windows_request_signout(byte[] token);
+        private static extern VecUint8 ydx_windows_request_get_user(ref RustString id, ref RustString token);
 
-        // ========== ПУБЛИЧНЫЕ МЕТОДЫ (работают со string) ==========
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+        private static extern VecUint8 ydx_windows_request_signout(ref RustString token);
 
-        public static void Init(string baseUrl, string uuid)
+        private static RustString _baseUrlStr;
+        private static RustString _uuidStr;
+        private static bool _initialized = false;
+
+        private static string PrepareForFfi(string input)
         {
-            byte[] baseUrlBytes = Encoding.UTF8.GetBytes(baseUrl + '\0');
-            byte[] uuidBytes = Encoding.UTF8.GetBytes(uuid + '\0');
-            ydx_windows_request_init(baseUrlBytes, uuidBytes);
+            if (string.IsNullOrEmpty(input))
+                return input ?? string.Empty;
+
+            var result = new StringBuilder(input.Length);
+            foreach (char c in input)
+            {
+                if (!char.IsControl(c) && c <= 127)
+                    result.Append(c);
+            }
+            return result.ToString().Trim();
         }
 
-        public static string SignIn(string email, string password)
+        public static void HttpClientInit(string baseUrl, string uuid)
         {
-            byte[] emailBytes = Encoding.UTF8.GetBytes(email + '\0');
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password + '\0');
-            VecUint8 result = ydx_windows_request_signin(emailBytes, passwordBytes);
-            string str = result.ToUtf8String();
-            result.Free();
-            return str;
+            if (_initialized) return;
+
+            try
+            {
+                string cleanBaseUrl = PrepareForFfi(baseUrl);
+                string cleanUuid = PrepareForFfi(uuid);
+
+                byte[] baseUrlBytes = Encoding.UTF8.GetBytes(cleanBaseUrl + '\0');
+                byte[] uuidBytes = Encoding.UTF8.GetBytes(cleanUuid + '\0');
+
+                IntPtr baseUrlPtr = Marshal.AllocHGlobal(baseUrlBytes.Length);
+                IntPtr uuidPtr = Marshal.AllocHGlobal(uuidBytes.Length);
+
+                try
+                {
+                    Marshal.Copy(baseUrlBytes, 0, baseUrlPtr, baseUrlBytes.Length);
+                    Marshal.Copy(uuidBytes, 0, uuidPtr, uuidBytes.Length);
+
+                    _baseUrlStr = new RustString
+                    {
+                        ptr = baseUrlPtr,
+                        len = (ulong)baseUrlBytes.Length - 1,
+                        capacity = (ulong)baseUrlBytes.Length - 1
+                    };
+
+                    _uuidStr = new RustString
+                    {
+                        ptr = uuidPtr,
+                        len = (ulong)uuidBytes.Length - 1,
+                        capacity = (ulong)uuidBytes.Length - 1
+                    };
+
+                    ydx_windows_request_init(ref _baseUrlStr, ref _uuidStr);
+                    _initialized = true;
+                }
+                catch
+                {
+                    Marshal.FreeHGlobal(baseUrlPtr);
+                    Marshal.FreeHGlobal(uuidPtr);
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($">>> Init failed: {ex.Message}");
+                throw;
+            }
         }
 
-        public static string SignUp(string email, string password)
+        private static RustString StringToRustString(string s)
         {
-            byte[] emailBytes = Encoding.UTF8.GetBytes(email + '\0');
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password + '\0');
-            VecUint8 result = ydx_windows_request_signup(emailBytes, passwordBytes);
-            string str = result.ToUtf8String();
-            result.Free();
-            return str;
+            string clean = PrepareForFfi(s);
+            byte[] bytes = Encoding.UTF8.GetBytes(clean + '\0');
+            IntPtr ptr = Marshal.AllocHGlobal(bytes.Length);
+
+            try
+            {
+                Marshal.Copy(bytes, 0, ptr, bytes.Length);
+
+                return new RustString
+                {
+                    ptr = ptr,
+                    len = (ulong)bytes.Length - 1,
+                    capacity = (ulong)bytes.Length - 1
+                };
+            }
+            catch
+            {
+                Marshal.FreeHGlobal(ptr);
+                throw;
+            }
         }
 
-        public static string SignCheck(string token)
+        private static void FreeRustString(RustString rs)
         {
-            byte[] tokenBytes = Encoding.UTF8.GetBytes(token + '\0');
-            VecUint8 result = ydx_windows_request_signcheck(tokenBytes);
-            string str = result.ToUtf8String();
-            result.Free();
-            return str;
+            if (rs.ptr != IntPtr.Zero)
+                Marshal.FreeHGlobal(rs.ptr);
         }
 
-        public static string GetUser(string id, string token)
+        public static string RequestSignIn(string email, string password)
         {
-            byte[] idBytes = Encoding.UTF8.GetBytes(id + '\0');
-            byte[] tokenBytes = Encoding.UTF8.GetBytes(token + '\0');
-            VecUint8 result = ydx_windows_request_get_user(idBytes, tokenBytes);
-            string str = result.ToUtf8String();
-            result.Free();
-            return str;
+            RustString emailRs = StringToRustString(email);
+            RustString passwordRs = StringToRustString(password);
+
+            try
+            {
+                VecUint8 result = ydx_windows_request_signin(ref emailRs, ref passwordRs);
+                string str = result.ToUtf8String();
+                result.Free();
+                return str;
+            }
+            finally
+            {
+                FreeRustString(emailRs);
+                FreeRustString(passwordRs);
+            }
         }
 
-        public static string SignOut(string token)
+        public static string RequestSignUp(string email, string password)
         {
-            byte[] tokenBytes = Encoding.UTF8.GetBytes(token + '\0');
-            VecUint8 result = ydx_windows_request_signout(tokenBytes);
-            string str = result.ToUtf8String();
-            result.Free();
-            return str;
+            RustString emailRs = StringToRustString(email);
+            RustString passwordRs = StringToRustString(password);
+
+            try
+            {
+                VecUint8 result = ydx_windows_request_signup(ref emailRs, ref passwordRs);
+                string str = result.ToUtf8String();
+                result.Free();
+                return str;
+            }
+            finally
+            {
+                FreeRustString(emailRs);
+                FreeRustString(passwordRs);
+            }
+        }
+
+        public static string RequestSignCheck(string token)
+        {
+            RustString tokenRs = StringToRustString(token);
+
+            try
+            {
+                VecUint8 result = ydx_windows_request_signcheck(ref tokenRs);
+                string str = result.ToUtf8String();
+                result.Free();
+                return str;
+            }
+            finally
+            {
+                FreeRustString(tokenRs);
+            }
+        }
+
+        public static string RequestGetUser(string id, string token)
+        {
+            RustString idRs = StringToRustString(id);
+            RustString tokenRs = StringToRustString(token);
+
+            try
+            {
+                VecUint8 result = ydx_windows_request_get_user(ref idRs, ref tokenRs);
+                string str = result.ToUtf8String();
+                result.Free();
+                return str;
+            }
+            finally
+            {
+                FreeRustString(idRs);
+                FreeRustString(tokenRs);
+            }
+        }
+
+        public static string RequestSignOut(string token)
+        {
+            RustString tokenRs = StringToRustString(token);
+
+            try
+            {
+                VecUint8 result = ydx_windows_request_signout(ref tokenRs);
+                string str = result.ToUtf8String();
+                result.Free();
+                return str;
+            }
+            finally
+            {
+                FreeRustString(tokenRs);
+            }
         }
     }
 
@@ -102,19 +236,28 @@ namespace YDX.Native
 
         public string ToUtf8String()
         {
-            if (ptr == IntPtr.Zero || len == 0)
+            if (ptr == IntPtr.Zero || len == 0 || len > 10 * 1024 * 1024)
                 return string.Empty;
 
-            byte[] bytes = new byte[len];
-            Marshal.Copy(ptr, bytes, 0, (int)len);
-            return Encoding.UTF8.GetString(bytes);
+            try
+            {
+                byte[] bytes = new byte[len];
+                Marshal.Copy(ptr, bytes, 0, (int)len);
+                return Encoding.UTF8.GetString(bytes);
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
 
         public void Free()
         {
             if (ptr != IntPtr.Zero)
             {
-                NativeMethods.ydx_windows_free_string(ptr, len, cap);
+                if (len > 0 && len < 10 * 1024 * 1024)
+                    NativeMethods.ydx_windows_free_string(ptr, len, cap);
+
                 ptr = IntPtr.Zero;
                 len = 0;
                 cap = 0;

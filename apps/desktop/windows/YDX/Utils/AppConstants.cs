@@ -4,7 +4,7 @@ namespace YDX.Utils
     {
         public static class Api
         {
-            public const string BaseUrl = "http://0.0.0.0:3002";
+            public const string BaseUrl = "http://localhost:3002";
             public const string Uuid = "uuid-windows";
         }
 
