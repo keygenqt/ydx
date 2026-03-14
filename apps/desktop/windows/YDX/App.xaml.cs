@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using YDX.ViewModels;
 using YDX.ViewModels.Pages.Welcome;
 using YDX.Views;
+using YDX.Native;
 
 namespace YDX
 {
@@ -45,6 +45,9 @@ namespace YDX
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            // init http client
+            NativeMethods.Init("http://localhost:3002", "uuid-windows");
 
             var viewModel = Services.GetRequiredService<MainWindowViewModel>();
             var mainWindow = new MainWindow

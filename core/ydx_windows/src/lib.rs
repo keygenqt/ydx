@@ -64,6 +64,16 @@ pub fn ydx_windows_request_signout(token: &repr_c::String) -> repr_c::String {
     )
 }
 
+/// Free string allocated by Rust
+#[ffi_export]
+pub fn ydx_windows_free_string(ptr: *mut u8, len: usize, cap: usize) {
+    if !ptr.is_null() {
+        unsafe {
+            let _ = Vec::from_raw_parts(ptr, len, cap);
+        }
+    }
+}
+
 #[cfg(feature = "headers")]
 pub fn generate_headers() -> ::std::io::Result<()> {
     ::safer_ffi::headers::builder()

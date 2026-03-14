@@ -38,6 +38,8 @@ for %%t in (%TARGETS%) do (
     copy /y "target\%%t\%TYPE%\*.dll" "%PATH_LIB_OUT%\%%t"
     copy /y "%PATH_HEADERS%\ydx_windows.h" "%PATH_LIB_OUT%\%%t\"
     if exist "%PATH_HEADERS%" rmdir /s /q "%PATH_HEADERS%"
+    if exist "..\apps\desktop\windows\YDX\Native\ydx_windows.h" del /f /q "..\apps\desktop\windows\YDX\Native\ydx_windows.h"
     if exist "..\apps\desktop\windows\YDX\Native\ydx_windows.dll" del /f /q "..\apps\desktop\windows\YDX\Native\ydx_windows.dll"
+    mklink /H "..\apps\desktop\windows\YDX\Native\ydx_windows.h" "%PATH_LIB_OUT%\%%t\ydx_windows.h"
     mklink /H "..\apps\desktop\windows\YDX\Native\ydx_windows.dll" "%PATH_LIB_OUT%\%%t\ydx_windows.dll"
 )
