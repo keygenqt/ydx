@@ -4,49 +4,24 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:YDX.Views.Pages.Welcome.Elements"
-      xmlns:vm="clr-namespace:YDX.ViewModels.Pages.Welcome"
+      xmlns:vm="clr-namespace:YDX.Views.Pages.Welcome"
       mc:Ignorable="d"
       Title="Welcome"
       d:DataContext="{d:DesignInstance vm:WelcomeViewModel}">
 
-    <Page.Resources>
-        <Storyboard x:Key="FadeInAnimation">
-            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                           From="0" To="1"
-                           Duration="0:0:0.3"
-                           FillBehavior="HoldEnd"/>
-        </Storyboard>
-
-        <Style TargetType="local:WelcomeAuth">
-            <Setter Property="Opacity" Value="0"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ShowAuth}" Value="True">
-                    <DataTrigger.EnterActions>
-                        <BeginStoryboard Storyboard="{StaticResource FadeInAnimation}"/>
-                    </DataTrigger.EnterActions>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style TargetType="local:WelcomeLoading">
-            <Setter Property="Opacity" Value="0"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ShowLoading}" Value="True">
-                    <DataTrigger.EnterActions>
-                        <BeginStoryboard Storyboard="{StaticResource FadeInAnimation}"/>
-                    </DataTrigger.EnterActions>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-    </Page.Resources>
-
     <Grid>
         <StackPanel HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Width="400">
+                   VerticalAlignment="Center">
 
-            <local:WelcomeAuth Visibility="{Binding ShowAuth, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <local:WelcomeLoading Visibility="{Binding ShowLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <local:WelcomeAuth
+                Visibility="{Binding ShowAuth, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Style="{StaticResource FadeInWhenTrue}"
+                Tag="{Binding ShowAuth}"/>
+
+            <local:WelcomeLoading
+                Visibility="{Binding ShowLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Style="{StaticResource FadeInWhenTrue}"
+                Tag="{Binding ShowLoading}"/>
 
         </StackPanel>
     </Grid>

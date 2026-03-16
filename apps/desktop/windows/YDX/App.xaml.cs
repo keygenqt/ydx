@@ -1,8 +1,11 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
-using YDX.ViewModels;
-using YDX.ViewModels.Pages.Welcome;
-using YDX.Views;
+using YDX.Views.Windows;
+using YDX.Services;
+using YDX.Views.Pages.Welcome;
+using YDX.Views.Pages.SignIn;
+using YDX.Views.Pages.SignUp;
+using YDX.Views.Pages.Home;
 using YDX.Native;
 using static YDX.Utils.AppConstants;
 
@@ -34,8 +37,24 @@ namespace YDX
         {
             var services = new ServiceCollection();
 
+            // general window
             services.AddSingleton<MainWindowViewModel>();
+            services.AddTransient<MainWindow>();
+
+            // view modes
             services.AddTransient<WelcomeViewModel>();
+            services.AddTransient<SignInViewModel>();
+            services.AddTransient<SignUpViewModel>();
+            services.AddTransient<HomeViewModel>();
+
+            // pages
+            services.AddTransient<WelcomePage>();
+            services.AddTransient<SignInPage>();
+            services.AddTransient<SignUpPage>();
+            services.AddTransient<HomePage>();
+
+            // navigation
+            services.AddSingleton<INavigationService, NavigationService>();
 
             return services.BuildServiceProvider();
         }
@@ -46,16 +65,10 @@ namespace YDX
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
             // init http client
             NativeMethods.HttpClientInit(Api.BaseUrl, Api.Uuid);
-
-            var viewModel = Services.GetRequiredService<MainWindowViewModel>();
-            var mainWindow = new MainWindow
-            {
-                DataContext = viewModel
-            };
-
+            // show main window
+            var mainWindow = Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
     }

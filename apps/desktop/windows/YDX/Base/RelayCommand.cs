@@ -1,6 +1,6 @@
 using System.Windows.Input;
 
-namespace YDX.Commands
+namespace YDX.Base
 {
     /// <summary>
     /// A command that relays its logic to delegate methods.

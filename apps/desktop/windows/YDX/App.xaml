@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Assets/Styles/Colors.xaml" />
                 <ResourceDictionary Source="/Assets/Styles/Images.xaml" />
+                <ResourceDictionary Source="/Assets/Animations/FadeAnimationsBool.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>

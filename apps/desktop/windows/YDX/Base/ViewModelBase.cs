@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace YDX.ViewModels
+namespace YDX.Base
 {
     /// <summary>
     /// Base class for all ViewModels implementing INotifyPropertyChanged.

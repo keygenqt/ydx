@@ -7,9 +7,10 @@ namespace YDX.Views.Pages.Welcome
     /// </summary>
     public partial class WelcomePage : Page
     {
-        public WelcomePage()
+        public WelcomePage(WelcomeViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
     }
 }
