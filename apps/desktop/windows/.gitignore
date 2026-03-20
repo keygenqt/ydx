@@ -1,27 +1,55 @@
+# Visual Studio
+.vs/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
 # Build results
 bin/
 obj/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+arm64/
 
-# Visual Studio files
-.vs/
-*.user
-*.suo
-*.userosscache
+# VS Code
+.vscode/
+*.code-workspace
 
 # NuGet packages
 packages/
 *.nupkg
+project.lock.json
+project.assets.json
+
+# WinUI specific
+*.msix
+*.msixupload
+AppPackages/
+BundleArtifacts/
 
 # User-specific files
-*.rsuser
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
+*.userprefs
+*.profiles
+*.psess
+*.vspx
 
-# Build results
-[Dd]ebug/
-[Rr]elease/
-x64/
-[Bb]in/
-[Oo]bj/
+# Environment specific
+*.pidb
+*.userprefs
+*.usertasks
+
+# Testing
+TestResults/
+*.coverage
+
+# Output files
+*.dll
+*.exe
+*.pdb
+*.exp
+*.lib
+*.log

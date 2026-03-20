@@ -1,0 +1,33 @@
+<ContentDialog x:Class="YDX.Views.Dialogs.AboutDialog"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:local="using:YDX.Views.Dialogs"
+               Title="{x:Bind strings:Resources.About}"
+               PrimaryButtonText="{x:Bind strings:Resources.Website}"
+               CloseButtonText="{x:Bind strings:Resources.Close}"
+               DefaultButton="Primary"
+               Style="{StaticResource DefaultContentDialogStyle}"
+               xmlns:strings="using:YDX.Strings">
+
+    <StackPanel Spacing="12" HorizontalAlignment="Center" Margin="0,20">
+
+        <Image Style="{StaticResource IconLogoSvg}"
+               HorizontalAlignment="Center"/>
+
+        <TextBlock Text="YDX"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"/>
+
+        <TextBlock x:Name="VersionText"
+                   Text="{x:Bind strings:Resources.Version}"
+                   HorizontalAlignment="Center"
+                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+
+        <TextBlock x:Name="CopyrightText"
+                   Text="{x:Bind strings:Resources.Copyright}"
+                   HorizontalAlignment="Center"
+                   Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                   FontSize="12"/>
+    </StackPanel>
+</ContentDialog>

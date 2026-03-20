@@ -1,12 +1,73 @@
-<Page
-    x:Class="YDX.Views.Pages.SignUp.SignUpPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="24"
-            Text="SignUp Page" />
-    </Grid>
+<Page x:Class="YDX.Views.Pages.SignUp.SignUpPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:strings="using:YDX.Strings">
+
+    <StackPanel Width="360"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="30">
+
+        <StackPanel HorizontalAlignment="Center" Spacing="24">
+            <Viewbox Width="85" Height="85">
+                <SymbolIcon Symbol="AddFriend" Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
+            </Viewbox>
+
+            <TextBlock Text="{x:Bind strings:Resources.CreateSpace}"
+                       FontSize="22"
+                       FontWeight="SemiBold"
+                       Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Spacing="16">
+            <StackPanel Spacing="4">
+                <TextBox Text="{x:Bind ViewModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         PlaceholderText="{x:Bind strings:Resources.Email}"
+                         InputScope="EmailNameOrAddress"
+                         IsSpellCheckEnabled="False"
+                         IsTextPredictionEnabled="False"
+                         Padding="12,12"/>
+                <TextBlock Text="{x:Bind ViewModel.EmailError, Mode=OneWay}"
+                           Foreground="{ThemeResource SystemErrorTextColor}"
+                           FontSize="12"
+                           Margin="12,0,0,0"
+                           Visibility="{x:Bind ViewModel.ShowEmailError, Mode=OneWay}"/>
+            </StackPanel>
+
+            <StackPanel Spacing="4">
+                <PasswordBox Password="{x:Bind ViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             PlaceholderText="{x:Bind strings:Resources.Password}"
+                             Padding="12,12"/>
+                <TextBlock Text="{x:Bind ViewModel.PasswordError, Mode=OneWay}"
+                           Foreground="{ThemeResource SystemErrorTextColor}"
+                           FontSize="12"
+                           Margin="12,0,0,0"
+                           Visibility="{x:Bind ViewModel.ShowPasswordError, Mode=OneWay}"/>
+            </StackPanel>
+
+            <Button Command="{x:Bind ViewModel.SignUpCommand}"
+                    Content="{x:Bind strings:Resources.SignUp}"
+                    Style="{StaticResource AccentButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Padding="12,12"
+                    Margin="0,4,0,0"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Center"
+                    Spacing="4">
+            <TextBlock Text="{x:Bind strings:Resources.AlreadyHaveAccount}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+            <HyperlinkButton Command="{x:Bind ViewModel.ToSignInCommand}"
+                             Content="{x:Bind strings:Resources.SignIn}"
+                             Padding="0"
+                             Margin="0"/>
+        </StackPanel>
+
+        <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                      HorizontalAlignment="Center"
+                      Width="24"
+                      Height="24"/>
+    </StackPanel>
 </Page>

@@ -1,25 +1,33 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using YDX.Services;
-using YDX.Base;
-using YDX.Views.Pages.Welcome;
 
-namespace YDX.Views.Windows
+namespace YDX.Views.Windows;
+
+public partial class MainWindowViewModel : ObservableObject
 {
-    /// <summary>
-    /// ViewModel for the main application window.
-    /// Handles window-level properties and navigation state.
-    /// </summary>
-    public class MainWindowViewModel : ViewModelBase
+    private readonly INavigationService _navigation;
+    private readonly ITitleService _titleService;
+
+    [ObservableProperty]
+    private bool _canGoBack;
+
+    [ObservableProperty]
+    private string _title = "YDX";
+
+    public MainWindowViewModel(
+        INavigationService navigation,
+        ITitleService titleService)
     {
-        private readonly INavigationService _navigation;
+        _navigation = navigation;
+        _titleService = titleService;
 
-        public MainWindowViewModel(INavigationService navigation)
-        {
-            _navigation = navigation;
-        }
+        _canGoBack = _navigation.CanGoBack();
+        _navigation.CanGoBackChanged += (s, e) => CanGoBack = _navigation.CanGoBack();
 
-        public void Start()
-        {
-            _navigation?.NavigateTo<WelcomePage>();
-        }
+        _titleService.TitleChanged += (s, title) => Title = title;
     }
+
+    [RelayCommand]
+    private void GoBack() => _navigation.GoBack();
 }

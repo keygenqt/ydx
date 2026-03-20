@@ -1,47 +1,87 @@
-using System.Windows.Controls;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
+using System;
 
-namespace YDX.Services
+namespace YDX.Services;
+
+public class NavigationService(ITitleService _titleService) : INavigationService
 {
-    public class NavigationService : INavigationService
+    private Frame? _frame;
+    private bool _changeRoot = false;
+
+    public event EventHandler? CanGoBackChanged;
+
+    public void Initialize(Frame frame)
     {
-        private readonly IServiceProvider _services;
+        _frame = frame;
+        _frame.Navigated += OnNavigated;
+    }
 
-        public NavigationService(IServiceProvider services)
+    private void OnNavigated(object sender, NavigationEventArgs e)
+    {
+        if (e.Content is Page page)
         {
-            _services = services;
+            _titleService.SetTitle(page.GetType());
         }
+        CanGoBackChanged?.Invoke(this, EventArgs.Empty);
+    }
 
-        private Frame GetMainFrame()
+    public void NavigateTo<T>() where T : Page
+    {
+        _frame?.Navigate(typeof(T));
+    }
+
+    public void Replace<T>() where T : Page
+    {
+        if (_frame == null) return;
+
+        _frame.Navigate(typeof(T));
+
+        if (_frame.BackStack.Count > 0)
         {
-            if (System.Windows.Application.Current.MainWindow is Views.Windows.MainWindow mainWindow)
+            _frame.BackStack.RemoveAt(_frame.BackStack.Count - 1);
+        }
+    }
+
+    public void ReplaceRoot<T>(bool animate = true) where T : Page
+    {
+        if (_frame == null) return;
+
+        _changeRoot = animate;
+        _frame.Navigate(typeof(T));
+
+        if (animate)
+        {
+            var timer = new DispatcherTimer
             {
-                return mainWindow.MainFrame;
-            }
-            throw new System.InvalidOperationException("MainWindow not ready");
-        }
-
-        public void NavigateTo<T>() where T : Page
-        {
-            var frame = GetMainFrame();
-            var page = _services.GetRequiredService<T>();
-            frame.Navigate(page);
-        }
-
-        public void GoBack()
-        {
-            var frame = GetMainFrame();
-            if (frame.CanGoBack)
-                frame.GoBack();
-        }
-
-        public bool CanGoBack
-        {
-            get
+                Interval = TimeSpan.FromMilliseconds(10)
+            };
+            timer.Tick += (s, e) =>
             {
-                var frame = GetMainFrame();
-                return frame.CanGoBack;
-            }
+                timer.Stop();
+                _frame.BackStack.Clear();
+                _changeRoot = false;
+                CanGoBackChanged?.Invoke(this, EventArgs.Empty);
+            };
+            timer.Start();
         }
+        else
+        {
+            _frame.BackStack.Clear();
+            CanGoBackChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public void GoBack()
+    {
+        if (_frame?.CanGoBack == true)
+            _frame.GoBack();
+    }
+
+    public bool CanGoBack()
+    {
+        if (_changeRoot) return false;
+        return _frame?.CanGoBack ?? false;
     }
 }

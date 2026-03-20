@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "YDX (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "YDX (Unpackaged)": {
+      "commandName": "Project",
+      "hotReloadEnabled": true
+    }
+  }
+}

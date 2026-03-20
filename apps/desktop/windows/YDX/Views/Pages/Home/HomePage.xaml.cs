@@ -1,14 +1,13 @@
-using System.Windows.Controls;
-using YDX.Views.Pages.Home;
+using Microsoft.UI.Xaml.Controls;
 
-namespace YDX.Views.Pages.Home
+namespace YDX.Views.Pages.Home;
+
+public sealed partial class HomePage : Page
 {
-    public partial class HomePage : Page
+    public HomeViewModel ViewModel { get; } = App.GetService<HomeViewModel>();
+
+    public HomePage()
     {
-        public HomePage(HomeViewModel viewModel)
-        {
-            InitializeComponent();
-            DataContext = viewModel;
-        }
+        InitializeComponent();
     }
 }

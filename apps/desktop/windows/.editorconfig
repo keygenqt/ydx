@@ -1,0 +1,8 @@
+# Ensures a blank line at the end of every file (POSIX compliance, cleaner git diffs)
+[*]
+insert_final_newline = true
+
+# CommunityToolkit.Mvvm: Disable WinRT AOT compatibility warnings (MVVMTK0034)
+[*.cs]
+dotnet_diagnostic.MVVMTK0034.severity = none
+dotnet_diagnostic.MVVMTK0045.severity = none

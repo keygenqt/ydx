@@ -1,13 +1,13 @@
-using System.Windows.Controls;
+using Microsoft.UI.Xaml.Controls;
 
-namespace YDX.Views.Pages.SignIn
+namespace YDX.Views.Pages.SignIn;
+
+public sealed partial class SignInPage : Page
 {
-    public partial class SignInPage : Page
+    public SignInViewModel ViewModel { get; } = App.GetService<SignInViewModel>();
+
+    public SignInPage()
     {
-        public SignInPage(SignInViewModel viewModel)
-        {
-            InitializeComponent();
-            DataContext = viewModel;
-        }
+        InitializeComponent();
     }
 }

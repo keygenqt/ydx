@@ -1,75 +1,66 @@
-﻿using System.Windows;
+﻿
 using Microsoft.Extensions.DependencyInjection;
-using YDX.Views.Windows;
+using Microsoft.UI.Xaml;
+using YDX.Native;
 using YDX.Services;
-using YDX.Views.Pages.Welcome;
+using YDX.Views.Pages.Home;
 using YDX.Views.Pages.SignIn;
 using YDX.Views.Pages.SignUp;
-using YDX.Views.Pages.Home;
-using YDX.Native;
+using YDX.Views.Pages.Splash;
+using YDX.Views.Pages.Welcome;
+using YDX.Views.Windows;
 using static YDX.Utils.AppConstants;
 
 namespace YDX
 {
-    /// <summary>
-    /// Application entry point with dependency injection setup
-    /// </summary>
     public partial class App : Application
     {
-        /// <summary>
-        /// Gets the service provider for dependency injection
-        /// </summary>
-        public IServiceProvider Services { get; }
+        public ServiceProvider Services { get; private set; } = null!;
 
-        /// <summary>
-        /// Initializes a new instance of the App class
-        /// </summary>
+        public static new App Current => (App)Application.Current;
+
+        public static T GetService<T>() where T : class => (Current as App)!.Services.GetRequiredService<T>();
+
         public App()
         {
             Services = ConfigureServices();
+            InitializeComponent();
         }
 
-        /// <summary>
-        /// Configures and builds the service collection
-        /// </summary>
-        /// <returns>Configured service provider</returns>
-        private static IServiceProvider ConfigureServices()
+        private static ServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
 
-            // general window
-            services.AddSingleton<MainWindowViewModel>();
-            services.AddTransient<MainWindow>();
+            services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<ITitleService, TitleService>();
+            services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<ISecureStorageService, SecureStorageService>();
 
-            // view modes
+            services.AddTransient<MainWindowViewModel>();
+            services.AddTransient<SplashViewModel>();
             services.AddTransient<WelcomeViewModel>();
             services.AddTransient<SignInViewModel>();
             services.AddTransient<SignUpViewModel>();
             services.AddTransient<HomeViewModel>();
 
-            // pages
-            services.AddTransient<WelcomePage>();
-            services.AddTransient<SignInPage>();
-            services.AddTransient<SignUpPage>();
-            services.AddTransient<HomePage>();
-
-            // navigation
-            services.AddSingleton<INavigationService, NavigationService>();
-
             return services.BuildServiceProvider();
         }
 
-        /// <summary>
-        /// Called when the application starts
-        /// </summary>
-        protected override void OnStartup(StartupEventArgs e)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            base.OnStartup(e);
+            //Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "en-EN";
+
             // init http client
             NativeMethods.HttpClientInit(Api.BaseUrl, Api.Uuid);
-            // show main window
-            var mainWindow = Services.GetRequiredService<MainWindow>();
-            mainWindow.Show();
+
+            // create window
+            var mainWindow = new MainWindow();
+
+            // initialize dialog DI
+            (Services.GetRequiredService<IDialogService>() as DialogService)?.Initialize(mainWindow);
+
+            // show window
+            mainWindow.Activate();
         }
     }
 }

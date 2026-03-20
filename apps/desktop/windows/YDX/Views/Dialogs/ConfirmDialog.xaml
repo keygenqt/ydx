@@ -1,0 +1,16 @@
+<ContentDialog x:Class="YDX.Views.Dialogs.ConfirmDialog"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:local="using:YDX.Views.Dialogs"
+               PrimaryButtonText="{x:Bind strings:Resources.Yes}"
+               CloseButtonText="{x:Bind strings:Resources.No}"
+               DefaultButton="Primary"
+               Style="{StaticResource DefaultContentDialogStyle}"
+               xmlns:strings="using:YDX.Strings">
+
+    <Grid>
+        <TextBlock x:Name="MessageText"
+                   TextWrapping="Wrap"
+                   FontSize="14"/>
+    </Grid>
+</ContentDialog>

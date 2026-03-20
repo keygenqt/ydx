@@ -2,6 +2,12 @@ namespace YDX.Utils
 {
     public static class AppConstants
     {
+        public static class DefaultWindow
+        {
+            public const int Width = 950;
+            public const int Height = 550;
+        }
+
         public static class Api
         {
             public const string BaseUrl = "http://localhost:3002";

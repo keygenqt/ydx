@@ -2,13 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "🚀 Запуск YDX",
+            "name": "🚀 Запуск YDX (Unpackaged)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/YDX/bin/Debug/net10.0-windows/YDX.exe",
+            "preLaunchTask": "build-winui",
+            "program": "${workspaceFolder}/YDX/bin/x64/Debug/net8.0-windows10.0.19041.0/win-x64/YDX.exe",
             "args": [],
-            "cwd": "${workspaceFolder}/YDX",
+            "cwd": "${workspaceFolder}/YDX/bin/x64/Debug/net8.0-windows10.0.19041.0/win-x64",
             "console": "internalConsole",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart"
