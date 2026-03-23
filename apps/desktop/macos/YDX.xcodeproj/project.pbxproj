@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2F52A5682F45F15800ECE377 /* libydx_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F52A5672F45F15800ECE377 /* libydx_macos.a */; };
+		2FC994152F7113060040316D /* NavigatorUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2FC994142F7113060040316D /* NavigatorUI */; };
+		2FC994182F71223E0040316D /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 2FC994172F71223E0040316D /* Factory */; };
+		2FC9941A2F71223E0040316D /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FC994192F71223E0040316D /* FactoryKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FC994182F71223E0040316D /* Factory in Frameworks */,
+				2FC994152F7113060040316D /* NavigatorUI in Frameworks */,
+				2FC9941A2F71223E0040316D /* FactoryKit in Frameworks */,
 				2F52A5682F45F15800ECE377 /* libydx_macos.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,6 +86,9 @@
 			);
 			name = YDX;
 			packageProductDependencies = (
+				2FC994142F7113060040316D /* NavigatorUI */,
+				2FC994172F71223E0040316D /* Factory */,
+				2FC994192F71223E0040316D /* FactoryKit */,
 			);
 			productName = YDX;
 			productReference = 2FCB39402F3F340E00F649A2 /* YDX.app */;
@@ -109,6 +118,10 @@
 			);
 			mainGroup = 2FCB39372F3F340E00F649A2;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2FC994132F7113060040316D /* XCRemoteSwiftPackageReference "Navigator" */,
+				2FC994162F71223E0040316D /* XCRemoteSwiftPackageReference "Factory" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2FCB39412F3F340E00F649A2 /* Products */;
 			projectDirPath = "";
@@ -346,6 +359,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2FC994132F7113060040316D /* XCRemoteSwiftPackageReference "Navigator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Navigator";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		2FC994162F71223E0040316D /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Factory";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2FC994142F7113060040316D /* NavigatorUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2FC994132F7113060040316D /* XCRemoteSwiftPackageReference "Navigator" */;
+			productName = NavigatorUI;
+		};
+		2FC994172F71223E0040316D /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2FC994162F71223E0040316D /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
+		};
+		2FC994192F71223E0040316D /* FactoryKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2FC994162F71223E0040316D /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = FactoryKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2FCB39382F3F340E00F649A2 /* Project object */;
 }

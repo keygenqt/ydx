@@ -18,7 +18,7 @@ public class TokenResponse
     public long ExpiresAt { get; set; }
 
     [JsonPropertyName("created_at")]
-    public long CreatedAt { get; set; } 
+    public long CreatedAt { get; set; }
 
     [JsonIgnore]
     public DateTime ExpiresAtDateTime => DateTimeOffset.FromUnixTimeMilliseconds(ExpiresAt).LocalDateTime;

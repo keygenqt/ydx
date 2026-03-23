@@ -1,16 +1,10 @@
-# OS X Finder stuff
-.DS_Store
-
-# CocoaPods
-Pods/
-Podfile.lock
-
 # Xcode
-build/
-xcuserdata
-*.xccheckout
 *.xcuserstate
-*.xcscmblueprint
+*.xcuserdatad/
+DerivedData/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
 
-/Resources/Environment/Environment.xcconfig
-/debug-env.xcconfig
+# Swift Package Manager
+.build/
+.swiftpm/
