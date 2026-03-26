@@ -22,224 +22,224 @@ msgstr ""
 #: data/assets/ui/pages/welcome/WelcomePage.ui:4
 #: data/com.keygenqt.ydx.desktop.in:3 data/com.keygenqt.ydx.metainfo.xml.in:7
 msgid "YDX"
-msgstr ""
+msgstr "YDX"
 
 #: data/assets/ui/dialogs/AboutDialog.ui:9
 #: data/com.keygenqt.ydx.metainfo.xml.in:23
 msgid "Vitaliy Zarubin"
-msgstr ""
+msgstr "Vitaliy Zarubin"
 
 #: data/assets/ui/pages/home/HomePage.ui:4
 msgid "YDX | Home"
-msgstr ""
+msgstr "YDX | Главная"
 
 #: data/assets/ui/pages/home/HomePage.ui:14
 #: data/assets/ui/pages/welcome/WelcomePage.ui:14
 msgid "Menu"
-msgstr ""
+msgstr "Меню"
 
 #: data/assets/ui/pages/home/HomePage.ui:30
 #: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:29
 msgid "Welcome to YDX!"
-msgstr ""
+msgstr "Добро пожаловать в YDX!"
 
 #: data/assets/ui/pages/home/HomePage.ui:39
 msgid "Click the button to fetch data"
-msgstr ""
+msgstr "Нажмите кнопку, чтобы получить данные"
 
 #: data/assets/ui/pages/home/HomePage.ui:47 src/pages/home/HomePage.js:30
 msgid "Fetch Data"
-msgstr ""
+msgstr "Получить данные"
 
 #: data/assets/ui/pages/home/HomePage.ui:63
 #: data/assets/ui/pages/welcome/WelcomePage.ui:65
 msgid "_About"
-msgstr ""
+msgstr "_О программе"
 
 #: data/assets/ui/pages/home/HomePage.ui:67
 msgid "_Logout"
-msgstr ""
+msgstr "_Выйти"
 
 #: data/assets/ui/pages/signin/SignInPage.ui:4
 msgid "YDX | Sign In"
-msgstr ""
+msgstr "YDX | Вход"
 
 #: data/assets/ui/pages/signin/SignInPage.ui:40
 msgid "👋 Welcome back!"
-msgstr ""
+msgstr "👋 С возвращением!"
 
 #: data/assets/ui/pages/signin/SignInPage.ui:50
 #: data/assets/ui/pages/signup/SignUpPage.ui:50
 msgid "Email"
-msgstr ""
+msgstr "Электронная почта"
 
 #: data/assets/ui/pages/signin/SignInPage.ui:56
 #: data/assets/ui/pages/signup/SignUpPage.ui:56
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: data/assets/ui/pages/signin/SignInPage.ui:68
 #: data/assets/ui/pages/signup/SignUpPage.ui:94
 #: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:107
 msgid "Sign In"
-msgstr ""
+msgstr "Войти"
 
 #: data/assets/ui/pages/signin/SignInPage.ui:86
 msgid "Don't have an account?"
-msgstr ""
+msgstr "Нет учётной записи?"
 
 #: data/assets/ui/pages/signin/SignInPage.ui:94
 #: data/assets/ui/pages/signup/SignUpPage.ui:68
 #: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:133
 msgid "Sign Up"
-msgstr ""
+msgstr "Зарегистрироваться"
 
 #: data/assets/ui/pages/signup/SignUpPage.ui:4
 msgid "YDX | Sign Up"
-msgstr ""
+msgstr "YDX | Регистрация"
 
 #: data/assets/ui/pages/signup/SignUpPage.ui:40
 msgid "🌟 Create your space"
-msgstr ""
+msgstr "🌟 Создайте своё пространство"
 
 #: data/assets/ui/pages/signup/SignUpPage.ui:86
 msgid "Already have an account?"
-msgstr ""
+msgstr "Уже есть учётная запись?"
 
 #: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:60
 msgid "✓ Native experience on all 8 platforms"
-msgstr ""
+msgstr "✓ Нативный интерфейс на всех 8 платформах"
 
 #: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:68
 msgid "✓ Lightning fast on any device"
-msgstr ""
+msgstr "✓ Молниеносно быстро на любом устройстве"
 
 #: data/assets/ui/pages/welcome/elements/WelcomeAuth.ui:76
 msgid "✓ Sync across all devices"
-msgstr ""
+msgstr "✓ Синхронизация между всеми устройствами"
 
 #: data/assets/ui/pages/welcome/elements/WelcomeLoading.ui:32
 msgid "Please wait..."
-msgstr ""
+msgstr "Пожалуйста, подождите..."
 
 #: data/com.keygenqt.ydx.desktop.in:9
 msgid "gtk;rust;demo;"
-msgstr ""
+msgstr "gtk;rust;demo;"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:8
 msgid "Edit collections, learn on any device!"
-msgstr ""
+msgstr "Редактируйте коллекции, учитесь на любом устройстве!"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:10
 msgid ""
 "A powerful cross-platform application for creating and managing learning "
 "collections."
-msgstr ""
+msgstr "Мощное кросс‑платформенное приложение для создания и управления учебными коллекциями."
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:11
 msgid "Features:"
-msgstr ""
+msgstr "Возможности:"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:13
 msgid "Native interface on all 8 platforms"
-msgstr ""
+msgstr "Нативный интерфейс на всех 8 платформах"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:14
 msgid "Lightning fast on any device"
-msgstr ""
+msgstr "Молниеносно быстро на любом устройстве"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:15
 msgid "Synchronization between all your devices"
-msgstr ""
+msgstr "Синхронизация между всеми вашими устройствами"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:16
 msgid "Available in Russian, English, and Chinese on all platforms"
-msgstr ""
+msgstr "Доступно на русском, английском и китайском на всех платформах"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:17
 msgid "Simple and intuitive interface"
-msgstr ""
+msgstr "Простой и интуитивно понятный интерфейс"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:18
 msgid "AI-powered content generation"
-msgstr ""
+msgstr "Генерация контента с помощью ИИ"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:38
 msgid "Initial release"
-msgstr ""
+msgstr "Первый выпуск"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:40
 msgid "Basic collection management"
-msgstr ""
+msgstr "Базовое управление коллекциями"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:41
 msgid "Cross-platform UI"
-msgstr ""
+msgstr "Кросс‑платформенный интерфейс"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:42
 msgid "Device synchronization"
-msgstr ""
+msgstr "Синхронизация устройств"
 
 #: data/com.keygenqt.ydx.metainfo.xml.in:43
 msgid "Multi-language support (EN, RU, ZH)"
-msgstr ""
+msgstr "Поддержка нескольких языков (EN, RU, ZH)"
 
 #: src/pages/signin/SignInPage.js:81 src/pages/signup/SignUpPage.js:83
 msgid "Please fill in all fields."
-msgstr ""
+msgstr "Пожалуйста, заполните все поля."
 
 #: src/pages/signin/SignInPage.js:86 src/pages/signup/SignUpPage.js:88
 msgid "Please enter a valid email address."
-msgstr ""
+msgstr "Пожалуйста, введите корректный адрес электронной почты."
 
 #: src/pages/signin/SignInPage.js:91 src/pages/signup/SignUpPage.js:93
 msgid "Password needs uppercase, lowercase and number."
-msgstr ""
+msgstr "Пароль должен содержать заглавные и строчные буквы, а также цифру."
 
 #: src/pages/welcome/elements/WelcomeLoading.js:12
 msgid "☕ Brewing coffee"
-msgstr ""
+msgstr "☕ Завариваем кофе"
 
 #: src/pages/welcome/elements/WelcomeLoading.js:13
 msgid "🫖 Steeping tea"
-msgstr ""
+msgstr "🫖 Завариваем чай"
 
 #: src/pages/welcome/elements/WelcomeLoading.js:14
 msgid "🗄️ Tickling the database"
-msgstr ""
+msgstr "🗄️ Щекочем базу данных"
 
 #: src/pages/welcome/elements/WelcomeLoading.js:15
 msgid "🚀 Igniting the reactor"
-msgstr ""
+msgstr "🚀 Запускаем реактор"
 
 #: src/pages/welcome/elements/WelcomeLoading.js:16
 msgid "🔐 Inspecting tokens"
-msgstr ""
+msgstr "🔐 Проверяем токены"
 
 #: src/pages/welcome/elements/WelcomeLoading.js:17
 msgid "🧙 Casting authorization spells"
-msgstr ""
+msgstr "🧙 Произносим заклинания авторизации"
 
 #: src/pages/welcome/elements/WelcomeLoading.js:18
 msgid "🎩 Pulling rabbit out of hat"
-msgstr ""
+msgstr "🎩 Достаём кролика из шляпы"
 
 #: src/pages/welcome/elements/WelcomeLoading.js:19
 msgid "🦄 Feeding unicorns"
-msgstr ""
+msgstr "🦄 Кормим единорогов"
 
 #: src/pages/welcome/elements/WelcomeLoading.js:20
 msgid "⚡ Accelerating neutrons"
-msgstr ""
+msgstr "⚡ Ускоряем нейтроны"
 
 #: src/pages/welcome/elements/WelcomeLoading.js:21
 msgid "🧪 Mixing reagents"
-msgstr ""
+msgstr "🧪 Смешиваем реагенты"
 
 #: src/pages/welcome/elements/WelcomeLoading.js:22
 msgid "🌱 Watering the server"
-msgstr ""
+msgstr "🌱 Поливаем сервер"
 
 #: src/widgets/GtkWidget.js:173
 msgid "Validate form failed"
-msgstr ""
+msgstr "Проверка формы не удалась"
