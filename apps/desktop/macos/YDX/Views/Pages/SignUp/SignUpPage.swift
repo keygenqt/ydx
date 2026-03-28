@@ -20,7 +20,7 @@ struct SignUpPage: View {
                         .foregroundColor(.accentColor)
                         .frame(width: 100, height: 100)
                     
-                    Text("Create your space")
+                    Text("🌟 Create your space")
                         .font(.title2)
                         .fontWeight(.semibold)
                 }
