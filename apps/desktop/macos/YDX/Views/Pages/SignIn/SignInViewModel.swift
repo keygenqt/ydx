@@ -1,6 +1,7 @@
 import Foundation
 import Factory
 import NavigatorUI
+import YdxMacos
 
 @MainActor
 @Observable
@@ -8,7 +9,9 @@ final class SignInViewModel {
     var email = ""
     var password = ""
     var isLoading = false
-    var errorMessage: String?
+    var emailError: String?
+    var passwordError: String?
+    var didAttemptSubmit = false
     
     @ObservationIgnored
     @Injected(\.secureStorageService) private var secureStorageService
@@ -16,25 +19,73 @@ final class SignInViewModel {
     @ObservationIgnored
     @Injected(\.appNavigator) private var nav
     
-    var canSignIn: Bool {
-        email.isValidEmail() && password.isValidPassword()
-    }
-    
     func signIn() async {
-        guard canSignIn else { return }
+        // validate fields after first submit attempt
+        didAttemptSubmit = true
+        validateFields()
+        guard emailError == nil && passwordError == nil else { return }
         
+        // show loading indicator
         isLoading = true
         defer { isLoading = false }
         
-        // Simulate network request
-        try? await Task.sleep(nanoseconds: 500_000_000)
+        // send signin request in background
+        let jsonString = await Task.detached(priority: .userInitiated) { [email, password] in
+            return NativeMethods.requestSignIn(email: email, password: password)
+        }.value
         
-        // TODO: Real authorization
-        // secureStorageService.setUserId(response.userId)
-        // secureStorageService.setAccessToken(response.accessToken)
-        // secureStorageService.setRefreshToken(response.refreshToken)
+        // parse server response
+        guard let jsonData = jsonString.data(using: .utf8),
+              let response = try? JSONDecoder().decode(ApiResponse<TokenResponse>.self, from: jsonData) else {
+            emailError = "Failed to parse user data."
+            return
+        }
         
-        nav.navigate(to: .home)
+        if response.code == 200, let tokenData = response.data {
+            // save credentials on success
+            secureStorageService.setAccessToken(tokenData.accessToken)
+            secureStorageService.setRefreshToken(tokenData.refreshToken)
+            secureStorageService.setUserId(String(tokenData.userId))
+            // navigate to home
+            nav.navigate(to: .home)
+        } else if response.code == 422 {
+            // handle validation errors from server
+            if let errorData = response.data {
+                let errorJson = try? JSONSerialization.jsonObject(with: JSONEncoder().encode(errorData)) as? [String: Any]
+                if let emailErr = errorJson?["email"] as? String {
+                    emailError = emailErr
+                }
+                if let passwordErr = errorJson?["password"] as? String {
+                    passwordError = passwordErr
+                }
+            }
+        } else {
+            // generic error
+            emailError = "Please verify your email."
+            passwordError = "Please verify your password."
+        }
+    }
+    
+    func validateFields() {
+        guard didAttemptSubmit else { return }
+        
+        if email.isEmpty {
+            emailError = "Must not be not blank."
+        } else if !email.isValidEmail() {
+            emailError = "Please enter a valid email address."
+        } else {
+            emailError = nil
+        }
+        
+        if password.isEmpty {
+            passwordError = "Must not be not blank."
+        } else if password.count < 8 || password.count > 16 {
+            passwordError = "Password must be between 8 and 16 characters."
+        } else if !password.isValidPassword() {
+            passwordError = "Password needs uppercase, lowercase and number."
+        } else {
+            passwordError = nil
+        }
     }
     
     func navigateToSignUp() {

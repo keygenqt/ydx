@@ -56,13 +56,49 @@ final class SecureStorageService: SecureStorageServiceProtocol {
     }
     
     // MARK: - Private Helpers
+    private func saveValue(key: String, value: String) {
+        #if DEBUG
+        // Use UserDefaults during development to avoid keychain prompts
+        UserDefaults.standard.set(value, forKey: key)
+        #else
+        // Use Keychain for production
+        guard let data = value.data(using: .utf8) else { return }
+        
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrAccount as String: key
+        ]
+        
+        let attributes: [String: Any] = [
+            kSecValueData as String: data,
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
+        ]
+        
+        let status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
+        
+        if status == errSecItemNotFound {
+            var addQuery = query
+            addQuery[kSecValueData as String] = data
+            addQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlock
+            SecItemAdd(addQuery as CFDictionary, nil)
+        }
+        #endif
+    }
+    
     private func getValue(key: String) -> String? {
+        #if DEBUG
+        // Use UserDefaults during development
+        return UserDefaults.standard.string(forKey: key)
+        #else
+        // Use Keychain for production
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
             kSecAttrAccount as String: key,
             kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
         ]
         
         var result: AnyObject?
@@ -74,29 +110,35 @@ final class SecureStorageService: SecureStorageServiceProtocol {
             return nil
         }
         return value
-    }
-    
-    private func saveValue(key: String, value: String) {
-        guard let data = value.data(using: .utf8) else { return }
-        
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: key,
-            kSecValueData as String: data
-        ]
-        
-        SecItemDelete(query as CFDictionary)
-        SecItemAdd(query as CFDictionary, nil)
+        #endif
     }
     
     private func deleteValue(key: String) {
+        #if DEBUG
+        // Use UserDefaults during development
+        UserDefaults.standard.removeObject(forKey: key)
+        #else
+        // Use Keychain for production
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
             kSecAttrAccount as String: key
         ]
-        
         SecItemDelete(query as CFDictionary)
+        #endif
+    }
+    
+    // MARK: - Development Helper
+    func clearAllKeychainData() {
+        #if DEBUG
+        let keys = ["user_id", "access_token", "refresh_token"]
+        keys.forEach { UserDefaults.standard.removeObject(forKey: $0) }
+        #else
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service
+        ]
+        SecItemDelete(query as CFDictionary)
+        #endif
     }
 }

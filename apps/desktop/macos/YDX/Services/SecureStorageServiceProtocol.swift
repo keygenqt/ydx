@@ -9,4 +9,5 @@ protocol SecureStorageServiceProtocol {
     func setRefreshToken(_ value: String?)
     func clearAll()
     func hasValidToken() -> Bool
+    func clearAllKeychainData()
 }

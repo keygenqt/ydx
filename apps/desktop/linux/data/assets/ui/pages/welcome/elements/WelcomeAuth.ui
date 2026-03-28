@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
 	<template class="YdxWelcomeAuth" parent="GtkBox">
-		<!-- Растягиваем корневой виджет на всю страницу -->
 		<property name="hexpand">True</property>
 		<property name="vexpand">True</property>
 		<property name="halign">fill</property>
 		<property name="valign">fill</property>
 
-		<!-- Фон на всю страницу -->
 		<style>
 			<class name="navigation-bg" />
 		</style>
 
-		<!-- Центрирующий контейнер для контента -->
 		<child>
 			<object class="GtkBox">
 				<property name="halign">center</property>
 				<property name="valign">center</property>
-				<property name="hexpand">True</property>  <!-- 👈 добавил -->
-				<property name="vexpand">True</property>  <!-- 👈 добавил -->
+				<property name="hexpand">True</property>
+				<property name="vexpand">True</property>
 				<property name="orientation">vertical</property>
 				<property name="spacing">30</property>
 				<property name="margin-start">20</property>

@@ -1,12 +1,11 @@
 import Foundation
 import Factory
 import NavigatorUI
+import YdxMacos
 
 @MainActor
 @Observable
 final class SplashViewModel {
-    var currentMessage: String = "Checking authentication..."
-    
     @ObservationIgnored
     @Injected(\.secureStorageService) private var secureStorageService
     
@@ -14,18 +13,29 @@ final class SplashViewModel {
     @Injected(\.appNavigator) private var nav
     
     func checkAuthState() async {
-        currentMessage = "Validating token..."
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        // for smooth animation
+        try? await Task.sleep(nanoseconds: 800_000_000)
         
-        let token = secureStorageService.getAccessToken()
-        
-        currentMessage = "Connecting to server..."
-        try? await Task.sleep(nanoseconds: 500_000_000)
-        
-        if token != nil {
-            nav.navigate(to: .home)
-        } else {
+        // check if token exists locally
+        guard let token = secureStorageService.getAccessToken() else {
             nav.navigate(to: .welcome)
+            return
         }
+        
+        // validate token with server in background thread
+        let jsonString = await Task.detached(priority: .userInitiated) { [token] in
+            return NativeMethods.requestSignCheck(token: token)
+        }.value
+        
+        // parse response and navigate based on result
+        guard let jsonData = jsonString.data(using: .utf8),
+              let response = try? JSONDecoder().decode(ApiResponse<EmptyData>.self, from: jsonData),
+              response.code == 200 else {
+            nav.navigate(to: .welcome)
+            return
+        }
+        
+        // open user page
+        nav.navigate(to: .home)
     }
 }

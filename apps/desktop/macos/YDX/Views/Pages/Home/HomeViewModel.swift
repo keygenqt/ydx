@@ -1,12 +1,14 @@
 import Foundation
 import Factory
 import NavigatorUI
+import AppKit
 
 @MainActor
 @Observable
 final class HomeViewModel {
-    var user: UserResponse?
+    var dataLabel = "Click the button to fetch data"
     var isLoading = false
+    var user: UserResponse?
     
     @ObservationIgnored
     @Injected(\.secureStorageService) private var secureStorageService
@@ -14,21 +16,36 @@ final class HomeViewModel {
     @ObservationIgnored
     @Injected(\.appNavigator) private var nav
     
-    func loadUser() async {
+    func fetchData() async {
         isLoading = true
         defer { isLoading = false }
         
-        // TODO: Load user from Keychain or API
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        // check if user is authenticated
+        guard let userId = secureStorageService.getUserId(),
+              let token = secureStorageService.getAccessToken() else {
+            dataLabel = "User not found."
+            return
+        }
         
-        // Temporary mock data
-        user = UserResponse(
-            id: 1,
-            email: "user@example.com",
-            icon: nil,
-            fname: "John",
-            lname: "Doe"
-        )
+        // request user data in background
+        let jsonString = await Task.detached(priority: .userInitiated) { [userId, token] in
+            return NativeMethods.requestGetUser(id: userId, token: token)
+        }.value
+        
+        // parse server response
+        guard let jsonData = jsonString.data(using: .utf8),
+              let user = try? JSONDecoder().decode(UserResponse.self, from: jsonData) else {
+            dataLabel = "Failed to parse user data."
+            return
+        }
+        
+        // update ui with user data
+        self.user = user
+        dataLabel = "Email: \(user.email)"
+    }
+    
+    func showAbout() {
+        AboutDialog.show()
     }
     
     func signOut() async {

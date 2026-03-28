@@ -5,7 +5,7 @@ enum AppConstants {
     
     enum DefaultWindow {
         static let width: Int = 950
-        static let height: Int = 550
+        static let height: Int = 500
     }
     
     enum API {

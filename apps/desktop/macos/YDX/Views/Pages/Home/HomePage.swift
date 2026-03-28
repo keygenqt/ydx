@@ -3,53 +3,71 @@ import Factory
 
 struct HomePage: View {
     @State private var viewModel = Container.shared.homeViewModel()
+    @State private var showLogoutAlert = false
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 0) {
+            // header
             HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Home")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+                Button {
+                    viewModel.showAbout()
+                } label: {
+                    Image(systemName: "info.circle")
+                        .font(.system(size: 18))
                 }
+                .buttonStyle(.plain)
+                .help("About")
                 
                 Spacer()
                 
-                Button("Sign Out") {
-                    Task { await viewModel.signOut() }
+                Button {
+                    showLogoutAlert = true
+                } label: {
+                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                        .font(.system(size: 18))
                 }
-                .buttonStyle(.bordered)
+                .buttonStyle(.plain)
+                .help("Logout")
             }
-            .padding()
+            .padding(.horizontal)
+            .padding(.vertical, 12)
+            .background(Color(NSColor.controlBackgroundColor))
             
             Spacer()
             
-            VStack(spacing: 20) {
+            // content
+            VStack(spacing: 24) {
                 Image(systemName: "house.fill")
                     .font(.system(size: 60))
                     .foregroundColor(.accentColor)
                 
-                Text("You are signed in!")
-                    .font(.title2)
-                    .fontWeight(.semibold)
+                Text("Welcome to YDX!")
+                    .font(.title)
+                    .fontWeight(.bold)
                 
-                if let user = viewModel.user {
-                    VStack(alignment: .leading, spacing: 8) {
-                        InfoRow(title: "Email", value: user.email)
-                        InfoRow(title: "ID", value: String(user.id))
-                    }
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(10)
-                    .padding(.horizontal)
+                Text(LocalizedStringKey(viewModel.dataLabel))
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 400)
+                
+                Button("Fetch Data") {
+                    Task { await viewModel.fetchData() }
                 }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
             }
             
             Spacer()
         }
-        .frame(minWidth: 600, minHeight: 400)
-        .task {
-            await viewModel.loadUser()
+        .frame(minHeight: 400)
+        .alert("Logout", isPresented: $showLogoutAlert) {
+            Button("Cancel", role: .cancel) { }
+            Button("Logout", role: .destructive) {
+                Task { await viewModel.signOut() }
+            }
+        } message: {
+            Text("Are you sure you want to logout?")
         }
         .overlay {
             if viewModel.isLoading {

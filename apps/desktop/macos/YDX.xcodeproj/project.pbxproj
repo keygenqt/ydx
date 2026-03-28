@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F52A5682F45F15800ECE377 /* libydx_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F52A5672F45F15800ECE377 /* libydx_macos.a */; };
+		2F65A3282F77FDF500944AE8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F65A3272F77FDF500944AE8 /* SystemConfiguration.framework */; };
+		2FA240212F782BE90062E3D5 /* libydx_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F52A5672F45F15800ECE377 /* libydx_macos.a */; };
 		2FC994152F7113060040316D /* NavigatorUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2FC994142F7113060040316D /* NavigatorUI */; };
 		2FC994182F71223E0040316D /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 2FC994172F71223E0040316D /* Factory */; };
 		2FC9941A2F71223E0040316D /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2FC994192F71223E0040316D /* FactoryKit */; };
@@ -15,6 +16,7 @@
 
 /* Begin PBXFileReference section */
 		2F52A5672F45F15800ECE377 /* libydx_macos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libydx_macos.a; path = "../../../core/build/macos/aarch64-apple-darwin/libydx_macos.a"; sourceTree = "<group>"; };
+		2F65A3272F77FDF500944AE8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2FCB39402F3F340E00F649A2 /* YDX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YDX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -31,10 +33,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FA240212F782BE90062E3D5 /* libydx_macos.a in Frameworks */,
+				2F65A3282F77FDF500944AE8 /* SystemConfiguration.framework in Frameworks */,
 				2FC994182F71223E0040316D /* Factory in Frameworks */,
 				2FC994152F7113060040316D /* NavigatorUI in Frameworks */,
 				2FC9941A2F71223E0040316D /* FactoryKit in Frameworks */,
-				2F52A5682F45F15800ECE377 /* libydx_macos.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +47,7 @@
 		2F1BA1CF2F3F7D6D0094A7E3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2F65A3272F77FDF500944AE8 /* SystemConfiguration.framework */,
 				2F52A5672F45F15800ECE377 /* libydx_macos.a */,
 			);
 			name = Frameworks;
@@ -115,6 +119,8 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
+				"zh-Hans",
 			);
 			mainGroup = 2FCB39372F3F340E00F649A2;
 			minimizedProjectReferenceProxies = 1;
@@ -186,6 +192,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = YDX/YDX.entitlements;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -212,6 +219,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -249,6 +257,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = YDX/YDX.entitlements;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -268,6 +277,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
@@ -279,7 +289,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -312,7 +322,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;

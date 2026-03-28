@@ -5,36 +5,49 @@ struct WelcomePage: View {
     @State private var viewModel = Container.shared.welcomeViewModel()
     
     var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "hand.wave.fill")
-                .font(.system(size: 60))
-                .foregroundColor(.accentColor)
+        VStack(spacing: 36) {
+            Text("Welcome to YDX!")
+                .font(.system(size: 36, weight: .bold))
             
-            Text("Welcome to YDX")
-                .font(.title)
-                .fontWeight(.bold)
+            Image("Ydx")
+                .resizable()
+                .frame(width: 120, height: 120)
             
-            Text("Please sign in or create an account")
-                .font(.body)
-                .foregroundColor(.secondary)
+            VStack(spacing: 6) {
+                Text("✓ Native experience on all 8 platforms")
+                    .font(.system(size: 14))
+                Text("✓ Lightning fast on any device")
+                    .font(.system(size: 14))
+                Text("✓ Sync across all devices")
+                    .font(.system(size: 14))
+            }
             
-            VStack(spacing: 12) {
-                Button("Sign In") {
+            HStack(spacing: 20) {
+                Button {
                     viewModel.navigateToSignIn()
+                } label: {
+                    HStack {
+                        Spacer(minLength: 0)
+                        Text("Sign In")
+                        Spacer(minLength: 0)
+                    }
                 }
                 .buttonStyle(.borderedProminent)
-                .controlSize(.large)
+                .frame(width: 120)
                 
-                Button("Create Account") {
+                Button {
                     viewModel.navigateToSignUp()
+                } label: {
+                    HStack {
+                        Spacer(minLength: 0)
+                        Text("Sign Up")
+                        Spacer(minLength: 0)
+                    }
                 }
                 .buttonStyle(.bordered)
-                .controlSize(.large)
+                .frame(width: 120)
             }
-            .padding(.horizontal, 40)
-            .padding(.top, 20)
         }
         .padding()
-        .frame(width: 500, height: 400)
     }
 }
